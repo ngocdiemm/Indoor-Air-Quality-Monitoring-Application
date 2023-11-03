@@ -64,7 +64,7 @@
                 android:layout_height="match_parent"
                 android:padding="40dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/logouittransparent">
+                android:src="@drawable/logo_uit_transparent">
 
 
             </ImageView>
@@ -112,7 +112,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/edit_text_background"
-                android:drawableStart="@drawable/outline_email_24"
+                android:drawableStart="@drawable/icon_email"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"
                 android:hint="Email"
@@ -131,7 +131,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/edit_text_background"
-                android:drawableStart="@drawable/outline_lock_24"
+                android:drawableStart="@drawable/icon_password"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"
                 android:hint="Password"
@@ -193,7 +193,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/logogithub"></ImageView>
+            android:src="@drawable/logo_github"></ImageView>
     </androidx.cardview.widget.CardView>
 
 
@@ -214,7 +214,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/logofacebook"></ImageView>
+            android:src="@drawable/logo_facebook"></ImageView>
     </androidx.cardview.widget.CardView>
 
 
@@ -235,7 +235,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/logogoogle"></ImageView>
+            android:src="@drawable/logo_google"></ImageView>
     </androidx.cardview.widget.CardView>
 
 
