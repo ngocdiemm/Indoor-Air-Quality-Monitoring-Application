@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LogIn">
 
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/appCompatButton4"
         android:layout_width="180dp"
@@ -176,9 +175,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:ignore="MissingConstraints" />
 
-
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView7"
         android:layout_width="35dp"
@@ -192,6 +188,7 @@
 
 
         <ImageView
+            android:id="@+id/language"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/vietnameseflag"
