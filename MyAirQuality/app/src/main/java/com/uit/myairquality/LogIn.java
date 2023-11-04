@@ -21,32 +21,13 @@ public class LogIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
         login = findViewById(R.id.btnLogin);
-        register = findViewById(R.id.btnRegister);
-
-
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openRegister();
-            }
-        });
-        username = (EditText) findViewById(R.id.email);
-        password = (EditText) findViewById(R.id.password);
-        btnlogin = (Button) findViewById(R.id.btnLogin);
-        DB = new Database(this,"Final_app.db",null,1);
-
-
+        //Bấm nút Login
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
-
 
                 if(user.equals("")||pass.equals(""))
                     Toast.makeText(LogIn.this, "Vui lòng điền hết tất cả các trường", Toast.LENGTH_SHORT).show();
@@ -63,12 +44,15 @@ public class LogIn extends AppCompatActivity {
                 }
             }
         });
-    }
-
-
-    public void openRegister(){
-        Intent intent = new Intent(this, Register.class);
-        startActivity(intent);
+        // Quay lại màn hình Homepage
+        Button btnBackLogIn = findViewById(R.id.btnBackLogin);
+        btnBackLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LogIn.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
     }
 }
 

@@ -242,11 +242,11 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnBackLogin"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
-        android:text="REGISTER ♥"
+        android:text="BACK"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"

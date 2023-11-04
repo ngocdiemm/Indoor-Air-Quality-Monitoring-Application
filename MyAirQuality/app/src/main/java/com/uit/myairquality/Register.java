@@ -26,7 +26,7 @@ public class Register extends AppCompatActivity {
         repassword = (EditText)findViewById(R.id.ReType);
         email = (EditText)findViewById(R.id.Email);
         signup = (Button) findViewById(R.id.btn_signup);
-        signin = (Button) findViewById(R.id.btn_back);
+        signin = (Button) findViewById(R.id.btnBackRegister);
         DB = new Database(this,"Final_app.db",null,1);
 
 
@@ -69,6 +69,19 @@ public class Register extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // Quay lại màn hình Homepage
+        Button btnBackRegister = findViewById(R.id.btnBackRegister);
+        btnBackRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Register.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
     }
 }
 
