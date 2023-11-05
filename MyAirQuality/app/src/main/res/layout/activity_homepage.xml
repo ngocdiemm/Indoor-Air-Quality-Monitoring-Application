@@ -60,39 +60,6 @@
         android:paddingTop="45dp"/>
 
 
-    <!--    <androidx.cardview.widget.CardView-->
-    <!--        android:id="@+id/cardView2"-->
-    <!--        android:layout_width="100dp"-->
-    <!--        android:layout_height="70dp"-->
-    <!--        android:layout_marginBottom="50dp"-->
-    <!--        app:cardCornerRadius="15dp"-->
-    <!--        app:cardElevation="21dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        tools:ignore="MissingConstraints">-->
-
-
-    <!--        <LinearLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:background="@drawable/card_background">-->
-
-
-    <!--            <ImageView-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent"-->
-    <!--                android:padding="5dp"-->
-    <!--                android:scaleType="centerCrop"-->
-    <!--                android:src="@drawable/upload_370e4813fd16faa4aca073bf6c09d512">-->
-
-
-    <!--            </ImageView>-->
-
-
-    <!--        </LinearLayout>-->
-    <!--    </androidx.cardview.widget.CardView>-->
-
-
     <TextView
         android:paddingTop="70dp"
         android:id="@+id/textView4"
@@ -105,11 +72,6 @@
         app:layout_constraintEnd_toEndOf="@+id/cardView7"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
-    <!--        app:layout_constraintBottom_toBottomOf="@+id/cardView2"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="@+id/linearLayout2" />-->
-
 
     <TextView
         android:id="@+id/textView3"
@@ -191,7 +153,7 @@
             android:id="@+id/language"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/vietnameseflag"
+            android:src="@drawable/britishflag"
             android:scaleType="centerCrop"
             ></ImageView>
     </androidx.cardview.widget.CardView>
