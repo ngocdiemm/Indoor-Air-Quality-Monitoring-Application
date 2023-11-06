@@ -1,7 +1,6 @@
 package com.uit.myairquality;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,72 +18,124 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+//public class LogIn extends AppCompatActivity {
+//
+//    String grant_type = "password";
+//    String client_id = "openremote";
+//    String usr,pwd;
+//    APIInterface apiInterface;
+//    Button btnLogin,btnBackLogin;
+//
+//    EditText username,password;
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_login);
+//        apiInterface = APIClient.getClient().create(APIInterface.class);
+//        username = findViewById(R.id.email);
+//        password = findViewById(R.id.password);
+//        btnLogin = findViewById(R.id.btnLogin);
+//        btnBackLogin = findViewById(R.id.btnBackLogin);
+//        // Quay lại màn hình Homepage
+//        btnBackLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LogIn.this, Homepage.class);
+//                startActivity(intent);
+//            }
+//        });
+//        // Đăng nhập
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                usr = String.valueOf(username.getText());
+//                pwd = String.valueOf(password.getText());
+//                getToken(usr,pwd);
+//            }
+//        });
+//    }
+//
+//    public void getToken(String usr, String pwd) {
+//        Call<Token> call = apiInterface.Login(grant_type, usr, pwd,client_id);
+//        call.enqueue(new Callback<Token>() {
+//            @Override
+//            public void onResponse(Call<Token> call, Response<Token> response) {
+//                if (response.isSuccessful()) {
+//                    assert response.body() != null;
+//                    Token Token = response.body();
+//                    Log.d("LoginActivity", "Hi ");
+//                    APIClient.Usertoken = Token.access_token;
+//                    Toast.makeText(LogIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(LogIn.this, Settings.class);
+//                    startActivity(intent);
+//
+//                } else {
+//                    Toast.makeText(LogIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Token> call, Throwable t) {
+//                // Xử lý lỗi kết nối
+//                Toast.makeText(LogIn.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+//
+//    private void saveTokenToSharedPreferences(String accessToken) {
+//        // Lưu accessToken vào SharedPreferences hoặc thực hiện các hoạt động khác liên quan đến token
+//        // Đảm bảo bạn đã tạo phương thức để lưu và quản lý token trong SharedPreferences
+//    }
+//}
 public class LogIn extends AppCompatActivity {
 
-    String grant_type = "password";
-    String client_id = "openremote";
-    String usr,pwd;
+    EditText username, password;
+    Button btnLogin;
+    String User,Pass;
     APIInterface apiInterface;
-    Button btnLogin,btnBackLogin;
+    String client_id = "openremote";
+    String grantType = "password";
 
-    EditText username,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        btnLogin = findViewById(R.id.btnLogin);
         username = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnBackLogin = findViewById(R.id.btnBackLogin);
-        // Quay lại màn hình Homepage
-        btnBackLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LogIn.this, Homepage.class);
-                startActivity(intent);
-            }
-        });
-        // Đăng nhập
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                usr = String.valueOf(username.getText());
-                pwd = String.valueOf(password.getText());
-                getToken(usr,pwd);
+                User = String.valueOf(username.getText());
+                Pass = String.valueOf(password.getText());
+                getToken(User,Pass);
             }
         });
     }
-
-    public void getToken(String usr, String pwd) {
-        Call<Token> call = apiInterface.Login(grant_type, usr, pwd,client_id);
+    public void getToken(String usr, String pwd){
+        Call<Token> call = apiInterface.Login(client_id,usr,pwd,grantType);
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
-                if (response.isSuccessful()) {
+                if(response.isSuccessful()){
+                    Toast.makeText(LogIn.this, "Dang nhap thanh cong", Toast.LENGTH_SHORT).show();
                     assert response.body() != null;
                     Token Token = response.body();
-                    Log.d("LoginActivity", "Hi ");
-                    APIClient.Usertoken = Token.access_token;
-                    Toast.makeText(LogIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LogIn.this, Settings.class);
+                    APIClient.token = com.uit.myairquality.Model.Token.access_token;
+                    Intent intent = new Intent(LogIn.this, Homepage.class);
                     startActivity(intent);
-
                 } else {
-                    Toast.makeText(LogIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogIn.this, "Dang nhap that bai", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                // Xử lý lỗi kết nối
-                Toast.makeText(LogIn.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogIn.this, "Khong the dang nhap", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void saveTokenToSharedPreferences(String accessToken) {
-        // Lưu accessToken vào SharedPreferences hoặc thực hiện các hoạt động khác liên quan đến token
-        // Đảm bảo bạn đã tạo phương thức để lưu và quản lý token trong SharedPreferences
     }
 }

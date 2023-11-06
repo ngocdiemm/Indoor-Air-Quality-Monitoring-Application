@@ -3,17 +3,12 @@ package com.uit.myairquality.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class Token {
-
     @SerializedName("access_token")
     public static String access_token;
-
-    @SerializedName("expires_in")
-    public String expires_in;
-
+    @SerializedName("expire_in")
+    public String expire_in;
     @SerializedName("scope")
     public String scope;
-
-    // GETTERS AND SETTERS
 
     public String getAccess_token() {
         return access_token;
@@ -23,12 +18,12 @@ public class Token {
         this.access_token = access_token;
     }
 
-    public String getExpires_in() {
-        return expires_in;
+    public String getExpire_in() {
+        return expire_in;
     }
 
-    public void setExpires_in(String expires_in) {
-        this.expires_in = expires_in;
+    public void setExpire_in(String expire_in) {
+        this.expire_in = expire_in;
     }
 
     public String getScope() {
