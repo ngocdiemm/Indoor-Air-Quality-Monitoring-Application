@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Air Quality</string>
+    <string name="Welcome">Chào mừng bạn đến với My Air Quality</string>
+    <string name="UITwithlove">Một ứng dụng của sinh viên UIT</string>
+    <string name="or">HOẶC</string>
+    <string name="btnLogin">ĐĂNG NHẬP</string>
+    <string name="btnForgotPassword">QUÊN MẬT KHẨU</string>
+    <string name="btnRegister">ĐĂNG KÝ</string>
+    <string name="btnSigninwithgg">ĐĂNG NHẬP QUA GOOGLE</string>
+</resources>

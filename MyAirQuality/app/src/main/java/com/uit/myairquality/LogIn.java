@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -121,20 +123,20 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(LogIn.this, "Dang nhap thanh cong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     assert response.body() != null;
                     Token Token = response.body();
                     APIClient.token = com.uit.myairquality.Model.Token.access_token;
-                    Intent intent = new Intent(LogIn.this, Homepage.class);
+                    Intent intent = new Intent(LogIn.this, Settings.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(LogIn.this, "Dang nhap that bai", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LogIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                Toast.makeText(LogIn.this, "Khong the dang nhap", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogIn.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
             }
         });
     }

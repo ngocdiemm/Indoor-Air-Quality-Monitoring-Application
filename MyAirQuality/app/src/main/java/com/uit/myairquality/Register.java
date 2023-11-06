@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -15,6 +16,8 @@ public class Register extends AppCompatActivity {
     String password = "";
 
     Button btnRegister;
+    private WebView webView;
+
     private static final String API_URL = "https://uiot.ixxc.dev/api/master/console/register";
 
     @Override
@@ -23,14 +26,22 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         // Quay lại màn hình Homepage
-        Button btnBackRegister = findViewById(R.id.btnBackRegister);
-        btnBackRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Register.this, Homepage.class);
-                startActivity(intent);
-            }
-        });
+//        Button btnBackRegister = findViewById(R.id.btnBackRegister);
+
+        webView = findViewById(R.id.webView);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+        String url = "https://uiot.ixxc.dev/auth/realms/master/protocol/openid-connect/registrations?response_type=code&client_id=openremote&redirect_uri=https://uiot.ixxc.dev/mobile-callback"; // Thay thế bằng URL bạn muốn nhúng
+        webView.loadUrl(url);
+//        btnBackRegister.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Register.this, Homepage.class);
+//                startActivity(intent);
+//            }
+//
+//        });
 /*
         // Thiết lập WebView
         WebView webView = findViewById(R.id.webView);
