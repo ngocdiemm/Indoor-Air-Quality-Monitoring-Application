@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="70dp"
             android:layout_height="56dp"
-            android:src="@drawable/img"/>
+            android:src="@drawable/sampleavatar"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -6,8 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".LogIn">
 
-
-
+<!--    Diễm đã include thêm 2 layout khác vào-->
+    <include
+        layout="@layout/webview"/>
+    <include
+        layout="@layout/activity_loading"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -172,15 +175,8 @@
                 android:paddingStart="10dp"
                 android:inputType="textPassword"/>
 
-
-
-
-
-
-
-
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_signup"
+                android:id="@+id/btn_register"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -189,9 +185,6 @@
                 android:text="REGISTER"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
-
-
-
 
         </LinearLayout>
 
