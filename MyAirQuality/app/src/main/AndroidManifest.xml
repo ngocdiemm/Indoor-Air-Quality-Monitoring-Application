@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MyAirQuality"
         tools:targetApi="31">
         <activity
+            android:name=".ResetPassword"
+            android:exported="false" />
+        <activity
             android:name=".navigation"
             android:exported="false" />
         <activity
