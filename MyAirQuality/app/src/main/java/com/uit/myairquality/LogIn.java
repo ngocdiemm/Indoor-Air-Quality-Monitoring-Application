@@ -64,7 +64,6 @@ public class LogIn extends AppCompatActivity {
                     String accessToken = token.getAccess_token();
                     saveTokenToSharedPreferences(accessToken);
                     Toast.makeText(LogIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    log.d
                 } else {
                     Toast.makeText(LogIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
