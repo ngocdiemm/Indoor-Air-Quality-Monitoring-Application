@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,8 +12,9 @@ import android.widget.Toast;
 
 
 import com.uit.myairquality.Interfaces.APIInterface;
-import com.uit.myairquality.Model.Token;
 import com.uit.myairquality.Model.APIClient;
+import com.uit.myairquality.Model.Token;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,21 +23,22 @@ public class LogIn extends AppCompatActivity {
 
     String grant_type = "password";
     String client_id = "openremote";
-    String usr;
-    String pwd;
+    String usr,pwd;
     APIInterface apiInterface;
+    Button btnLogin,btnBackLogin;
 
+    EditText username,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         apiInterface = APIClient.getClient().create(APIInterface.class);
-        EditText username = findViewById(R.id.email);
-        EditText password = findViewById(R.id.password);
-        Button btnLogin = findViewById(R.id.btnLogin);
-        Button btnBackLogIn = findViewById(R.id.btnBackLogin);
+        username = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnBackLogin = findViewById(R.id.btnBackLogin);
         // Quay lại màn hình Homepage
-        btnBackLogIn.setOnClickListener(new View.OnClickListener() {
+        btnBackLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LogIn.this, Homepage.class);
@@ -46,24 +49,27 @@ public class LogIn extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                usr= String.valueOf(username.getText());
+                usr = String.valueOf(username.getText());
                 pwd = String.valueOf(password.getText());
                 getToken(usr,pwd);
-                Intent intent = new Intent(LogIn.this, Settings.class);
-                startActivity(intent);
             }
         });
     }
-    public void getToken(String username, String password) {
-        Call<Token> call = apiInterface.Login(grant_type, usr, pwd, client_id);
+
+    public void getToken(String usr, String pwd) {
+        Call<Token> call = apiInterface.Login(grant_type, usr, pwd,client_id);
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful()) {
-                    Token token = response.body();
-                    String accessToken = token.getAccess_token();
-                    saveTokenToSharedPreferences(accessToken);
+                    assert response.body() != null;
+                    Token Token = response.body();
+                    Log.d("LoginActivity", "Hi ");
+                    APIClient.Usertoken = Token.access_token;
                     Toast.makeText(LogIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LogIn.this, Settings.class);
+                    startActivity(intent);
+
                 } else {
                     Toast.makeText(LogIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
@@ -72,7 +78,7 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
                 // Xử lý lỗi kết nối
-                Toast.makeText(LogIn.this, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LogIn.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
             }
         });
     }

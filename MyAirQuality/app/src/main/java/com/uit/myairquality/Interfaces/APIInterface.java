@@ -1,7 +1,7 @@
 package com.uit.myairquality.Interfaces;
-import androidx.browser.trusted.Token;
 import com.google.gson.JsonObject;
 import com.uit.myairquality.Model.Asset;
+import com.uit.myairquality.Model.Token;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -16,12 +16,11 @@ import retrofit2.http.Path;
 public interface APIInterface {
     @GET("api/master/asset/{assetID}")
     Call<Asset> getAsset(@Path("assetID") String assetID);
-    @POST("auth/reals/master/protocol/openid-connect/token")
+    @POST("auth/realms/master/protocol/openid-connect/token")
     @FormUrlEncoded
+        //Đăng nhập
 
-    //Đăng nhập
-
-    Call<com.uit.myairquality.Model.Token> Login(
+    Call<Token> Login(
 
             @Field("client_id") String clientId,
             @Field("username") String username,

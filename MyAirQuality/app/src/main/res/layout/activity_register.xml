@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".LogIn">
 
-<!--    Diễm đã include thêm 2 layout khác vào-->
-    <include
-        layout="@layout/webview"/>
-    <include
-        layout="@layout/activity_loading"/>
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
