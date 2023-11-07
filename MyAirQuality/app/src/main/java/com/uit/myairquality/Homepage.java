@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import java.util.Locale;
 
 public class Homepage extends AppCompatActivity {
@@ -23,12 +22,9 @@ public class Homepage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadLocale();
         setContentView(R.layout.activity_homepage);
-        //
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getResources().getString(R.string.app_name));
-        //Mở màn hình LogIn
+        loadLocale();
+        // Mở màn hình LogIn
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +33,7 @@ public class Homepage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //Mở màn hình Register
+        // Mở màn hình Register
         btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +43,7 @@ public class Homepage extends AppCompatActivity {
             }
         });
 
-        //Đổi ngôn ngữ
+        //Đổi ngôn ngữ khi nhấn vào ImageButton
         ImageButton changeLanguage = findViewById(R.id.btnLanguage);
         changeLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,18 +54,16 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void showChangeLanguageDialog() {
-        final String[] languages = {"Việt Nam", "English", "Français"}; // Danh sách ngôn ngữ
+        final String[] languages = { "English", "Việt Nam"}; // Danh sách ngôn ngữ
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose a language");
         builder.setSingleChoiceItems(languages, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
+                    setLocale("en");
+                } else {
                     setLocale("vi");
-                } else if (i == 1) {
-                    setLocale("en-us");
-                } else if (i == 2) {
-                    setLocale("fr");
                 }
                 dialog.dismiss();
                 recreate();

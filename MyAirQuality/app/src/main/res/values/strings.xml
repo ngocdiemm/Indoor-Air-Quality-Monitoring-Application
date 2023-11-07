@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">My Air Quality</string>
-    <string name="Welcome">Welcome to My App</string>
+    <!--  Màn hình homepage   -->
+    <string name="Welcome">Welcome to My Air Quality</string>
     <string name="UITwithlove">From UIT-ers with love</string>
     <string name="btnLogin">LOGIN</string>
     <string name="btnSigninwithgg">SIGN IN VIA GOOGLE</string>
