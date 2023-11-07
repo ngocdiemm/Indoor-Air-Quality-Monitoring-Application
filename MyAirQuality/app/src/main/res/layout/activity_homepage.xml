@@ -129,7 +129,7 @@
         app:layout_constraintTop_toTopOf="@+id/btnLogin"
         tools:ignore="MissingConstraints" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btnLanguage"
         android:layout_width="40dp"
         android:layout_height="40dp"

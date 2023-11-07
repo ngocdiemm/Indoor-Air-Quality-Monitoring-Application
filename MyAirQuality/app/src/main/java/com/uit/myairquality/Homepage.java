@@ -11,20 +11,23 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+
 import java.util.Locale;
 
 public class Homepage extends AppCompatActivity {
-    Button btnLogin, btnRegister, btnForgotPassword;
+    Button btnLogin, btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        loadLocale();
+
         // Mở màn hình LogIn
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -43,71 +46,43 @@ public class Homepage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // Mở màn hình ResetPassword
-        btnForgotPassword = findViewById(R.id.btnForgotPassword);
-        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+
+
+        ImageView image = findViewById(R.id.btnLanguage);
+        String currentLang = getResources().getConfiguration().locale.getLanguage();
+        if (currentLang.equals("en")) {
+            image.setImageResource(R.drawable.americanflag);
+        } else {
+            image.setImageResource(R.drawable.vietnameseflag);
+        }
+
+        //When click language image view
+        image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, ResetPassword.class);
-                startActivity(intent);
-            }
-        });
-
-        //Đổi ngôn ngữ khi nhấn vào ImageButton
-        ImageButton changeLanguage = findViewById(R.id.btnLanguage);
-        changeLanguage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showChangeLanguageDialog();
-            }
-        });
-    }
-
-    private void showChangeLanguageDialog() {
-        final String[] languages = { "English", "Việt Nam" }; // Danh sách ngôn ngữ
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose a language");
-        builder.setSingleChoiceItems(languages, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == 0) {
-                    setLocale("en");
-                } else {
+                String currentLang = getResources().getConfiguration().locale.getLanguage();
+                if (currentLang.equals("en")) {
                     setLocale("vi");
+                } else {
+                    setLocale("en");
                 }
-                dialog.dismiss();
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+
     }
 
-
-    private void setLocale(String lang) {
-        Log.d("Language", "Changing to: " + lang);
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        Resources resources = getBaseContext().getResources();
-        resources.updateConfiguration(config, resources.getDisplayMetrics());
-        // Lưu dữ liệu vào Shared Preferences
-        SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
-        editor.putString("My_Lang", lang);
-        editor.apply();
+    //SET LANGUAGE
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, Homepage.class);
+        startActivity(refresh);
+        finish();
     }
-
-    // Load ngôn ngữ đã lưu trong Shared Preferences
-    public void loadLocale() {
-        SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-        String language = prefs.getString("My_Lang", "");
-        setLocale(language);
-    }
-    /*
-    public void setLocale (String lang) {
-        Local myLocale = new Local(lang)
-
-    * */
 
 
 }
