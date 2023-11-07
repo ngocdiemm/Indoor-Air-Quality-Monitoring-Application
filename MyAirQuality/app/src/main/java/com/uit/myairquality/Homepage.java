@@ -11,13 +11,14 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import java.util.Locale;
 
 public class Homepage extends AppCompatActivity {
-    Button btnLogin, btnRegister;
+    Button btnLogin, btnRegister, btnForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,15 @@ public class Homepage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        // Mở màn hình ResetPassword
+        btnForgotPassword = findViewById(R.id.btnForgotPassword);
+        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Homepage.this, ResetPassword.class);
+                startActivity(intent);
+            }
+        });
 
         //Đổi ngôn ngữ khi nhấn vào ImageButton
         ImageButton changeLanguage = findViewById(R.id.btnLanguage);
@@ -54,26 +64,27 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void showChangeLanguageDialog() {
-        final String[] languages = { "English", "Việt Nam"}; // Danh sách ngôn ngữ
+        final String[] languages = { "English", "Việt Nam" }; // Danh sách ngôn ngữ
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose a language");
         builder.setSingleChoiceItems(languages, -1, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int i) {
-                if (i == 0) {
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
                     setLocale("en");
                 } else {
                     setLocale("vi");
                 }
                 dialog.dismiss();
-                recreate();
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
+
     private void setLocale(String lang) {
+        Log.d("Language", "Changing to: " + lang);
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -92,4 +103,11 @@ public class Homepage extends AppCompatActivity {
         String language = prefs.getString("My_Lang", "");
         setLocale(language);
     }
+    /*
+    public void setLocale (String lang) {
+        Local myLocale = new Local(lang)
+
+    * */
+
+
 }

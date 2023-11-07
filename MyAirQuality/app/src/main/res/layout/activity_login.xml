@@ -94,6 +94,7 @@
 
 
             <TextView
+                android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -115,7 +116,7 @@
                 android:drawableStart="@drawable/icon_email"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"
-                android:hint="Email"
+                android:hint="Account"
                 android:paddingStart="10dp"
                 android:inputType="text">
 
@@ -140,7 +141,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnForgotpass"
+                android:id="@+id/btnForgotPassword"
                 android:layout_width="100dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="20dp"
