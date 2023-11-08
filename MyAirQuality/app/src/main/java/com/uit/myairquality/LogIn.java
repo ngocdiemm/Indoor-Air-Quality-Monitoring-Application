@@ -1,5 +1,6 @@
 package com.uit.myairquality;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -23,7 +25,9 @@ import retrofit2.Response;
 public class LogIn extends AppCompatActivity {
 
     EditText username, password;
-    Button btnLogin, btnBackLogin, btnForgotPassword;
+    Button btnLogin, btnBackLogin;
+
+    TextView btnForgotPassword;
     String User,Pass;
     APIInterface apiInterface;
     String client_id = "openremote";
@@ -34,17 +38,18 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         apiInterface = APIClient.getClient().create(APIInterface.class);
-
         btnLogin = findViewById(R.id.btnLogin);
         btnBackLogin = findViewById(R.id.btnBackLogin);
         btnForgotPassword = findViewById(R.id.btnForgotPassword);
         username = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        //LoadingAlert loadingAlert = new LoadingAlert(LogIn.this);
 
         //Quay lại màn hình Homepage
         btnBackLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //loadingAlert.startAlertDialog();
                 Intent intent = new Intent(LogIn.this, Homepage.class);
                 startActivity(intent);
               }

@@ -20,7 +20,7 @@ public class ResetPassword extends AppCompatActivity {
         btnBackResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ResetPassword.this, Homepage.class);
+                Intent intent = new Intent(ResetPassword.this, LogIn.class);
                 startActivity(intent);
             }
         });
