@@ -140,23 +140,22 @@
                 android:inputType="textPassword"/>
 
 
-            <androidx.appcompat.widget.AppCompatButton
+            <TextView
                 android:id="@+id/btnForgotPassword"
-                android:layout_width="100dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/button_forgotpass"
                 android:text="Forgot Password"
-                android:textColor="@color/white"
-                android:textSize="10dp"
+                android:textColor="@color/primary"
+                android:textSize="16dp"
                 android:textStyle="italic"
                 tools:ignore="TextSizeCheck" />
 
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLogin"
-                android:layout_width="160dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
@@ -178,7 +177,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBackLogin"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:text="BACK"

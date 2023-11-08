@@ -21,7 +21,7 @@ import android.widget.ImageView;
 import java.util.Locale;
 
 public class Homepage extends AppCompatActivity {
-    Button btnLogin, btnRegister;
+    Button btnLogin, btnRegister, btnForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +46,20 @@ public class Homepage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
+        // Mở màn hình Reset Password
+        btnForgotPassword = findViewById(R.id.btnForgotPassword);
+        btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Homepage.this, ResetPassword.class);
+                startActivity(intent);
+            }
+        });
+        //Đổi ngôn ngữ
         ImageView image = findViewById(R.id.btnLanguage);
         String currentLang = getResources().getConfiguration().locale.getLanguage();
         if (currentLang.equals("en")) {
-            image.setImageResource(R.drawable.americanflag);
+            image.setImageResource(R.drawable.britishflag);
         } else {
             image.setImageResource(R.drawable.vietnameseflag);
         }
@@ -68,8 +76,7 @@ public class Homepage extends AppCompatActivity {
                 }
             }
         });
-
-    }
+}
 
     //SET LANGUAGE
     public void setLocale(String lang) {

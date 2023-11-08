@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">My Air Quality</string>
+
     <!-- Màn hình homepage   -->
-    <string name="Welcome">Welcome to My Air Quality</string>
-    <string name="UITwithlove">From UIT-ers with love</string>
+    <string name="Welcome">Welcome to My App</string>
+    <string name="UITwithlove">From UIT-ers with love ♥</string>
     <string name="btnLogin">LOGIN</string>
     <string name="btnSigninwithgg">SIGN IN VIA GOOGLE</string>
     <string name="btnForgotPassword">FORGOT PASSWORD</string>
@@ -13,4 +14,13 @@
     <string name="tvLogin">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="btnBackLogin">BACK</string>
+
+    <!-- Màn hình reset mật khẩu   -->
+    <string name="tvResetPassword">Reset Password</string>
+    <string name="NewPassword">New Password</string>
+    <string name="ReEnterPassword">Re-Enter Password</string>
+    <string name="btnConfirm">CONFIRM</string>
+    <string name="btnBackResetPassword">BACK</string>
+
 </resources>

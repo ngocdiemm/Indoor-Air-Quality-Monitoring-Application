@@ -9,10 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:text="Loading..."/>
+        android:text="Loading..."
+        android:textColor="@color/teal_700"/>
     <ProgressBar
         android:layout_width="50dp"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp" />
 </LinearLayout>
 
 

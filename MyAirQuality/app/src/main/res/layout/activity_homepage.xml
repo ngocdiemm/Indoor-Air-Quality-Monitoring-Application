@@ -6,28 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".LogIn">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnForgotPassword"
-        android:layout_width="180dp"
-        android:layout_height="48dp"
-        android:background="@drawable/button_forgotpass"
-        android:text="Forgot Password"
-        android:textColor="@color/white"
-        android:textSize="15dp"
-        android:layout_marginTop="10dp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSigninwithgg"
-        tools:ignore="TextSizeCheck" />
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background_homepage"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/UITwithlove"
         app:layout_constraintTop_toBottomOf="parent">
 
         <ImageView
@@ -85,7 +70,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogin"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/button_background"
@@ -95,38 +80,24 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/UITwithlove"
-        android:layout_marginTop="100dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSigninwithgg"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_background"
-        android:text="SIGN IN WITH GOOGLE"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnLogin"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="200dp"
+        app:layout_constraintTop_toTopOf="@+id/UITwithlove" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRegister"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/button_background"
         android:text="SIGN UP"
         android:textColor="@color/white"
         android:textSize="20dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnForgotPassword"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/or"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -154,7 +125,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnSigninwithgg"
         tools:ignore="MissingConstraints"
         android:paddingTop="20dp" />
 

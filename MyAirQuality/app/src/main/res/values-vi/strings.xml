@@ -10,8 +10,19 @@
     <string name="btnRegister">ĐĂNG KÝ</string>
     <string name="btnSigninwithgg">ĐĂNG NHẬP QUA GOOGLE</string>
 
-    <!--Màn hình đăng ký    -->
+    <!--Màn hình đăng nhập    -->
     <string name="tvLogin">ĐĂNG NHẬP</string>
     <string name="email">Tên đăng nhập</string>
     <string name="password">Mật khẩu</string>
+    <string name="btnBackLogin">QUAY LẠI</string>
+
+
+    <!--Màn hình reset mật khẩu    -->
+    <!-- Màn hình reset mật khẩu   -->
+    <string name="tvResetPassword">Cài lại mật khẩu</string>
+    <string name="NewPassword">Mật khẩu mới</string>
+    <string name="ReEnterPassword">Xác nhận mật khẩu</string>
+    <string name="btnConfirm">XÁC NHẬN</string>
+    <string name="btnBackResetPassword">QUAY LẠI</string>
+
 </resources>
