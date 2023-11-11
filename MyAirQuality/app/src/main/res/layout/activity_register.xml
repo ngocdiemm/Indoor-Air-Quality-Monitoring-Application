@@ -7,7 +7,17 @@
     tools:context=".LogIn">
 
 
-
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="302dp"
+        android:layout_height="472dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.586"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.903"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -63,17 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     </TextView>
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="302dp"
-        android:layout_height="472dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.586"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.903"
-        android:visibility="gone"/>
+
 
 
     <androidx.cardview.widget.CardView
@@ -241,7 +241,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="667dp" />
+        tools:layout_editor_absoluteY="667dp" />*/
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

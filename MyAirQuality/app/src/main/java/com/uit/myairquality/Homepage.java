@@ -21,7 +21,9 @@ import android.widget.ImageView;
 import java.util.Locale;
 
 public class Homepage extends AppCompatActivity {
-    Button btnLogin, btnRegister, btnForgotPassword;
+    Button btnLogin, btnRegister;
+    ImageView image;
+    int defaultLanguage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +50,9 @@ public class Homepage extends AppCompatActivity {
         });
 
         //Đổi ngôn ngữ
-        ImageView image = findViewById(R.id.btnLanguage);
+        /*ImageView image = findViewById(R.id.btnLanguage);
         String currentLang = getResources().getConfiguration().locale.getLanguage();
-        if (currentLang.equals("en-us")) {
+        if (currentLang.equals("en")) {
             image.setImageResource(R.drawable.britishflag);
         } else {
             image.setImageResource(R.drawable.vietnameseflag);
@@ -67,11 +69,56 @@ public class Homepage extends AppCompatActivity {
                     setLocale("en");
                 }
             }
+        });*/
+        final String selectedLanguage = ChangeLanguages.getSelectedLanguage(this);
+        ChangeLanguages.updateResources(this, selectedLanguage);
+        String engLang = "English";
+        String vnLang = "Vietnamese";
+        final String languages[] = {engLang, vnLang};
+        image = findViewById(R.id.btnLanguage);
+        if(ChangeLanguages.getSelectedLanguage(this).equals("en")) {
+            defaultLanguage = 0;
+            image.setImageResource(R.drawable.britishflag);
+        }else if(ChangeLanguages.getSelectedLanguage(this).equals("vi")) {
+            defaultLanguage = 1;
+            image.setImageResource(R.drawable.vietnameseflag);
+        }
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Homepage.this);
+                builder.setTitle(getResources().getString(R.string.language))
+                        .setSingleChoiceItems(languages, defaultLanguage, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int index) {
+                                defaultLanguage = index;
+                            }
+                        })
+                        .setPositiveButton(getResources().getString(R.string.save), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(defaultLanguage == 0) {
+                                    // Đặt ngôn ngữ cho activity hiện tại
+                                    ChangeLanguages.setLocale(Homepage.this, "en");
+                                } else if (defaultLanguage == 1) {
+                                    // Đặt ngôn ngữ cho activity hiện tại
+                                    ChangeLanguages.setLocale(Homepage.this, "vi");
+                                }
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                builder.create().show();
+            }
         });
 }
 
     //SET LANGUAGE
-    public void setLocale(String lang) {
+    /*public void setLocale(String lang) {
         Locale myLocale = new Locale(lang);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -81,7 +128,6 @@ public class Homepage extends AppCompatActivity {
         Intent refresh = new Intent(this, Homepage.class);
         startActivity(refresh);
         finish();
-    }
-
+    }*/
 
 }

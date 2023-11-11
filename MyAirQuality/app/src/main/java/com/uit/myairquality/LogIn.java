@@ -43,6 +43,10 @@ public class LogIn extends AppCompatActivity {
         btnForgotPassword = findViewById(R.id.btnForgotPassword);
         username = findViewById(R.id.email);
         password = findViewById(R.id.password);
+
+        // Hard code for test
+        username.setText("user123");
+        password.setText("123456789");
         //LoadingAlert loadingAlert = new LoadingAlert(LogIn.this);
 
         //Quay lại màn hình Homepage
@@ -85,6 +89,7 @@ public class LogIn extends AppCompatActivity {
                     Intent intent = new Intent(LogIn.this, Settings.class);
                     startActivity(intent);
                 } else {
+                    Log.d("Login","fail" + response.message());
                     Toast.makeText(LogIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
                 }
             }

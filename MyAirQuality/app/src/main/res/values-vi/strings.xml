@@ -3,26 +3,28 @@
     <!--Màn hình homepage    -->
     <string name="app_name">My Air Quality</string>
     <string name="Welcome">Chào mừng bạn đến với My Air Quality</string>
-    <string name="UITwithlove">Một ứng dụng của sinh viên UIT</string>
+    <string name="UITwithlove">Một ứng dụng của sinh viên UIT ♥</string>
     <string name="or">HOẶC</string>
     <string name="btnLogin">ĐĂNG NHẬP</string>
-    <string name="btnForgotPassword">QUÊN MẬT KHẨU</string>
     <string name="btnRegister">ĐĂNG KÝ</string>
     <string name="btnSigninwithgg">ĐĂNG NHẬP QUA GOOGLE</string>
 
-    <!--Màn hình đăng nhập    -->
+    <!--    Màn hình LogIn    -->
     <string name="tvLogin">ĐĂNG NHẬP</string>
     <string name="email">Tên đăng nhập</string>
     <string name="password">Mật khẩu</string>
     <string name="btnBackLogin">QUAY LẠI</string>
+    <string name="btnForgotPassword">QUÊN MẬT KHẨU</string>
 
-
-    <!--Màn hình reset mật khẩu    -->
-    <!-- Màn hình reset mật khẩu   -->
+    <!--    Màn hình ResetPassword   -->
     <string name="tvResetPassword">Cài lại mật khẩu</string>
     <string name="NewPassword">Mật khẩu mới</string>
     <string name="ReEnterPassword">Xác nhận mật khẩu</string>
     <string name="btnConfirm">XÁC NHẬN</string>
     <string name="btnBackResetPassword">QUAY LẠI</string>
 
+    <!--Chung   -->
+    <string name="language">Chọn ngôn ngữ...</string>
+    <string name="save">Lưu</string>
+    <string name="cancel">Hủy</string>
 </resources>

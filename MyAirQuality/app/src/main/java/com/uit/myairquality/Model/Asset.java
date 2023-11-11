@@ -30,17 +30,4 @@ public class Asset {
     public String getPlatform() {
         return platform;
     }
-
-    // Thêm getter và setter cho các trường dữ liệu khác nếu cần
-
-    @Override
-    public String toString() {
-        return "Asset{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", version='" + version + '\'' +
-                ", platform='" + platform + '\'' +
-                // Thêm các trường dữ liệu khác nếu cần
-                '}';
-    }
 }

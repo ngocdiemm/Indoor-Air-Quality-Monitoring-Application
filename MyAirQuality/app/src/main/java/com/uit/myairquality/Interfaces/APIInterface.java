@@ -9,6 +9,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.GET;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface APIInterface {
@@ -22,6 +23,10 @@ public interface APIInterface {
             @Field("username") String username,
             @Field("password") String password,
             @Field("grant_type") String grantType
+    );
+    @PUT("api/master/asset/{assetID}")
+    Call<Asset> ResetPassword (
+
     );
 
 
