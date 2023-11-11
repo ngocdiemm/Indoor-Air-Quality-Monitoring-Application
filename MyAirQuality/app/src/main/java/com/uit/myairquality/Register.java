@@ -2,9 +2,11 @@ package com.uit.myairquality;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.uit.myairquality.Interfaces.APIInterface;
 import com.uit.myairquality.Model.APIClient;
+import com.uit.myairquality.Model.Token;
 import com.uit.myairquality.R;
 import com.uit.myairquality.Settings;
 
@@ -34,15 +37,15 @@ import retrofit2.Response;
 
 public class Register extends AppCompatActivity {
     EditText username, password, repassword, email;
-
     Button signup, btnBackRegister;
     APIInterface apiInterface;
 
     WebView webView;
 
+    LoadingAlert loadingAlert;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d("Create","msg");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -50,28 +53,16 @@ public class Register extends AppCompatActivity {
         password = (EditText) findViewById(R.id.Password);
         repassword = (EditText) findViewById(R.id.ReType);
         email = (EditText) findViewById(R.id.Email);
+
+        webView = (WebView) findViewById(R.id.webView);
+        signup = (Button) findViewById(R.id.btnRegister);
+
         // Hard code data for test
         username.setText("user123");
         email.setText("user123@gmail.com");
         password.setText("123456789");
         repassword.setText("123456789");
 
-        webView = (WebView) findViewById(R.id.webView);
-        signup = (Button) findViewById(R.id.btnRegister);
-       //LoadElement();
-        signup.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if(username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || repassword.getText().toString().isEmpty()||email.getText().toString().isEmpty())
-                {
-                    Toast.makeText(Register.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    SignUp();
-                }
-            }
-        });
         //Quay lại màn hình Homepage
         btnBackRegister = findViewById(R.id.btnBackRegister);
         btnBackRegister.setOnClickListener(new View.OnClickListener() {
@@ -82,75 +73,97 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        //Đăng ký
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || repassword.getText().toString().isEmpty() || email.getText().toString().isEmpty()) {
+                    Toast.makeText(Register.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    SignUp();
+                }
+            }
+        });
+
+
     }
+
     private void SignUp() {
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(false);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setDomStorageEnabled(true);
+        cookieManager.removeAllCookies(null);
+        cookieManager.flush();
+        webView.clearCache(true);
 
         webView.setWebViewClient(new WebViewClient() {
-            //Viet them onpagestarted
-            public void onPageStarted (WebView view, String url, Bitmap favicon){
-                    //Loading ở đây
-                Log.d("on Page Finished", "onPageStarted");
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                //loadingAlert.startAlertDialog();
             }
-            public void onPageFinished (WebView view, String url) {
-                Log.d("on Page Finished", "Im here");
-                if (url.contains("openid-connect/registrations")) {
-                    String usrScript = "document.getElementById('username').value='" + username.toString() + "';";
-                    String emailScript = "document.getElementById('email').value='" + email.toString()+ "';";
-                    String pwdScript = "document.getElementById('password').value='" + password.toString() + "';";
-                    String rePwdScript = "document.getElementById('password-confirm').value='" + repassword.toString() + "';";
-                    String aV2 = "javascript:(function(){document.getElementById('username').value = '"+username.toString()+"';";
-                    String bV2 = "javascript:(function(){document.getElementById('email').value = '"+email.toString()+"';";
-                    String cV2 = "javascript:(function(){document.getElementById('password').value = '"+password.toString()+"';";
-                    String dV2 = "javascript:(function(){document.getElementById('password-confirm').value = '"+repassword.toString()+"';";
 
+            public void onPageFinished(WebView view, String url) {
+                Log.d("=====on Page load", url);
 
+                if (url.contains("login-actions/registration?client_id=openremote&tab_id=") || url.contains("manager/#session_state")) {
+                    Toast.makeText(Register.this, "Register successful", Toast.LENGTH_SHORT).show();
+                    webView.stopLoading();
+                    Intent intent = new Intent(Register.this, Settings.class);
+                    startActivity(intent);
+                } else if (url.contains("openid-connect/registrations")) {
+                    Log.d("=====on Page registrations", "openid-connect/registrations");
 
+                    // Do submit form to register
+                    String usrScript = "document.getElementById('username').value='" + username.getText().toString() + "';";
+                    String emailScript = "document.getElementById('email').value='" + email.getText().toString() + "';";
+                    String pwdScript = "document.getElementById('password').value='" + password.getText().toString() + "';";
+                    String rePwdScript = "document.getElementById('password-confirm').value='" + repassword.getText().toString() + "';";
 
-                   /* view.evaluateJavascript(usrScript, null);
+                    view.evaluateJavascript(usrScript, null);
                     view.evaluateJavascript(emailScript, null);
                     view.evaluateJavascript(pwdScript, null);
                     view.evaluateJavascript(rePwdScript, null);
-                   */
-                    view.evaluateJavascript(aV2, null);
-                    view.evaluateJavascript(bV2, null);
-                    view.evaluateJavascript(cV2, null);
-                    view.evaluateJavascript(dV2, null);
+                    view.evaluateJavascript("document.getElementById('kc-register-form').submit();", null);
 
+                } else {
 
-                    //view.evaluateJavascript("document.getElementByName('register').submit()", null);
-                    Log.d("on Page Finished", "script");
-
-                    webView.evaluateJavascript("document.getElementByName('register').submit();", new ValueCallback<String>() {
-                        @Override
-                        public void onReceiveValue(String s) {
-                            Log.d("on Page Finished2", s);
-                        }
-                    });
-
-                    Intent intent = new Intent(Register.this, Settings.class);
-                    startActivity(intent);
+                    if (url.contains("registration?execution")) {
+                        view.evaluateJavascript("document.documentElement.outerHTML", new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String s) {
+                                String finalHtml = s.replace("\\u003C", "<");
+                                Log.d("=====on Page registration?execution", finalHtml);
+                                if (finalHtml.contains("Email already exists") || finalHtml.contains("Username already exists")) {
+                                    if (finalHtml.contains("Username already exists")) {
+                                        Toast.makeText(Register.this, "Username already exists", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(Register.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(Register.this, "Register successful", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
 
                 }
-
-
+                //loadingAlert.closeAlertDialog();
 
             }
 
-            public void onReceivedHttpError (WebView view,
-                                                         WebResourceRequest request,
-                                                         WebResourceResponse errorResponse) {
+            public void onReceivedHttpError(WebView view,
+                                            WebResourceRequest request,
+                                            WebResourceResponse errorResponse) {
                 Log.d("This is error", errorResponse.getStatusCode() + "==");
             }
 
 
-
         });
-
 
         String url = "https://uiot.ixxc.dev/auth/realms/master/protocol/openid-connect/registrations?client_id=openremote&redirect_uri=https%3A%2F%2Fuiot.ixxc.dev%2Fmanager%2F&response_mode=fragment&response_type=code&scope=openid";
         webView.loadUrl(url);
-
     }
 
         /*private void loadJs(webView: WebView) {
@@ -166,7 +179,7 @@ public class Register extends AppCompatActivity {
         }*/
 
 
-    }
+}
 
     /*private void SignUp() {
 

@@ -24,9 +24,13 @@ public interface APIInterface {
             @Field("password") String password,
             @Field("grant_type") String grantType
     );
-    @PUT("api/master/asset/{assetID}")
-    Call<Asset> ResetPassword (
-
+    @POST("auth/realms/master/login-actions/registration")
+    @FormUrlEncoded
+    Call<Token> Register (
+            @Field("email") String email,
+            @Field("username") String username,
+            @Field("password") String password,
+            @Field("password-confirm") String passwordconfirm
     );
 
 

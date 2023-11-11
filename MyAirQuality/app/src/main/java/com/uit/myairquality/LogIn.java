@@ -17,10 +17,12 @@ import android.widget.Toast;
 import com.uit.myairquality.Interfaces.APIInterface;
 import com.uit.myairquality.Model.APIClient;
 import com.uit.myairquality.Model.Token;
+import com.uit.myairquality.LoadingAlert;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class LogIn extends AppCompatActivity {
 
@@ -47,17 +49,15 @@ public class LogIn extends AppCompatActivity {
         // Hard code for test
         username.setText("user123");
         password.setText("123456789");
-        //LoadingAlert loadingAlert = new LoadingAlert(LogIn.this);
 
         //Quay lại màn hình Homepage
         btnBackLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadingAlert.startAlertDialog();
                 Intent intent = new Intent(LogIn.this, Homepage.class);
                 startActivity(intent);
-              }
-       });
+            }
+        });
         //Quên mật khẩu
         btnForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +68,8 @@ public class LogIn extends AppCompatActivity {
         });
         //Đăng nhập
         btnLogin.setOnClickListener(new View.OnClickListener() {
+            LoadingAlert loadingalert = new LoadingAlert(LogIn.this);
+            //loadingalert.startAlertDialog();
             @Override
             public void onClick(View v) {
                 User = String.valueOf(username.getText());
