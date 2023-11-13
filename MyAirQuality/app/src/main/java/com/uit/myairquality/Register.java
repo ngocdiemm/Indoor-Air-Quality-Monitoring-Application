@@ -1,4 +1,4 @@
-package com.uit.myairquality;
+0package com.uit.myairquality;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,7 +42,7 @@ public class Register extends AppCompatActivity {
 
     WebView webView;
 
-    LoadingAlert loadingAlert;
+    LoadingAlert loadingAlert = new LoadingAlert(Register.this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class Register extends AppCompatActivity {
 
         webView.setWebViewClient(new WebViewClient() {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                //loadingAlert.startAlertDialog();
+                loadingAlert.startAlertDialog();;
             }
 
             public void onPageFinished(WebView view, String url) {
