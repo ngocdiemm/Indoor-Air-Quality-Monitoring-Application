@@ -34,7 +34,7 @@ public class LogIn extends AppCompatActivity {
     APIInterface apiInterface;
     String client_id = "openremote";
     String grantType = "password";
-    LoadingAlert loadingAlert = new LoadingAlert(Register.this);
+    //LoadingAlert loadingAlert = new LoadingAlert(Register.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class LogIn extends AppCompatActivity {
         });
     }
     public void getToken(String usr, String pwd){
-        loadingAlert.startAlertDialog();
+        //loadingAlert.startAlertDialog();
         Call<Token> call = apiInterface.Login(client_id,usr,pwd,grantType);
         call.enqueue(new Callback<Token>() {
             @Override

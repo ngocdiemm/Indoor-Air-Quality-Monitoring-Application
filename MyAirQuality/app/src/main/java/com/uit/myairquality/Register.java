@@ -1,4 +1,4 @@
-0package com.uit.myairquality;
+package com.uit.myairquality;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,7 +42,7 @@ public class Register extends AppCompatActivity {
 
     WebView webView;
 
-    LoadingAlert loadingAlert = new LoadingAlert(Register.this);
+    //LoadingAlert loadingAlert = new LoadingAlert(Register.this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,10 +58,10 @@ public class Register extends AppCompatActivity {
         signup = (Button) findViewById(R.id.btnRegister);
 
         // Hard code data for test
-        username.setText("user123");
+        /*username.setText("user123");
         email.setText("user123@gmail.com");
         password.setText("123456789");
-        repassword.setText("123456789");
+        repassword.setText("123456789");*/
 
         //Quay lại màn hình Homepage
         btnBackRegister = findViewById(R.id.btnBackRegister);
@@ -101,11 +101,26 @@ public class Register extends AppCompatActivity {
 
         webView.setWebViewClient(new WebViewClient() {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                loadingAlert.startAlertDialog();;
+                //loadingAlert.startAlertDialog();;
             }
 
             public void onPageFinished(WebView view, String url) {
-                Log.d("=====on Page load", url);
+                Log.d("=====on Page load", url);// Email validation
+                //Kiểm tra email có đúng format hay không
+
+                String usremail = email.getText().toString().trim();
+
+                // Check if the email is valid
+                if (!isValidEmail(usremail)) {
+                    Toast.makeText(Register.this, "Invalid email format", Toast.LENGTH_SHORT).show();
+                    return; // Stop further processing if email is invalid
+                }
+                // Kiểm tra mật khẩu trùng nhau
+                if (!passwordsMatch(password.getText().toString(), repassword.getText().toString())) {
+                    Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    return; // Stop further processing if passwords do not match
+                }
+
 
                 if (url.contains("login-actions/registration?client_id=openremote&tab_id=") || url.contains("manager/#session_state")) {
                     Toast.makeText(Register.this, "Register successful", Toast.LENGTH_SHORT).show();
@@ -115,18 +130,7 @@ public class Register extends AppCompatActivity {
                 } else if (url.contains("openid-connect/registrations")) {
                     Log.d("=====on Page registrations", "openid-connect/registrations");
 
-                    // Do submit form to register
-                    String usrScript = "document.getElementById('username').value='" + username.getText().toString() + "';";
-                    String emailScript = "document.getElementById('email').value='" + email.getText().toString() + "';";
-                    String pwdScript = "document.getElementById('password').value='" + password.getText().toString() + "';";
-                    String rePwdScript = "document.getElementById('password-confirm').value='" + repassword.getText().toString() + "';";
-
-                    view.evaluateJavascript(usrScript, null);
-                    view.evaluateJavascript(emailScript, null);
-                    view.evaluateJavascript(pwdScript, null);
-                    view.evaluateJavascript(rePwdScript, null);
-                    view.evaluateJavascript("document.getElementById('kc-register-form').submit();", null);
-
+                    submitRegistrationForm(view);
                 } else {
 
                     if (url.contains("registration?execution")) {
@@ -150,9 +154,7 @@ public class Register extends AppCompatActivity {
 
                 }
                 //loadingAlert.closeAlertDialog();
-
             }
-
             public void onReceivedHttpError(WebView view,
                                             WebResourceRequest request,
                                             WebResourceResponse errorResponse) {
@@ -166,102 +168,36 @@ public class Register extends AppCompatActivity {
         webView.loadUrl(url);
     }
 
-        /*private void loadJs(webView: WebView) {
-            webView.loadUrl(
-                    (function f() {
-                var targetButton = document.getElementById('your_button_id');
-                if (targetButton && targetButton.getAttribute('aria-label') === 'Support') {
-                    targetButton.setAttribute('onclick', 'Android.onClicked()');
-                }
-            })();
+    //Form đăng ký
 
-            )
-        }*/
+    private void submitRegistrationForm(WebView view) {
+        // Do submit form to register
+        String usrScript = "document.getElementById('username').value='" + username.getText().toString() + "';";
+        String emailScript = "document.getElementById('email').value='" + email.getText().toString() + "';";
+        String pwdScript = "document.getElementById('password').value='" + password.getText().toString() + "';";
+        String rePwdScript = "document.getElementById('password-confirm').value='" + repassword.getText().toString() + "';";
+
+        view.evaluateJavascript(usrScript, null);
+        view.evaluateJavascript(emailScript, null);
+        view.evaluateJavascript(pwdScript, null);
+        view.evaluateJavascript(rePwdScript, null);
+        view.evaluateJavascript("document.getElementById('kc-register-form').submit();", null);
+    }
+
+    //Kiểm tra password
+    private boolean passwordsMatch(String password, String repassword) {
+        return password.equals(repassword);
+    }
+
+    //Kiểm tra format email
+    private boolean isValidEmail(String email) {
+        // Define the email pattern
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        // Trim the input email and check against the pattern
+        return email.trim().matches(emailPattern);
+    }
 
 
 }
 
-    /*private void SignUp() {
-
-        webView.getSettings().setJavaScriptEnabled(true);
-        username = (EditText) findViewById(R.id.Username);
-        password = (EditText) findViewById(R.id.Password);
-        repassword = (EditText) findViewById(R.id.ReType);
-        email = (EditText) findViewById(R.id.Email);
-
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
-                if (url.contains("uiot.ixxc.dev/manager/")) {
-
-
-                    Toast.makeText(Register.this, "Register Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Register.this, Settings.class);
-                    startActivity(intent);
-                    Log.i("dang ki", "dang đang kí 1");
-                } else if(!url.contains("uiot.ixxc.dev/manager/")) {
-                    Toast.makeText(Register.this, "Email or account exists", Toast.LENGTH_SHORT).show();
-                    Log.i("dang ki", "dang đang kí 2");
-                }
-
-            }
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                if (url.contains("openid-connect/registrations")) {
-
-                    String usrScript = "document.getElementById('username').value ='" + username.getText().toString()+ "';";
-                    String emailScript = "document.getElementById('email').value ='" + email.getText().toString() + "';";
-                    String pwdScript = "document.getElementById('password').value ='" + password.getText().toString()+ "';";
-                    String rePwdScript = "document.getElementById('password-confirm').value ='" + repassword.getText().toString() + "';";
-                    String submitFormScript = "document.querySelector('form').submit();";
-
-                    webView.evaluateJavascript(usrScript, null);
-                    webView.evaluateJavascript(pwdScript, null);
-                    webView.evaluateJavascript(emailScript, null);
-                    webView.evaluateJavascript(rePwdScript, null);
-                    webView.evaluateJavascript(submitFormScript, null);
-                    Log.i("dang ki", username.getText().toString());
-                    Log.i("dang ki", email.getText().toString());
-                    Log.i("dang ki", password.getText().toString());
-                    Log.i("dang ki", repassword.getText().toString());
-                    Log.i("dang ki", "dang đang kí");
-                }
-
-
-            }
-        });
-        String url = "https://uiot.ixxc.dev/auth/realms/master/protocol/openid-connect/registrations?client_id=openremote&redirect_uri=https%3A%2F%2Fuiot.ixxc.dev%2Fmanager%2F&response_mode=fragment&response_type=code&scope=openid";
-        webView.loadUrl(url);
-    }
-
-    private void LoadElement(){
-        txtToken = findViewById(R.id.token);
-        webView = findViewById(R.id.webView);
-        signup = findViewById(R.id.btnRegister);
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setDomStorageEnabled(true);
-        cookieManager.removeAllCookies(null);
-        cookieManager.flush();
-    }  */
-    /*
-    webView.setWebViewClient(new WebViewClient() {
-            public void onPageFinished (WebView view, String url) {
-                if (url.contains("openid-connect/registrations")) {
-                    String usrScript = "document.getElementByName='()" + username + "';";
-                    String emailScript = ".value='" + email + "';";
-                    String pwdScript = ".value='" + password + "';";
-                    String rePwdScript = ".value='" + repassword + "';";
-
-                    view.evaluateJavascript(usrScript, null);
-                    view.evaluateJavascript(emailScript, null);
-                    view.evaluateJavascript(pwdScript, null);
-                    view.evaluateJavascript(rePwdScript, null);
-                    view.evaluateJavascript(".submit();", null);
-
-                }
-            }
-        });*/
