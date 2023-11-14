@@ -39,6 +39,7 @@ public class LogIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ChangeLanguages.loadLocaleChanged(LogIn.this);
         setContentView(R.layout.activity_login);
         apiInterface = APIClient.getClient().create(APIInterface.class);
         btnLogin = findViewById(R.id.btnLogin);

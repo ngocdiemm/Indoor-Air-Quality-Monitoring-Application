@@ -47,6 +47,8 @@ public class Register extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ChangeLanguages.loadLocaleChanged(Register.this);
+
         setContentView(R.layout.activity_register);
         apiInterface = APIClient.getClient().create(APIInterface.class);
         username = (EditText) findViewById(R.id.Username);

@@ -22,12 +22,14 @@ public class ChangeLanguages {
 
     public static void setLocale(Activity activity, String language) {
         String currentLanguage = getSelectedLanguage(activity);
-        if (!currentLanguage.equals(language)) {
-            persistLanguage(activity, language);
-            updateResources(activity, language);
-            activity.recreate();
-        }
+//        if (!currentLanguage.equals(language)) {
+
+        updateResources(activity, language);
+        persistLanguage(activity, language);
+        // activity.recreate();
+//        }
     }
+
     private static void persistLanguage(Activity activity, String language) {
         SharedPreferenceManager.getInstance(activity).saveStateLanguage(language);
     }
@@ -35,14 +37,23 @@ public class ChangeLanguages {
     public static void updateResources(Activity activity, String language) {
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
-        Resources resources = activity.getResources();
-        Configuration configuration = new Configuration(resources.getConfiguration());
+        Configuration configuration = new Configuration();
         configuration.setLocale(locale);
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        configuration.setLayoutDirection(locale);
+        activity.getBaseContext().getResources().updateConfiguration(configuration, activity.getBaseContext().getResources().getDisplayMetrics());
     }
 
     public static String getSelectedLanguage(Activity activity) {
         return SharedPreferenceManager.getInstance(activity).getStateLanguage();
+    }
+
+    public static void loadLocaleChanged(Activity activity) {
+        String currentLang = SharedPreferenceManager.getInstance(activity.getBaseContext()).getStateLanguage();
+        if (currentLang.isEmpty()) {
+            currentLang = "en";
+        }
+
+        ChangeLanguages.setLocale(activity, currentLang);
     }
 }
 
