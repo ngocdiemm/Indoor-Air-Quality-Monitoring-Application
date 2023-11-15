@@ -10,6 +10,9 @@ public class LoadingAlert {
     LoadingAlert(LogIn myActivity){
         activity = myActivity;
     }
+    LoadingAlert(Register myActivity){
+        activity = myActivity;
+    }
 
     void startAlertDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

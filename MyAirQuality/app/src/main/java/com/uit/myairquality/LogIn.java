@@ -35,6 +35,7 @@ public class LogIn extends AppCompatActivity {
     String client_id = "openremote";
     String grantType = "password";
     //LoadingAlert loadingAlert = new LoadingAlert(Register.this);
+    LoadingAlert loadingalert = new LoadingAlert(LogIn.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +71,10 @@ public class LogIn extends AppCompatActivity {
         });
         //Đăng nhập
         btnLogin.setOnClickListener(new View.OnClickListener() {
-            LoadingAlert loadingalert = new LoadingAlert(LogIn.this);
-            //loadingalert.startAlertDialog();
+
             @Override
             public void onClick(View v) {
+                loadingalert.startAlertDialog();
                 User = String.valueOf(username.getText());
                 Pass = String.valueOf(password.getText());
                 getToken(User,Pass);
@@ -96,6 +97,7 @@ public class LogIn extends AppCompatActivity {
                 } else {
                     Log.d("Login","fail" + response.message());
                     Toast.makeText(LogIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                    loadingalert.closeAlertDialog();
                 }
             }
 

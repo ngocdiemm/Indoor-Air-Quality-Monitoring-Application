@@ -42,7 +42,7 @@ public class Register extends AppCompatActivity {
 
     WebView webView;
 
-    //LoadingAlert loadingAlert = new LoadingAlert(Register.this);
+    LoadingAlert loadingAlert = new LoadingAlert(Register.this);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,8 +79,10 @@ public class Register extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadingAlert.startAlertDialog();
                 if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || repassword.getText().toString().isEmpty() || email.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                    loadingAlert.closeAlertDialog();
                 } else {
                     SignUp();
                 }
@@ -115,11 +117,13 @@ public class Register extends AppCompatActivity {
                 // Check if the email is valid
                 if (!isValidEmail(usremail)) {
                     Toast.makeText(Register.this, "Invalid email format", Toast.LENGTH_SHORT).show();
+                    loadingAlert.closeAlertDialog();
                     return; // Stop further processing if email is invalid
                 }
                 // Kiểm tra mật khẩu trùng nhau
                 if (!passwordsMatch(password.getText().toString(), repassword.getText().toString())) {
                     Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                    loadingAlert.closeAlertDialog();
                     return; // Stop further processing if passwords do not match
                 }
 
@@ -144,8 +148,10 @@ public class Register extends AppCompatActivity {
                                 if (finalHtml.contains("Email already exists") || finalHtml.contains("Username already exists")) {
                                     if (finalHtml.contains("Username already exists")) {
                                         Toast.makeText(Register.this, "Username already exists", Toast.LENGTH_SHORT).show();
+                                        loadingAlert.closeAlertDialog();
                                     } else {
                                         Toast.makeText(Register.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                                        loadingAlert.closeAlertDialog();
                                     }
                                 } else {
                                     Toast.makeText(Register.this, "Register successful", Toast.LENGTH_SHORT).show();
