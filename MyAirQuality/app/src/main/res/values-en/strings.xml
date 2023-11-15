@@ -16,6 +16,12 @@
     <string name="btnForgotPassword">Forgot Password</string>
     <string name="btnBackLogin">BACK</string>
 
+    <!--    Màn hình Register    -->
+    <string name="tvRegister">Register</string>
+    <!--    <string name="email">Tên đăng nhập</string>-->
+    <!--    <string name="password">Mật khẩu</string>-->
+    <string name="btnBackRegister">BACK</string>
+
     <!--    Màn hình ResetPassword-->
     <string name="tvResetPassword">Reset Password</string>
     <string name="NewPassword">New Password</string>

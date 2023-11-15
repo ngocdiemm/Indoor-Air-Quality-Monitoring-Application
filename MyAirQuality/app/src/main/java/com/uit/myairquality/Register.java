@@ -123,38 +123,45 @@ public class Register extends AppCompatActivity {
                 }
 
                 // Kiểm tra dữ liệu đăng kí
-                if (url.contains("login-actions/registration?client_id=openremote&tab_id=") || url.contains("manager/#session_state")) {
+                //TH1:
+                if (url.contains("openid-connect/registrations")) {
+                    Log.d("=====on Page registrations", "openid-connect/registrations");
+
+                    submitRegistrationForm(view);
+                }
+                //TH2:
+                else if (url.contains("login-actions/registration?client_id=openremote&tab_id=") || url.contains("manager/#session_state")) {
                     Toast.makeText(Register.this, "Register successful", Toast.LENGTH_SHORT).show();
                     webView.stopLoading();
                     Intent intent = new Intent(Register.this, Settings.class);
                     startActivity(intent);
-                } else if (url.contains("openid-connect/registrations")) {
-                    Log.d("=====on Page registrations", "openid-connect/registrations");
-
-                    submitRegistrationForm(view);
-                } else {
+                }
+                //TH3:
+                else {
 
                     if (url.contains("registration?execution")) {
                         view.evaluateJavascript("document.documentElement.outerHTML", new ValueCallback<String>() {
                             @Override
                             public void onReceiveValue(String s) {
                                 String finalHtml = s.replace("\\u003C", "<");
+
                                 if (finalHtml.contains("Email already exists") || finalHtml.contains("Username already exists")) {
                                     if (finalHtml.contains("Username already exists")) {
                                         Toast.makeText(Register.this, "Username already exists", Toast.LENGTH_SHORT).show();
-                                        //loadingAlert.closeAlertDialog();
                                     } else {
                                         Toast.makeText(Register.this, "Email already exists", Toast.LENGTH_SHORT).show();
-                                        //loadingAlert.closeAlertDialog();
                                     }
                                 } else {
                                     Toast.makeText(Register.this, "Register successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Register.this, Settings.class);
+                                    startActivity(intent);
                                 }
                             }
                         });
                     }
 
                 }
+
                 loadingAlert.closeAlertDialog();
             }
             public void onReceivedHttpError(WebView view,
