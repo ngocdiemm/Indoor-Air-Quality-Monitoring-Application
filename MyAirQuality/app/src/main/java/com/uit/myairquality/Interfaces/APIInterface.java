@@ -33,5 +33,11 @@ public interface APIInterface {
             @Field("password-confirm") String passwordconfirm
     );
 
+    @POST("/auth/realms/master/login-actions/reset-credentials")
+    Call<Token> ResetPassword (
+            @Field("email") String email,
+            @Field("username") String username
+    );
+
 
 }

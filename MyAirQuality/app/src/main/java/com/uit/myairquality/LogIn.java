@@ -30,12 +30,11 @@ public class LogIn extends AppCompatActivity {
     Button btnLogin, btnBackLogin;
 
     TextView btnForgotPassword;
-    String User,Pass;
+    String User, Pass;
     APIInterface apiInterface;
     String client_id = "openremote";
     String grantType = "password";
-    //LoadingAlert loadingAlert = new LoadingAlert(Register.this);
-    LoadingAlert loadingalert = new LoadingAlert(LogIn.this);
+    LoadingAlert loadingAlert = new LoadingAlert(LogIn.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,6 @@ public class LogIn extends AppCompatActivity {
         password = findViewById(R.id.password);
 
         // Hard code for test
-        username.setText("user123");
         password.setText("123456789");
 
         //Quay lại màn hình Homepage
@@ -74,20 +72,20 @@ public class LogIn extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                loadingalert.startAlertDialog();
+                loadingAlert.startAlertDialog();
                 User = String.valueOf(username.getText());
                 Pass = String.valueOf(password.getText());
-                getToken(User,Pass);
+                getToken(User, Pass);
             }
         });
     }
-    public void getToken(String usr, String pwd){
-        //loadingAlert.startAlertDialog();
-        Call<Token> call = apiInterface.Login(client_id,usr,pwd,grantType);
+
+    public void getToken(String usr, String pwd) {
+        Call<Token> call = apiInterface.Login(client_id, usr, pwd, grantType);
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Toast.makeText(LogIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     assert response.body() != null;
                     Token Token = response.body();
@@ -95,16 +93,19 @@ public class LogIn extends AppCompatActivity {
                     Intent intent = new Intent(LogIn.this, Settings.class);
                     startActivity(intent);
                 } else {
-                    Log.d("Login","fail" + response.message());
+                    Log.d("Login", "fail" + response.message());
                     Toast.makeText(LogIn.this, "Login Failed", Toast.LENGTH_SHORT).show();
-                    loadingalert.closeAlertDialog();
                 }
+                loadingAlert.closeAlertDialog();
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
+                loadingAlert.closeAlertDialog();
                 Toast.makeText(LogIn.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
             }
+
         });
+
     }
 }

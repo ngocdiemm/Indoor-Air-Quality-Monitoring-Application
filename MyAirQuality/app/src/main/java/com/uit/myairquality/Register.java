@@ -103,23 +103,18 @@ public class Register extends AppCompatActivity {
         webView.clearCache(true);
 
         webView.setWebViewClient(new WebViewClient() {
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                //loadingAlert.startAlertDialog();;
-            }
 
             public void onPageFinished(WebView view, String url) {
                 Log.d("=====on Page load", url);
 
                 //Kiểm tra email có đúng format hay không
-
                 String usremail = email.getText().toString().trim();
-
-                // Kiểm tra email đúng format
                 if (!isValidEmail(usremail)) {
                     Toast.makeText(Register.this, "Invalid email format", Toast.LENGTH_SHORT).show();
                     loadingAlert.closeAlertDialog();
                     return;
                 }
+
                 // Kiểm tra mật khẩu trùng nhau
                 if (!passwordsMatch(password.getText().toString(), repassword.getText().toString())) {
                     Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
@@ -127,7 +122,7 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
-
+                // Kiểm tra dữ liệu đăng kí
                 if (url.contains("login-actions/registration?client_id=openremote&tab_id=") || url.contains("manager/#session_state")) {
                     Toast.makeText(Register.this, "Register successful", Toast.LENGTH_SHORT).show();
                     webView.stopLoading();
@@ -144,7 +139,6 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onReceiveValue(String s) {
                                 String finalHtml = s.replace("\\u003C", "<");
-                                Log.d("=====on Page registration?execution", finalHtml);
                                 if (finalHtml.contains("Email already exists") || finalHtml.contains("Username already exists")) {
                                     if (finalHtml.contains("Username already exists")) {
                                         Toast.makeText(Register.this, "Username already exists", Toast.LENGTH_SHORT).show();
@@ -202,6 +196,7 @@ public class Register extends AppCompatActivity {
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         return email.trim().matches(emailPattern);
     }
+
 
 
 }

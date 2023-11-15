@@ -2,7 +2,7 @@
 <resources>
     <!--Màn hình homepage    -->
     <string name="app_name">My Air Quality</string>
-    <string name="Welcome">Chào mừng đến với My Air Quality</string>
+    <string name="Welcome">My Air Quality</string>
     <string name="UITwithlove">Một ứng dụng của sinh viên UIT ♥</string>
     <string name="or">HOẶC</string>
     <string name="btnLogin">ĐĂNG NHẬP</string>
