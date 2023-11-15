@@ -30,6 +30,7 @@ public class ChangeLanguages {
 //        }
     }
 
+    //Lưu trạng thái ngôn ngữ
     private static void persistLanguage(Activity activity, String language) {
         SharedPreferenceManager.getInstance(activity).saveStateLanguage(language);
     }

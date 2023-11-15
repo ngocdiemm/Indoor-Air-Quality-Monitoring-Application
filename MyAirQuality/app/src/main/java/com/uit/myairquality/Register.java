@@ -60,10 +60,10 @@ public class Register extends AppCompatActivity {
         signup = (Button) findViewById(R.id.btnRegister);
 
         // Hard code data for test
-        /*username.setText("user123");
-        email.setText("user123@gmail.com");
+        //username.setText("user123");
+        email.setText("@gmail.com");
         password.setText("123456789");
-        repassword.setText("123456789");*/
+        repassword.setText("123456789");
 
         //Quay lại màn hình Homepage
         btnBackRegister = findViewById(R.id.btnBackRegister);
@@ -82,7 +82,6 @@ public class Register extends AppCompatActivity {
                 loadingAlert.startAlertDialog();
                 if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty() || repassword.getText().toString().isEmpty() || email.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-                    loadingAlert.closeAlertDialog();
                 } else {
                     SignUp();
                 }
@@ -109,22 +108,23 @@ public class Register extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                Log.d("=====on Page load", url);// Email validation
+                Log.d("=====on Page load", url);
+
                 //Kiểm tra email có đúng format hay không
 
                 String usremail = email.getText().toString().trim();
 
-                // Check if the email is valid
+                // Kiểm tra email đúng format
                 if (!isValidEmail(usremail)) {
                     Toast.makeText(Register.this, "Invalid email format", Toast.LENGTH_SHORT).show();
                     loadingAlert.closeAlertDialog();
-                    return; // Stop further processing if email is invalid
+                    return;
                 }
                 // Kiểm tra mật khẩu trùng nhau
                 if (!passwordsMatch(password.getText().toString(), repassword.getText().toString())) {
                     Toast.makeText(Register.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                     loadingAlert.closeAlertDialog();
-                    return; // Stop further processing if passwords do not match
+                    return;
                 }
 
 
@@ -148,10 +148,10 @@ public class Register extends AppCompatActivity {
                                 if (finalHtml.contains("Email already exists") || finalHtml.contains("Username already exists")) {
                                     if (finalHtml.contains("Username already exists")) {
                                         Toast.makeText(Register.this, "Username already exists", Toast.LENGTH_SHORT).show();
-                                        loadingAlert.closeAlertDialog();
+                                        //loadingAlert.closeAlertDialog();
                                     } else {
                                         Toast.makeText(Register.this, "Email already exists", Toast.LENGTH_SHORT).show();
-                                        loadingAlert.closeAlertDialog();
+                                        //loadingAlert.closeAlertDialog();
                                     }
                                 } else {
                                     Toast.makeText(Register.this, "Register successful", Toast.LENGTH_SHORT).show();
@@ -161,7 +161,7 @@ public class Register extends AppCompatActivity {
                     }
 
                 }
-                //loadingAlert.closeAlertDialog();
+                loadingAlert.closeAlertDialog();
             }
             public void onReceivedHttpError(WebView view,
                                             WebResourceRequest request,
@@ -199,10 +199,7 @@ public class Register extends AppCompatActivity {
 
     //Kiểm tra format email
     private boolean isValidEmail(String email) {
-        // Define the email pattern
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-        // Trim the input email and check against the pattern
         return email.trim().matches(emailPattern);
     }
 
