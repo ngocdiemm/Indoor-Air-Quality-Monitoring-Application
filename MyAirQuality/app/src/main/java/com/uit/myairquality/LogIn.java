@@ -2,7 +2,12 @@ package com.uit.myairquality;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import android.content.Intent;
+import android.graphics.RenderEffect;
+import android.graphics.Shader;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +39,8 @@ public class LogIn extends AppCompatActivity {
     APIInterface apiInterface;
     String client_id = "openremote";
     String grantType = "password";
+
+    CardView cardView;
     LoadingAlert loadingAlert = new LoadingAlert(LogIn.this);
 
     @Override
@@ -47,9 +54,11 @@ public class LogIn extends AppCompatActivity {
         btnForgotPassword = findViewById(R.id.btnForgotPassword);
         username = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        cardView = findViewById(R.id.cardView);
+
 
         // Hard code for test
-        password.setText("123456789");
+//        password.setText("123456789");
 
         //Quay lại màn hình Homepage
         btnBackLogin.setOnClickListener(new View.OnClickListener() {

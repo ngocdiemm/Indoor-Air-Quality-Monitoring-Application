@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:background="@drawable/welcome_background">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/appCompatImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="left"
+            android:src="@drawable/avatar"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="50dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:gravity="left"
+            android:text="Hello Admin!"
+            android:textColor="@color/black"
+            android:textSize="27sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-10dp"
+            android:layout_marginBottom="400dp"
+            android:text="26°C"
+            android:textColor="@color/black"
+            android:textSize="90sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/amaranth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/weather_now"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:src="@drawable/cloudy"
+            app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"
+            android:layout_marginTop="160dp"
+            android:layout_marginLeft="40dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-30dp"
+            android:layout_marginLeft="25dp"
+            android:text="Mostly Sunny"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:fontFamily="sans-serif-condensed-light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/days_a_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-160dp"
+            android:layout_marginRight="20dp"
+            android:text="Tuesday"
+            android:textSize="50dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif-condensed-light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:textSize="40dp"
+            android:layout_marginTop="-30dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="140dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-30dp"
+            android:text="12"
+            android:textSize="40dp"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/day"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-30dp"
+            android:text="/"
+            android:textSize="40dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/month"
+            app:layout_constraintStart_toEndOf="@+id/day"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.cardview.widget.CardView
+
+        android:layout_gravity="center_vertical"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
+        app:cardElevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_sunrise"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sunrise"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="58dp"
+            app:fontFamily="sans-serif-condensed-light"
+            />
+        <TextView
+            android:id="@+id/sunrise_tem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23°C"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="52dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="50dp"
+            app:fontFamily="sans-serif-condensed-light"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="58dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/sunrise"
+            android:layout_marginTop="-40dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sunset"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginRight="63.5dp"
+            android:layout_marginTop="5dp"
+            app:fontFamily="sans-serif-condensed-light"
+                    />
+                <TextView
+                    android:id="@+id/sunset_tem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="28°C"
+                    android:textStyle="bold"
+                    android:textSize="40sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="55dp"
+                    app:fontFamily="sans-serif-condensed-light"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/sunset"
+                    android:layout_marginTop="-40dp"
+                    android:layout_marginRight="60dp"/>
+
+    </androidx.cardview.widget.CardView>
+
+<!--    <androidx.cardview.widget.CardView-->
+
+<!--        android:layout_gravity="end|center_vertical"-->
+<!--        android:id="@+id/cardView5"-->
+<!--        android:layout_width="180dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_margin="20dp"-->
+<!--        app:cardElevation="20dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:cardCornerRadius="15dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:cardBackgroundColor="@color/cardview_light_background">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@drawable/sunset_background"/>-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Sunset"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textSize="20sp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            app:fontFamily="sans-serif-condensed-light"-->
+<!--            />-->
+<!--        <TextView-->
+<!--            android:id="@+id/sunset_tem"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="28°C"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="40sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            app:fontFamily="sans-serif-condensed-light"-->
+<!--            />-->
+
+<!--        <androidx.appcompat.widget.AppCompatImageView-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:src="@drawable/sunset"-->
+<!--            android:layout_marginTop="-40dp" />-->
+
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+    <androidx.cardview.widget.CardView
+        android:layout_gravity="center_vertical"
+        android:id="@+id/cardView1"
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="210dp"
+        android:layout_marginLeft="20dp"
+        app:cardElevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:cardCornerRadius="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rain_background"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/rain"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/rain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8"
+            android:layout_gravity="center"
+            app:fontFamily="sans-serif-condensed-light"
+            android:textSize="50sp"
+            android:layout_marginTop="32dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mm"
+            android:layout_gravity="center"
+            android:layout_marginBottom="-70dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rain Fall"
+            app:fontFamily="sans-serif-condensed-light"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:textSize="20sp"
+            android:textStyle="bold">
+        </androidx.appcompat.widget.AppCompatTextView>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_gravity="end|center_vertical"
+        android:id="@+id/cardView2"
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="210dp"
+        android:layout_marginRight="20dp"
+        app:cardElevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:cardCornerRadius="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/humidity_background"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/humidity_icon"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="%"
+            android:layout_gravity="center"
+            android:layout_marginBottom="-70dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="79"
+            android:layout_gravity="center"
+            app:fontFamily="sans-serif-condensed-light"
+            android:textSize="50sp"
+            android:layout_marginTop="32dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Humidity"
+            app:fontFamily="sans-serif-condensed-light"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </androidx.cardview.widget.CardView>
+
+
+</FrameLayout>

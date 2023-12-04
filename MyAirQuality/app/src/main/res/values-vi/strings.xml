@@ -33,4 +33,7 @@
     <string name="language">Chọn ngôn ngữ...</string>
     <string name="save">Lưu</string>
     <string name="cancel">Hủy</string>
+<!--    <string name="home">Home</string>-->
+
+
 </resources>

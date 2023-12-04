@@ -1,26 +1,79 @@
 package com.uit.myairquality;
 
+
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+
 public class Settings extends AppCompatActivity {
 
-//    DrawerLayout drawerLayout;
-//    ImageView menu;
-//    LinearLayout home, settings, share, exit, info;
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_settings);
+
+    BottomNavigationView bottomNavigationView;
+    FrameLayout frameLayout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bottom_nav);
+        frameLayout = findViewById(R.id.frame);
+
+        bottomNavigationView = findViewById(R.id.Bottom_Nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemID=item.getItemId();
+                if(itemID==R.id.nav_home){
+                    loadFragment(new HomeFragment(), false);
+                }
+                else if (itemID==R.id.nav_dashboard){
+                    loadFragment(new DashboardFragment(), false);
+                }
+                else if (itemID==R.id.nav_settings){
+                    loadFragment(new SettingsFragment(), false);
+                }
+                else {
+                    loadFragment(new ProfileFragment(), false);
+                }
+
+
+                return true;
+            }
+        });
+        loadFragment(new HomeFragment(), true);
+
+    }
+    private void loadFragment(Fragment fragment, boolean isAppInitialized){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if (isAppInitialized){
+            fragmentTransaction.add(R.id.frame,fragment);
+        } else {
+            fragmentTransaction.replace(R.id.frame,fragment);
+        }
+
+        fragmentTransaction.commit();
+    }
 //
 //        drawerLayout = findViewById(R.id.drawerLayout);
 //        menu = findViewById(R.id.menu);

@@ -31,4 +31,5 @@
     <string name="language">Select a language...</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+<!--    <string name="home">Home</string>-->
 </resources>

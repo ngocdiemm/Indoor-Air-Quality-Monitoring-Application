@@ -4,11 +4,11 @@
 
     <gradient
         android:startColor="@color/primary"
-        android:endColor="@color/secondary"
+        android:endColor="@color/teal_200"
         android:angle="120"/>
-    <corners
-        android:bottomLeftRadius="100dp"
-        android:bottomRightRadius="100dp"
-        />
+<!--    <corners-->
+<!--        android:bottomLeftRadius="45dp"-->
+<!--        android:bottomRightRadius="45dp"-->
+<!--        />-->
 
 </shape>

@@ -22,7 +22,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="match_parent"
         android:background="@drawable/top_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,9 +39,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30sp"
-        android:text="UIT APP"
         android:textColor="@color/white"
-        android:textSize="35dp"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,9 +51,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30sp"
-        android:text="UIT APP"
         android:textColor="@color/white"
-        android:textSize="35dp"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +63,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30sp"
-        android:text="UIT APP"
         android:textColor="@color/white"
         android:textSize="35dp"
         android:textStyle="bold"
@@ -75,17 +72,17 @@
     </TextView>
 
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="180dp"
-        android:layout_height="90dp"
-        app:cardCornerRadius="15dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="360dp"
         app:cardElevation="21dp"
+        android:layout_marginTop="-600dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="@+id/textView">
+        app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
 
         <LinearLayout
@@ -97,7 +94,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="40dp"
+                android:padding="5dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/logo_uit_transparent">
 
@@ -119,7 +116,10 @@
         app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="@android:color/background_light"
+        >
 
 
         <LinearLayout
@@ -135,9 +135,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="50dp"
                 android:text="Register"
-                android:textColor="@color/black"
+                android:textColor="@color/blue"
                 android:textSize="40dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
 
             <EditText
@@ -147,8 +148,9 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_background"
-                android:drawableStart="@drawable/icon_create"
+                android:backgroundTint="#D3E4ED"
+                android:background="@drawable/card_background"
+                android:drawableStart="@drawable/baseline_person_pin_24"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"
                 android:hint="Username"
@@ -168,9 +170,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/card_background"
                 android:drawableStart="@drawable/icon_email"
                 android:drawablePadding="10dp"
+                android:backgroundTint="#D3E4ED"
                 android:drawableTint="@color/black"
                 android:hint="Email"
                 android:paddingStart="10dp"
@@ -182,9 +185,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
+                android:backgroundTint="#D3E4ED"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/card_background"
                 android:drawableStart="@drawable/icon_password"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"
@@ -200,10 +204,11 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/card_background"
                 android:drawableStart="@drawable/icon_password"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"
+                android:backgroundTint="#D3E4ED"
                 android:hint="Re-Enter the Password"
                 android:paddingStart="10dp"
                 android:inputType="textPassword"/>
@@ -212,14 +217,15 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnRegister"
-                android:layout_width="160dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_background"
                 android:text="REGISTER"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:textSize="25dp" />
 
 
 
@@ -231,13 +237,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBackRegister"
-        android:layout_width="160dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/button_background"
         android:text="BACK"
-        android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:textSize="25dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

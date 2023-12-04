@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="match_parent"
         android:background="@drawable/top_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,47 +22,43 @@
     </LinearLayout>
 
 
-
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30sp"
-        android:text="UIT APP"
-        android:textColor="@color/white"
-        android:textSize="35dp"
+        android:fontFamily="@font/alegreya_sans_extrabold"
+        android:textColor="@color/yellow"
+        android:textSize="50dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </TextView>
-
-
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="180dp"
-        android:layout_height="90dp"
-        app:cardCornerRadius="15dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="360dp"
         app:cardElevation="21dp"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        android:layout_marginTop="-270dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="@+id/textView">
+        app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/card_background">
 
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="40dp"
+                android:padding="5dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/logo_uit_transparent">
 
@@ -84,7 +80,11 @@
         app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="@color/cardview_light_background"
+
+        >
 
 
         <LinearLayout
@@ -100,7 +100,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="50dp"
                 android:text="@string/tvLogin"
-                android:textColor="@color/black"
+                android:textColor="@color/blue"
                 android:textSize="40dp"
                 android:textStyle="bold" />
 
@@ -111,8 +111,9 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="#D3E4ED"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/card_background"
                 android:drawableStart="@drawable/icon_email"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"
@@ -131,13 +132,14 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/card_background"
+                android:backgroundTint="#D3E4ED"
                 android:drawableStart="@drawable/icon_password"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/black"
                 android:hint="Password"
-                android:paddingStart="10dp"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:paddingStart="10dp" />
 
 
             <TextView
@@ -147,7 +149,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/btnForgotPassword"
-                android:textColor="@color/primary"
+                android:textColor="@color/blue"
                 android:textSize="16dp"
                 android:textStyle="italic"
                 tools:ignore="TextSizeCheck" />
@@ -155,14 +157,16 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLogin"
-                android:layout_width="200dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_background"
                 android:text="@string/btnLogin"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                />
 
 
 
@@ -177,12 +181,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBackLogin"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:text="@string/btnBackLogin"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/blue"
+        android:textSize="25sp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -225,15 +231,15 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:text="Android App Project"
-        android:textColor="@color/primary"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
 
 
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        >
 
 
 
