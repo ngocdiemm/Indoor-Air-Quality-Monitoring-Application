@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -21,16 +23,10 @@
             android:name=".SplashScene"
             android:exported="false" />
         <activity
-            android:name=".SplashScence"
-            android:exported="false" />
-        <activity
             android:name=".ResetPassword"
             android:exported="false" />
         <activity
             android:name=".navigation"
-            android:exported="false" />
-        <activity
-            android:name=".Loading"
             android:exported="false" />
         <activity
             android:name=".Settings"
@@ -40,7 +36,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -54,6 +49,8 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
     </application>
-
 </manifest>

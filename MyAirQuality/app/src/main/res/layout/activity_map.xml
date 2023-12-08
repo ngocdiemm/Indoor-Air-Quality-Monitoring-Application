@@ -6,4 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Map">
 
+    <!-- <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="400dp"
+        android:layout_height="727dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="This is a Map View" /> -->
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mapView"
+    android:name="com.google.android.gms.maps.SupportMapFragment" />    
 </androidx.constraintlayout.widget.ConstraintLayout>

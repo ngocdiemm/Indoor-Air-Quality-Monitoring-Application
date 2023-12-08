@@ -58,7 +58,8 @@ public class LogIn extends AppCompatActivity {
 
 
         // Hard code for test
-//        password.setText("123456789");
+        username.setText("test101");
+        password.setText("12345678");
 
         //Quay lại màn hình Homepage
         btnBackLogin.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +100,9 @@ public class LogIn extends AppCompatActivity {
                     assert response.body() != null;
                     Token Token = response.body();
                     APIClient.token = com.uit.myairquality.Model.Token.access_token;
-                    Intent intent = new Intent(LogIn.this, Settings.class);
+                    // Hard-code to Map Activity
+                    Intent intent = new Intent(LogIn.this, Map.class);
+//                    Intent intent = new Intent(LogIn.this, Map.class);
                     startActivity(intent);
                 } else {
                     Log.d("Login", "fail" + response.message());
