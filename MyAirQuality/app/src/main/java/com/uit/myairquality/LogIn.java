@@ -101,7 +101,7 @@ public class LogIn extends AppCompatActivity {
                     Token Token = response.body();
                     APIClient.token = com.uit.myairquality.Model.Token.access_token;
                     // Hard-code to Map Activity
-                    Intent intent = new Intent(LogIn.this, Map.class);
+                    Intent intent = new Intent(LogIn.this, Settings.class);
 //                    Intent intent = new Intent(LogIn.this, Map.class);
                     startActivity(intent);
                 } else {

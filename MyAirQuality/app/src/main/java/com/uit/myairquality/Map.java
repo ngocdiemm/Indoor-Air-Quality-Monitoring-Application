@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-public class Map extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
+/*public class Map extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Marker markerPerth;
@@ -97,4 +97,4 @@ public class Map extends AppCompatActivity implements GoogleMap.OnMarkerClickLis
         // marker is centered and for the marker's info window to open, if it has one).
         return false;
     }
-}
+}*/
