@@ -1,6 +1,6 @@
 package com.uit.myairquality.Interfaces;
 import com.uit.myairquality.Model.Asset;
-
+import com.uit.myairquality.Model.RespondMap;
 import android.media.session.MediaSession;
 import com.uit.myairquality.Model.Token;
 import retrofit2.Call;
@@ -38,6 +38,8 @@ public interface APIInterface {
             @Field("email") String email,
             @Field("username") String username
     );
+    @GET("api/master/map")
+    Call<RespondMap> getMap();
 
 
 }

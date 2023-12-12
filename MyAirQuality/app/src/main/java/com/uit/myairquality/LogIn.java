@@ -1,18 +1,12 @@
 package com.uit.myairquality;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.graphics.RenderEffect;
-import android.graphics.Shader;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,7 +16,7 @@ import android.widget.Toast;
 import com.uit.myairquality.Interfaces.APIInterface;
 import com.uit.myairquality.Model.APIClient;
 import com.uit.myairquality.Model.Token;
-import com.uit.myairquality.LoadingAlert;
+import com.uit.myairquality.Model.URL;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +42,7 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ChangeLanguages.loadLocaleChanged(LogIn.this);
         setContentView(R.layout.activity_login);
-        apiInterface = APIClient.getClient().create(APIInterface.class);
+        //apiInterface = APIClient.getClient(URL.mainURL).create(APIInterface.class);
         btnLogin = findViewById(R.id.btnLogin);
         btnBackLogin = findViewById(R.id.btnBackLogin);
         btnForgotPassword = findViewById(R.id.btnForgotPassword);
