@@ -57,11 +57,11 @@ public class RespondMap {
         }
     }
 
-    public RespondMap getRepondMapData() {
+    public RespondMap getRespondMapData() {
         return respondMap;
     }
 
-    public static void setRepondMapData(RespondMap repondMap) {
+    public static void setRespondMapData(RespondMap repondMap) {
         respondMap = repondMap;
         isReady = true;
     }
