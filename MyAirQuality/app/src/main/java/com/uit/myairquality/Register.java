@@ -38,7 +38,7 @@ public class Register extends AppCompatActivity {
 
         setContentView(R.layout.activity_register);
 
-        apiInterface = APIClient.getClient(URL.mainURL).create(APIInterface.class);
+        apiInterface = APIClient.getClient().create(APIInterface.class);
         username = (EditText) findViewById(R.id.Username);
         password = (EditText) findViewById(R.id.Password);
         repassword = (EditText) findViewById(R.id.ReType);

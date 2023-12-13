@@ -148,7 +148,7 @@ public class Map extends AppCompatActivity {
                     public void onClick(View view) {
 
                         // Xử lí lấy tọa độ
-                        Retrofit retrofit = APIClient.getClient(URL.mainURL);
+                        Retrofit retrofit = APIClient.getClient();
                         apiInterface = retrofit.create(APIInterface.class);
                         Call<RespondMap> call = apiInterface.getMap();
                         Log.d("Call", "calling");

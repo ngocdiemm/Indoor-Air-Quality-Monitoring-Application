@@ -42,7 +42,7 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ChangeLanguages.loadLocaleChanged(LogIn.this);
         setContentView(R.layout.activity_login);
-        //apiInterface = APIClient.getClient(URL.mainURL).create(APIInterface.class);
+        apiInterface = APIClient.getClient().create(APIInterface.class);
         btnLogin = findViewById(R.id.btnLogin);
         btnBackLogin = findViewById(R.id.btnBackLogin);
         btnForgotPassword = findViewById(R.id.btnForgotPassword);
