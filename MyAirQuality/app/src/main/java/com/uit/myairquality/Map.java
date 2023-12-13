@@ -1,5 +1,6 @@
 package com.uit.myairquality;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.uit.myairquality.Interfaces.APIInterface;
 import com.uit.myairquality.Model.APIClient;
 import com.uit.myairquality.Model.URL;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -186,6 +188,30 @@ public class Map extends AppCompatActivity {
                 });
             }
         });
+    }
+    private void showBottomSheetDialog() {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
+
+        LinearLayout navigateView = bottomSheetDialog.findViewById(R.id.navigation);
+        LinearLayout cancelView = bottomSheetDialog.findViewById(R.id.cancel);
+        // Listen events are clicked on Bottom Sheet
+        navigateView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Map.this, Settings.class);
+                startActivity(intent);
+            }
+        });
+        cancelView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.cancel();
+            }
+        });
+
+        bottomSheetDialog.show();
     }
 }
 
