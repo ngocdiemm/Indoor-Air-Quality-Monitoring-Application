@@ -129,7 +129,7 @@ public class Map extends AppCompatActivity {
             activityResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
 
-        mapView.getMapboxMap().loadStyleUri("mapbox://styles/minhtoan87/clpv8na1301ew01paeo5u0l7c", new Style.OnStyleLoaded() {
+        mapView.getMapboxMap().loadStyleUri("mapbox://styles/ngocdiemm/clq3aocdo00eg01qs4gr19yop", new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
                 mapView.getMapboxMap().setCamera(new CameraOptions.Builder().zoom(20.0).build());
