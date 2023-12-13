@@ -1,8 +1,17 @@
 package com.uit.myairquality;
 
+import com.google.android.gms.internal.maps.zzad;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.mapbox.geojson.Feature;
+import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
+import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
 import com.uit.myairquality.Interfaces.APIInterface;
 import com.uit.myairquality.Model.APIClient;
+import com.uit.myairquality.Model.Asset;
+import com.uit.myairquality.Model.Token;
 import com.uit.myairquality.Model.URL;
 import com.uit.myairquality.R;
 import com.uit.myairquality.Model.RespondMap;
@@ -20,6 +29,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -117,6 +127,9 @@ public class Map extends AppCompatActivity {
         floatingActionButton.hide();
         authorization = "Bearer "+access_token;
 
+
+
+
         if (ActivityCompat.checkSelfPermission(Map.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             activityResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
@@ -162,9 +175,22 @@ public class Map extends AppCompatActivity {
                                                 .zoom(15.0)
                                                 .build();
 
+                                        Call<Asset> getAsset = apiInterface.getAsset(authorization, assetId);
+                                        getAsset.enqueue(new Callback<Asset>() {
+                                            @Override
+                                            public void onResponse(Call<Asset> call, Response<Asset> response) {
+
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Asset> call, Throwable t) {
+
+                                            }
+                                        });
+
                                         // Thiết lập camera cho bản đồ
                                         mapView.getMapboxMap().setCamera(cameraOptions);
-
 
                                     }
                                 }

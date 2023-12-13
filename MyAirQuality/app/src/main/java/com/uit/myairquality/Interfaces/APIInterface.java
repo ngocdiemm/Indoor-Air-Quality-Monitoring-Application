@@ -14,7 +14,7 @@ import retrofit2.http.Path;
 
 public interface APIInterface {
     @GET("api/master/asset/{assetID}")
-    Call<Asset> getAsset (@Path("assetID") String assetID);
+    Call<Asset> getAsset (@Header("Authorization") String auth, @Path("assetID") String assetID);
 
     @POST("/auth/realms/master/protocol/openid-connect/token")
     @FormUrlEncoded
