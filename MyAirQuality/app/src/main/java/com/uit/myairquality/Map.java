@@ -114,16 +114,6 @@ public class Map extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.focusLocation);
         floatingActionButton.hide();
         authorization = "Bearer "+access_token;
-        back = findViewById(R.id.btnMapBack);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();Log.d("Call", "calling");
-            }
-        });
-
-
-
 
         if (ActivityCompat.checkSelfPermission(Map.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             activityResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
