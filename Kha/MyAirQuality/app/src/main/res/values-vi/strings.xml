@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Màn hình homepage    -->
+    <string name="app_name">My Air Quality</string>
+    <string name="Welcome">My Air Quality</string>
+    <string name="UITwithlove">Một ứng dụng của sinh viên UIT ♥</string>
+    <string name="or">HOẶC</string>
+    <string name="btnLogin">ĐĂNG NHẬP</string>
+    <string name="btnRegister">ĐĂNG KÝ</string>
+    <string name="btnSigninwithgg">Đăng nhập qua Google</string>
+
+    <!--    Màn hình LogIn    -->
+    <string name="tvLogin">Đăng nhập</string>
+    <string name="email">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="btnBackLogin">QUAY LẠI</string>
+    <string name="btnForgotPassword">QUÊN MẬT KHẨU</string>
+
+    <!--    Màn hình Register    -->
+    <string name="tvRegister">Đăng ký</string>
+<!--    <string name="email">Tên đăng nhập</string>-->
+<!--    <string name="password">Mật khẩu</string>-->
+    <string name="btnBackRegister">QUAY LẠI</string>
+
+    <!--    Màn hình ResetPassword   -->
+    <string name="tvResetPassword">Cài lại mật khẩu</string>
+    <string name="NewPassword">Mật khẩu mới</string>
+    <string name="ReEnterPassword">Xác nhận mật khẩu</string>
+    <string name="btnConfirm">XÁC NHẬN</string>
+    <string name="btnBackResetPassword">QUAY LẠI</string>
+
+    <!-- Đổi ngôn ngữ   -->
+    <string name="language">Chọn ngôn ngữ...</string>
+    <string name="save">Lưu</string>
+    <string name="cancel">Hủy</string>
+<!--    <string name="home">Home</string>-->
+
+    <string name="loginSuccess">Đăng nhập thành công</string>
+
+
+</resources>

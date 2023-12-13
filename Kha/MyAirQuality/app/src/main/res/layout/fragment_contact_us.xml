@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ContactUsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="You can contact our information below platforms. Our team will reach to you as soon as possible."
+        android:textSize="18sp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="10dp"
+        app:fontFamily="sans-serif-condensed-light"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Contact Us"
+        android:textSize="30sp"
+        android:layout_marginTop="5dp"
+        app:fontFamily="sans-serif-condensed-light"
+        android:layout_gravity="start"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginLeft="50dp" />
+    <ImageView
+        android:id="@+id/Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_arrow_back_ios_new_24"
+        android:layout_gravity="start"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_gravity="center"
+        android:background="@drawable/card_background"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_marginBottom="200dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Support"
+            android:layout_gravity="start"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/phonecall"
+            android:layout_gravity="start"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="65dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email Address"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="110dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <TextView
+            android:id="@+id/send_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="21522139@gmail.com"
+            android:textColor="@color/black"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="130dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/emailadd"
+            android:layout_gravity="start"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="115dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Number"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="60dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <TextView
+            android:id="@+id/call_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+84 948492067"
+            android:textColor="@color/black"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="80dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_gravity="center"
+        android:background="@drawable/card_background"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        app:cardCornerRadius="20dp"
+        android:layout_marginTop="30dp"
+        app:cardElevation="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Social Media"
+            android:layout_gravity="start"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/instagram"
+            android:layout_gravity="start"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="65dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facebook"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="110dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Do Quang Huy"
+            android:textColor="@color/black"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="130dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/facebook"
+            android:layout_gravity="start"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="115dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instagram"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="60dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dqq.h"
+            android:textColor="@color/black"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="80dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Youtube"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="160dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thay Giao Ba"
+            android:textColor="@color/black"
+            android:layout_gravity="start"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="180dp"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif-condensed-light" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/youtube"
+            android:layout_gravity="start"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="165dp"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</FrameLayout>

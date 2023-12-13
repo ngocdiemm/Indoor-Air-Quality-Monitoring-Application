@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Màn hình Homepage-->
+    <string name="app_name">My Air Quality</string>
+    <string name="Welcome">Welcome to My App</string>
+    <string name="UITwithlove">From UIT-ers with love ♥</string>
+    <string name="or">OR</string>
+    <string name="btnLogin">LOGIN</string>
+    <string name="btnRegister">SIGN UP</string>
+    <string name="btnSigninwithgg">SIGN IN VIA GOOGLE</string>
+
+    <!--    Màn hình LogIn-->
+    <string name="tvLogin">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="btnForgotPassword">Forgot Password</string>
+    <string name="btnBackLogin">BACK</string>
+
+    <!--    Màn hình Register    -->
+    <string name="tvRegister">Register</string>
+    <!--    <string name="email">Tên đăng nhập</string>-->
+    <!--    <string name="password">Mật khẩu</string>-->
+    <string name="btnBackRegister">BACK</string>
+
+    <!--    Màn hình ResetPassword-->
+    <string name="tvResetPassword">Reset Password</string>
+    <string name="NewPassword">New Password</string>
+    <string name="ReEnterPassword">Re-Enter Password</string>
+    <string name="btnConfirm">CONFIRM</string>
+    <string name="btnBackResetPassword">BACK</string>
+    <string name="language">Select a language...</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="loginSuccess">Login Successfully</string>
+</resources>
