@@ -32,6 +32,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sunrise">Sunrise</string>
     <string name="loginSuccess">Login Successfully</string>
-
+    <string name="mapbox_access_token">sk.eyJ1IjoibmdvY2RpZW1tIiwiYSI6ImNscTJrcGwybTAzMzkya3BsaWczYTEzOGQifQ.n6q3fZjm1pxAbAS4dt9-fw</string>
     <!--    <string name="home">Home</string>-->
 </resources>

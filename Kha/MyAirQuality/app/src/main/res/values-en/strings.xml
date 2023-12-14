@@ -32,4 +32,5 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="loginSuccess">Login Successfully</string>
+    <string name="mapbox_access_token">sk.eyJ1IjoibmdvY2RpZW1tIiwiYSI6ImNscTJrcGwybTAzMzkya3BsaWczYTEzOGQifQ.n6q3fZjm1pxAbAS4dt9-fw</string>
 </resources>
