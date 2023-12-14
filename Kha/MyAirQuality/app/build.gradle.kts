@@ -54,5 +54,6 @@ dependencies {
     implementation("com.google.android.material:material:1.2.1")
     implementation ("org.osmdroid:osmdroid-android:6.1.14")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.mapbox.maps:android:10.16.3")
 
 }
