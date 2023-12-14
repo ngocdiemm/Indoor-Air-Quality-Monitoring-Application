@@ -61,8 +61,8 @@ public class RespondMap {
         return respondMap;
     }
 
-    public static void setRespondMapData(RespondMap repondMap) {
-        respondMap = repondMap;
+    public static void setRespondMapData(RespondMap respondMap) {
+        //respondMap = respondMap;
         isReady = true;
     }
 }

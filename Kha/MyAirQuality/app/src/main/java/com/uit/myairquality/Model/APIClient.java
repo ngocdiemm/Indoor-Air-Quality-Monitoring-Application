@@ -29,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
     private static Retrofit retrofit = null;
     public static String token = null;
+    private static String URL_BASE = "https://uiot.ixxc.dev/";
     //private static String token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLcHRXNWJCcTlsRGliY2s5NHI3TldHQVl0SHBrUFI3N1A4V0hMWDVIX1E0In0.eyJleHAiOjE2NjUwNDQ2MTAsImlhdCI6MTY2NTA0NDU1MCwiYXV0aF90aW1lIjoxNjY1MDM5NDIwLCJqdGkiOiJlZjE4OTc2Yi05YjVkLTQ2MzktYWM3Ny0wOGZhNTcxNzFkMWIiLCJpc3MiOiJodHRwczovLzEwMy4xMjYuMTYxLjE5OS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiJlMTA4ODg5ZS1kYTNlLTRjMzMtYThkNC1kOGY3ZDU4ZTQ2MDMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJvcGVucmVtb3RlIiwic2Vzc2lvbl9zdGF0ZSI6IjlkY2RjMjE2LTExYmUtNDM3NC1hMGJiLTVkNTFkMzQ5N2Q0NiIsImFjciI6IjAiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cHM6Ly9sb2NhbGhvc3QiLCJodHRwczovLzEwMy4xMjYuMTYxLjE5OSJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiY3JlYXRlLXJlYWxtIiwiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJvcGVucmVtb3RlIjp7InJvbGVzIjpbIndyaXRlOmxvZ3MiLCJ3cml0ZTphc3NldHMiLCJyZWFkIiwid3JpdGU6YWRtaW4iLCJyZWFkOmxvZ3MiLCJyZWFkOm1hcCIsInJlYWQ6YXNzZXRzIiwid3JpdGU6dXNlciIsInJlYWQ6dXNlcnMiLCJ3cml0ZTpydWxlcyIsInJlYWQ6cnVsZXMiLCJ3cml0ZTphdHRyaWJ1dGVzIiwid3JpdGUiLCJyZWFkOmFkbWluIl19LCJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsidmlldy1yZWFsbSIsInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwibWFuYWdlLWlkZW50aXR5LXByb3ZpZGVycyIsImltcGVyc29uYXRpb24iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiI5ZGNkYzIxNi0xMWJlLTQzNzQtYTBiYi01ZDUxZDM0OTdkNDYiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJTeXN0ZW0gQWRtaW5pc3RyYXRvciIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IlN5c3RlbSIsImZhbWlseV9uYW1lIjoiQWRtaW5pc3RyYXRvciJ9.JeZw1i979XIQ4dE_OFZUEHFX-kW2Z-LsHJ9eZmHJJhPP0cK94sCPwibPwMj9FUZffNrxgBe1h8Ry5365aIjhKnOpncDDC6C5Zz0c4xrVDeOMwM5AboJeYCmJ79oBmlkJ2KTBEugb-7hzhYtArZa1Num1R9klXlrCVzBrHaerJ8C1K5PJEVni0d5yd9W62pp5ennkNcApOMgJKDS9sjZ0tfdSn6HBjbypqK_4I6Wqwkg4uO51aLf0TtTwRAxhLN56_cCP79tJlDKt-py4XKPzJ_205CHTS-wnaRKZ17YqtKU4iG2VgZG_oIgHIffI_SujmqdfpgqBHbn0D3MjlP2t-Q";
     //private static String token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLcHRXNWJCcTlsRGliY2s5NHI3TldHQVl0SHBrUFI3N1A4V0hMWDVIX1E0In0.eyJleHAiOjE2NjUxOTY4NDIsImlhdCI6MTY2NTExMDQ2NCwiYXV0aF90aW1lIjoxNjY1MTEwNDQyLCJqdGkiOiJlZDA2MzZjZC0xZDBhLTQ4MDgtYWQ4MC00ZWU1MzcxYTQ5NTIiLCJpc3MiOiJodHRwczovLzEwMy4xMjYuMTYxLjE5OS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMTAxZGQ1MmMtMjNiYS00ZjM4LWExMjQtYjc4MGUxYjVhODFiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoib3BlbnJlbW90ZSIsInNlc3Npb25fc3RhdGUiOiJjNzkxMGYyZC1lNDFmLTQ0YmUtYTY2Zi01NzM3ZDkyOGUyMzIiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vbG9jYWxob3N0IiwiaHR0cHM6Ly8xMDMuMTI2LjE2MS4xOTkiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im9wZW5yZW1vdGUiOnsicm9sZXMiOlsicmVhZDp1c2VycyIsInJlYWQ6bG9ncyIsInJlYWQ6bWFwIiwicmVhZDpydWxlcyIsInJlYWQ6YXNzZXRzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwic2lkIjoiYzc5MTBmMmQtZTQxZi00NGJlLWE2NmYtNTczN2Q5MjhlMjMyIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyMSJ9.cabnvk_IP7Gk3yWbcWlJp-VRiZXKZ0vcIXf_-7xh24AtBHFe-W44VT0k1sZ5k3r0Ze4JAnNSs3kQg4FrdbGbNl9UQOuqYB4LV5jicebevTxIhElPzVPGIhUOTG0-5czaqVwsqNSxw-aP9EHgvJiuB-PJJ8y6jrNwGid7GDgucdUpzpZWrTu75wp6pCDEuTVzbZ8XOl56WlpwhanFS62Q--RRORJMXWOXGuqVkzmQpT5jWt0gPZJYT7mXvCf8Ru6KJ-bXzFWMfDOLEo_eKhlSy-SffRy6VVfPvRNWr8jzOHA9UTkR7VgdQ_Adw-9Q0DfMg1aDAQNJQhy7qO-YsLRHmA";
     //private static String token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJLcHRXNWJCcTlsRGliY2s5NHI3TldHQVl0SHBrUFI3N1A4V0hMWDVIX1E0In0.eyJleHAiOjE2NjUyMDU5MzgsImlhdCI6MTY2NTExOTU2OCwiYXV0aF90aW1lIjoxNjY1MTE5NTM4LCJqdGkiOiJmYjZkMTYyOS1lODNlLTQyYzMtYTlhNi1kOGZiZDhlMDU2YzIiLCJpc3MiOiJodHRwczovLzEwMy4xMjYuMTYxLjE5OS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMTAxZGQ1MmMtMjNiYS00ZjM4LWExMjQtYjc4MGUxYjVhODFiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoib3BlbnJlbW90ZSIsInNlc3Npb25fc3RhdGUiOiJiMTNkOTQwMS1hN2ViLTRkN2EtYjJjNy1hNGIxMmVkZTI3NDIiLCJhY3IiOiIwIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHBzOi8vbG9jYWxob3N0IiwiaHR0cHM6Ly8xMDMuMTI2LjE2MS4xOTkiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im9wZW5yZW1vdGUiOnsicm9sZXMiOlsicmVhZDp1c2VycyIsInJlYWQ6bG9ncyIsInJlYWQ6bWFwIiwicmVhZDpydWxlcyIsInJlYWQ6YXNzZXRzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwic2lkIjoiYjEzZDk0MDEtYTdlYi00ZDdhLWIyYzctYTRiMTJlZGUyNzQyIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyMSJ9.BY20wuEhwMPCaMT0YLGgq5wdg0WrWHXG6YioCZwmav1ns3cfTpYpc2JIYMUyaCnzLwlWXIv7O09UUMcVTVDw5fKrOQ2cLOAe4yHQGRCsHl6Xr9-KgvdWt-uCS602hZWWsneYn8WZHvXqx1zs8eEra1qAxouJnv4DIm6B72625PmC5d9c-UNfpnPDM7KFBeCdXG11AXa0WpnRmFgmp8n9B5zoQDpJkqRcntrewArlvEkiYxPxGOLRfe1BNtnQTG17HVYn35YvwLiCiZ_JJ1kiUR7Q_Sp0nZhQOhxf26iEAx5LzrhNE8NhtT_zenNGh8NI7a1tcd-rBF-oxmd2-xSekA";
@@ -92,21 +93,21 @@ public class APIClient {
     }
     public static CallMap CallMap() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://uiot.ixxc.dev")
+                .baseUrl(URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(CallMap.class);
     }
     public static CallToken CallToken() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://uiot.ixxc.dev")
+                .baseUrl(URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(CallToken.class);
     }
     public static CallWeather CallWeather() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://uiot.ixxc.dev")
+                .baseUrl(URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(CallWeather.class);
@@ -137,6 +138,16 @@ public class APIClient {
                 .build();
 
         return retrofit;
+
+        /*if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(URL_BASE)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;*/
+
+
     }
 }
 

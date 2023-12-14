@@ -1,5 +1,4 @@
 package com.uit.myairquality;
-
 import com.google.android.gms.internal.maps.zzad;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -38,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
+//import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.geojson.Point;

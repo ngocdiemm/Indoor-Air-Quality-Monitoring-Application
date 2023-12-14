@@ -3,6 +3,7 @@ import com.uit.myairquality.Model.ChartResponse;
 import com.uit.myairquality.Model.MapRespone;
 import com.uit.myairquality.Model.Asset;
 
+import com.uit.myairquality.Model.RespondMap;
 import com.uit.myairquality.Model.Token;
 
 import java.util.List;
@@ -54,8 +55,11 @@ public interface APIInterface {
             @Field("username") String username
     );
 
-    @GET ("api/master/map")
-    Call <MapRespone> getApiMap (@Header("Authorization") String auth);
+    /*@GET ("api/master/map")
+    Call <MapRespone> getMap (@Header("Authorization") String auth);*/
+
+    @GET("api/master/map")
+    Call<RespondMap> getMap(/*@Header("Authorization") String auth*/);
     @Headers({"Accept: application/json"})
     @POST("/api/master/asset/datapoint/5zI6XqkQVSfdgOrZ1MyWEf/attribute/{attributeName}")
     Call<List<ChartResponse>> CallChart(@Header("Authorization") String token,
