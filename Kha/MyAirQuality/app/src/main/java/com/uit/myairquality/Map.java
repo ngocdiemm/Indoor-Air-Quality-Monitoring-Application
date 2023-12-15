@@ -63,7 +63,6 @@ public class Map extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     Intent intent = new Intent();
     String access_token;
-    String authCode = "Bearer";
     private static final String BASE_URL = "https://uiot.ixxc.dev/api/master/";
     private static final String assetId = "4EqQeQ0L4YNWNNTzvTOqjy";
     private static String authorization = "";
@@ -124,9 +123,6 @@ public class Map extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.focusLocation);
         floatingActionButton.hide();
         authorization = "Bearer"+access_token;
-
-
-
 
         if (ActivityCompat.checkSelfPermission(Map.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             activityResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);

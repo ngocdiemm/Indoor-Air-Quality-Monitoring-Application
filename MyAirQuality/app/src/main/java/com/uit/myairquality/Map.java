@@ -208,8 +208,8 @@ public class Map extends AppCompatActivity {
 
 //                        locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
 //                        locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
-                        getGestures(mapView).addOnMoveListener(onMoveListener);
-                        floatingActionButton.hide();
+                          getGestures(mapView).addOnMoveListener(onMoveListener);
+                          floatingActionButton.hide();
                     }
                 });
             }
