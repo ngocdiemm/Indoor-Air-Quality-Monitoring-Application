@@ -119,21 +119,21 @@ public class Map extends AppCompatActivity {
             }
         }
     });
-    private void DrawMap() {
-        mapView.setVisibility(View.INVISIBLE);
-
-        new Thread(() -> {
-            while (!RespondMap.isReady) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            requireActivity().runOnUiThread(() -> setMapView());
-        }).start();
-    }
+//    private void DrawMap() {
+//        mapView.setVisibility(View.INVISIBLE);
+//
+//        new Thread(() -> {
+//            while (!RespondMap.isReady) {
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            requireActivity().runOnUiThread(() -> setMapView());
+//        }).start();
+//    }
     private void GetUserNearbyLocation(){
         GetUserNearBy(defaultWeatherId, Token.getAccess_token(), new NearbyUsersCallback() {
             @Override
@@ -211,7 +211,7 @@ public class Map extends AppCompatActivity {
     }
     private void showDialog(String idUser) {
 
-        final Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(getBaseContext());
 //        Toast.makeText(requireContext(), String.valueOf(idUser), Toast.LENGTH_SHORT).show();
         try {
             if(idUser.equals(lightId)){
