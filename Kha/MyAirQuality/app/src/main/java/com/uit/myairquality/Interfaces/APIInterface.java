@@ -4,6 +4,7 @@ import com.uit.myairquality.Model.MapRespone;
 import com.uit.myairquality.Model.Asset;
 
 import com.uit.myairquality.Model.RespondMap;
+import com.uit.myairquality.Model.RespondWeather;
 import com.uit.myairquality.Model.Token;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import retrofit2.http.Path;
 
 public interface APIInterface {
     @GET("api/master/asset/{assetId}")
-    Call<Asset> getAsset(@Header("Authorization") String auth, @Path("assetId") String assetId);
+    Call<RespondWeather> getWeather(@Header("Authorization") String auth, @Path("assetId") String assetId);
 
 
 

@@ -27,8 +27,6 @@ public class CustomChart extends MarkerView {
         Value = findViewById(R.id.Value);
     }
 
-
-
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         Value.setText("Value: " + e.getY());
