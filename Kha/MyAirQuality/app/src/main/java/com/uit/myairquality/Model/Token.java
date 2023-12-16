@@ -10,7 +10,7 @@ public class Token {
     @SerializedName("scope")
     public String scope;
 
-    public String getAccess_token() {
+    public static String getAccess_token() {
         return access_token;
     }
 

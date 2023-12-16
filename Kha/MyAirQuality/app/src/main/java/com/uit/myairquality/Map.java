@@ -67,6 +67,7 @@ import com.uit.myairquality.Model.RespondMap;
 import com.uit.myairquality.Model.RespondWeather;
 import com.uit.myairquality.Model.TokenResponse;
 import com.uit.myairquality.Model.User;
+import com.uit.myairquality.Model.Token;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
@@ -98,6 +99,7 @@ public class Map extends AppCompatActivity {
     String lightId="6iWtSbgqMQsVq8RPkJJ9vo";
     private static String authorization = "";
     TextView txtHumidity,txtManufacturer,txtPlace,txtRainFall,txtTempInfor,txtWindDirection,txtWindSpeed;
+    TextView txtEmailInfor,txtBrightness,txtcolourTemperature,txtonOff;
     Point pointUser1;
     Point pointUser2;
     RespondWeather userLocation1;
@@ -133,13 +135,13 @@ public class Map extends AppCompatActivity {
         }).start();
     }
     private void GetUserNearbyLocation(){
-        GetUserNearBy(defaultWeatherId, Token.getToken(), new NearbyUsersCallback() {
+        GetUserNearBy(defaultWeatherId, Token.getAccess_token(), new NearbyUsersCallback() {
             @Override
             public void onDataFetchComplete() {
                 pointUser1 = Point.fromLngLat(userLocation1.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(0),userLocation1.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(1));
             }
         });
-        GetUserNearBy(lightId, Token.getToken(), new NearbyUsersCallback() {
+        GetUserNearBy(lightId, Token.getAccess_token(), new NearbyUsersCallback() {
             @Override
             public void onDataFetchComplete() {
                 pointUser2 = Point.fromLngLat(userLocation2.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(0),userLocation2.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(1));
@@ -183,7 +185,7 @@ public class Map extends AppCompatActivity {
                 pointAnnoManager = (PointAnnotationManager) annoPlugin.createAnnotationManager(AnnotationType.PointAnnotation, annoConfig);
                 pointAnnoManager.addClickListener(pointAnnotation -> {
                     String id = Objects.requireNonNull(pointAnnotation.getData()).getAsJsonObject().get("id").getAsString();
-                    GetUserNearBy(id, Token.getToken(), new NearbyUsersCallback() {
+                    GetUserNearBy(id, Token.getAccess_token(), new NearbyUsersCallback() {
                         @Override
                         public void onDataFetchComplete() {
                         }
