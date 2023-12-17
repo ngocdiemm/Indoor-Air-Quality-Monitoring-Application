@@ -407,7 +407,8 @@ public class Map extends AppCompatActivity {
 //                                        createCircleAnnotation(mapView, Point.fromLngLat(106.6296633, 10.8230983));
 
 //                                        createPointAnnotation(Point.fromLngLat(106.6296633, 10.8230983), "xxua", R.drawable.baseline_person_pin_24);
-                                        addAnotherAnnotation(mapView, Point.fromLngLat(106.6296633, 10.8230983), R.drawable.baseline_person_pin_24);
+                                        Point daihoc = Point.fromLngLat(106.6286989110777,10.80645296951909);
+                                        addAnotherAnnotation(mapView, daihoc, R.drawable.baseline_location_on_24);
                                     }
                                 }
                                 else{
