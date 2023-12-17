@@ -17,6 +17,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -50,7 +51,13 @@ import com.mapbox.maps.plugin.annotation.AnnotationConfig;
 import com.mapbox.maps.plugin.annotation.AnnotationPlugin;
 import com.mapbox.maps.plugin.annotation.AnnotationPluginImplKt;
 import com.mapbox.maps.plugin.annotation.AnnotationType;
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager;
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManagerKt;
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions;
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener;
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation;
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager;
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManagerKt;
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions;
 import com.mapbox.maps.plugin.gestures.OnMoveListener;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin;
@@ -84,30 +91,11 @@ import retrofit2.Retrofit;
 
 public class Map extends AppCompatActivity {
 
-    MapView mapView;
-    Button back;
-    APIInterface apiInterface;
-    AnnotationConfig annoConfig;
-    AnnotationPlugin annoPlugin;
-    PointAnnotationManager pointAnnoManager;
-    FloatingActionButton floatingActionButton;
-    Intent intent = new Intent();
-    String access_token;
     private static final String BASE_URL = "https://uiot.ixxc.dev/api/master/";
     private static final String assetId = "4EqQeQ0L4YNWNNTzvTOqjy";
-    String defaultWeatherId= "5zI6XqkQVSfdgOrZ1MyWEf";
-    String lightId="6iWtSbgqMQsVq8RPkJJ9vo";
-    private static String authorization = "";
-    TextView txtHumidity,txtManufacturer,txtPlace,txtRainFall,txtTempInfor,txtWindDirection,txtWindSpeed;
-    TextView txtEmailInfor,txtBrightness,txtcolourTemperature,txtonOff;
-    Point pointUser1;
-    Point pointUser2;
-    RespondWeather userLocation1;
-    RespondWeather userLocation2;
-
-    RespondMap mapData;
     //InterfaceWeather weatherInterFace;
     static MapboxMap mapboxMap;
+    private static String authorization = "";
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
         public void onActivityResult(Boolean result) {
@@ -119,6 +107,39 @@ public class Map extends AppCompatActivity {
             }
         }
     });
+    MapView mapView;
+    //Cũ
+    private final OnIndicatorBearingChangedListener onIndicatorBearingChangedListener = new OnIndicatorBearingChangedListener() {
+        @Override
+        public void onIndicatorBearingChanged(double v) {
+            mapView.getMapboxMap().setCamera(new CameraOptions.Builder().bearing(v).build());
+        }
+    };
+    private final OnIndicatorPositionChangedListener onIndicatorPositionChangedListener = new OnIndicatorPositionChangedListener() {
+        @Override
+        public void onIndicatorPositionChanged(@NonNull Point point) {
+            mapView.getMapboxMap().setCamera(new CameraOptions.Builder().center(point).zoom(15.0).build());
+            getGestures(mapView).setFocalPoint(mapView.getMapboxMap().pixelForCoordinate(point));
+        }
+    };
+    Button back;
+    APIInterface apiInterface;
+    AnnotationConfig annoConfig;
+    AnnotationPlugin annoPlugin;
+    PointAnnotationManager pointAnnoManager;
+    FloatingActionButton floatingActionButton;
+    Intent intent = new Intent();
+    String access_token;
+    String defaultWeatherId= "5zI6XqkQVSfdgOrZ1MyWEf";
+    String lightId="6iWtSbgqMQsVq8RPkJJ9vo";
+    TextView txtHumidity,txtManufacturer,txtPlace,txtRainFall,txtTempInfor,txtWindDirection,txtWindSpeed;
+    TextView txtEmailInfor,txtBrightness,txtcolourTemperature,txtonOff;
+    Point pointUser1;
+    Point pointUser2;
+    RespondWeather userLocation1;
+    RespondWeather userLocation2;
+    RespondMap mapData;
+
 //    private void DrawMap() {
 //        mapView.setVisibility(View.INVISIBLE);
 //
@@ -169,6 +190,7 @@ public class Map extends AppCompatActivity {
             }
         });
     }
+
     private void setMapView() {
         mapData = RespondMap.respondMap.getRespondMapData();
         mapView.setVisibility(View.VISIBLE);
@@ -209,6 +231,7 @@ public class Map extends AppCompatActivity {
             });
         }
     }
+
     private void showDialog(String idUser) {
 
         final Dialog dialog = new Dialog(getBaseContext());
@@ -270,6 +293,7 @@ public class Map extends AppCompatActivity {
 
 
     }
+
     private void createPointAnnotation(Point point, String id, int iconResource) {
         ArrayList<PointAnnotationOptions> markerList = new ArrayList<>();
         Drawable iconDrawable = getResources().getDrawable(iconResource);
@@ -299,6 +323,7 @@ public class Map extends AppCompatActivity {
 
         return bitmap;
     }
+
     private void setCameraValues() {
         if (mapboxMap != null) {
             mapboxMap.setCamera(
@@ -317,42 +342,6 @@ public class Map extends AppCompatActivity {
             );
         }
     }
-
-    //Cũ
-    private final OnIndicatorBearingChangedListener onIndicatorBearingChangedListener = new OnIndicatorBearingChangedListener() {
-        @Override
-        public void onIndicatorBearingChanged(double v) {
-            mapView.getMapboxMap().setCamera(new CameraOptions.Builder().bearing(v).build());
-        }
-    };
-    private final OnIndicatorPositionChangedListener onIndicatorPositionChangedListener = new OnIndicatorPositionChangedListener() {
-        @Override
-        public void onIndicatorPositionChanged(@NonNull Point point) {
-            mapView.getMapboxMap().setCamera(new CameraOptions.Builder().center(point).zoom(15.0).build());
-            getGestures(mapView).setFocalPoint(mapView.getMapboxMap().pixelForCoordinate(point));
-        }
-    };
-
-
-    private final OnMoveListener onMoveListener = new OnMoveListener() {
-        @Override
-        public void onMoveBegin(@NonNull MoveGestureDetector moveGestureDetector) {
-            getLocationComponent(mapView).removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
-            getLocationComponent(mapView).removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
-            getGestures(mapView).removeOnMoveListener(onMoveListener);
-            floatingActionButton.show();
-        }
-
-        @Override
-        public boolean onMove(@NonNull MoveGestureDetector moveGestureDetector) {
-            return false;
-        }
-
-        @Override
-        public void onMoveEnd(@NonNull MoveGestureDetector moveGestureDetector) {
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -415,6 +404,10 @@ public class Map extends AppCompatActivity {
                                         // Thiết lập camera cho bản đồ
                                         mapView.getMapboxMap().setCamera(cameraOptions);
 
+//                                        createCircleAnnotation(mapView, Point.fromLngLat(106.6296633, 10.8230983));
+
+//                                        createPointAnnotation(Point.fromLngLat(106.6296633, 10.8230983), "xxua", R.drawable.baseline_person_pin_24);
+                                        addAnotherAnnotation(mapView, Point.fromLngLat(106.6296633, 10.8230983), R.drawable.baseline_person_pin_24);
                                     }
                                 }
                                 else{
@@ -437,7 +430,26 @@ public class Map extends AppCompatActivity {
                 });
             }
         });
-    }
+    }    private final OnMoveListener onMoveListener = new OnMoveListener() {
+        @Override
+        public void onMoveBegin(@NonNull MoveGestureDetector moveGestureDetector) {
+            getLocationComponent(mapView).removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
+            getLocationComponent(mapView).removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
+            getGestures(mapView).removeOnMoveListener(onMoveListener);
+            floatingActionButton.show();
+        }
+
+        @Override
+        public boolean onMove(@NonNull MoveGestureDetector moveGestureDetector) {
+            return false;
+        }
+
+        @Override
+        public void onMoveEnd(@NonNull MoveGestureDetector moveGestureDetector) {
+
+        }
+    };
+
     private void showBottomSheetDialog() {
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
@@ -462,6 +474,48 @@ public class Map extends AppCompatActivity {
 
         bottomSheetDialog.show();
     }
+
+    public void createCircleAnnotation(MapView mapView, Point point) {
+
+        AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
+        CircleAnnotationManager circleAnnotationManager = CircleAnnotationManagerKt.createCircleAnnotationManager(annotationApi, new AnnotationConfig());
+
+        // circle annotations options
+        CircleAnnotationOptions circleAnnotationOptions = new CircleAnnotationOptions()
+                .withPoint(point)
+                .withCircleRadius(8.0)
+                .withCircleColor("#ee4e8b")
+                .withCircleBlur(0.5)
+                .withCircleStrokeWidth(2.0)
+                .withCircleStrokeColor("#ffffff");
+
+        circleAnnotationManager.create(circleAnnotationOptions);
+    }
+
+    public void addAnotherAnnotation(MapView mapView, Point point, int iconResource) {
+
+        Drawable iconDrawable = getResources().getDrawable(iconResource);
+        Bitmap iconBitmap = drawableToBitmap(iconDrawable);
+        AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
+        PointAnnotationManager pointAnnoManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationApi, new AnnotationConfig());
+
+
+        PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
+                .withPoint(point).withIconImage(iconBitmap);
+        pointAnnoManager.create(pointAnnotationOptions);
+        pointAnnoManager.addClickListener(new OnPointAnnotationClickListener() {
+            @Override
+            public boolean onAnnotationClick(@NonNull PointAnnotation pointAnnotation) {
+                if(pointAnnotation.getPoint() == point) {
+                    Toast.makeText(Map.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
+    }
+
+
+
 }
 
 
