@@ -5,12 +5,12 @@
     <string name="Welcome">Welcome to My App</string>
     <string name="UITwithlove">From UIT-ers with love ♥</string>
     <string name="or">OR</string>
-    <string name="btnLogin">LOGIN</string>
+    <string name="btnLogin">SIGN IN</string>
     <string name="btnRegister">SIGN UP</string>
     <string name="btnSigninwithgg">SIGN IN VIA GOOGLE</string>
 
     <!--    Màn hình LogIn-->
-    <string name="tvLogin">Login</string>
+    <string name="tvLogin">Sign In</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="btnForgotPassword">Forgot Password</string>

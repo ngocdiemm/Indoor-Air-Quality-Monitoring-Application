@@ -200,7 +200,7 @@ public class Map extends AppCompatActivity {
         Log.d("Coordinate", String.valueOf(mapData.getOptionSuperIdol().getDefaultSuperIdol().getBounds()));
         if (mapboxMap != null) {
             //Objects.requireNonNull(new Gson().toJson(mapData))
-            mapboxMap.loadStyleUri("mapbox://styles/minhtoan87/clpv8na1301ew01paeo5u0l7c", style -> {
+            mapboxMap.loadStyleUri("mapbox://styles/ngocdiemm/clq3aocdo00eg01qs4gr19yop", style -> {
                 style.removeStyleLayer("poi-level-1");
                 style.removeStyleLayer("highway-name-major");
 
@@ -380,7 +380,7 @@ public class Map extends AppCompatActivity {
                 Point daihoc = Point.fromLngLat(106.8031,10.8698);
 //                addAnotherAnnotation(mapView, daihoc, R.drawable.baseline_location_on_24);
 
-                Point daihoc2 = Point.fromLngLat(106.62869354652693, 10.806331754603287);
+                Point daihoc2 = Point.fromLngLat(106.80345028525176, 10.869905172970164);
 //                addAnotherAnnotation(mapView, daihoc2, R.drawable.baseline_location_on_24);
 
                 Point coopMar = Point.fromLngLat(106.63115859111467, 10.81810867093483);
