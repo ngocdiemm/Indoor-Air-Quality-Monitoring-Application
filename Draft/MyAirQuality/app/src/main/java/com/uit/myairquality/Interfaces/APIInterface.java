@@ -6,6 +6,7 @@ import com.uit.myairquality.Model.Asset;
 import com.uit.myairquality.Model.RespondMap;
 import com.uit.myairquality.Model.RespondWeather;
 import com.uit.myairquality.Model.Token;
+import com.uit.myairquality.Model.TokenResponse;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public interface APIInterface {
 
     @POST("/auth/realms/master/protocol/openid-connect/token")
     @FormUrlEncoded
-    Call<Token> Login(
+    Call<TokenResponse> Login(
             @Field("client_id") String client_id,
             @Field("username") String username,
             @Field("password") String password,

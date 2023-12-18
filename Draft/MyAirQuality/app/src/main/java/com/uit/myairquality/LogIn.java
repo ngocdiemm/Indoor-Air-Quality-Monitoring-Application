@@ -23,6 +23,7 @@ import com.uit.myairquality.Interfaces.APIInterface;
 import com.uit.myairquality.Model.APIClient;
 import com.uit.myairquality.Model.Token;
 import com.uit.myairquality.LoadingAlert;
+import com.uit.myairquality.Model.TokenResponse;
 import com.uit.myairquality.Model.URL;
 
 import retrofit2.Call;
@@ -95,17 +96,18 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void getToken(String usr, String pwd) {
-        Call<Token> call = apiInterface.Login(client_id, usr, pwd, grantType);
-        call.enqueue(new Callback<Token>() {
+        Call<TokenResponse> call = apiInterface.Login(client_id, usr, pwd, grantType);
+        call.enqueue(new Callback<TokenResponse>() {
             @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(LogIn.this,loginSuccess, Toast.LENGTH_SHORT).show();
                     assert response.body() != null;
-                    Token Token = response.body();
-                    APIClient.token = com.uit.myairquality.Model.Token.access_token;
+                    TokenResponse token = response.body();
+//                    APIClient.token = com.uit.myairquality.Model.Token.access_token;
                     // Hard-code to Map Activity
                     Intent intent = new Intent(LogIn.this, Map.class);
+                    intent.putExtra("access_token", token.getAccessToken());
 //                    Intent intent = new Intent(LogIn.this, Map.class);
                     startActivity(intent);
                 } else {
@@ -116,7 +118,7 @@ public class LogIn extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Token> call, Throwable t) {
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
                 loadingAlert.closeAlertDialog();
                 Toast.makeText(LogIn.this, "Cannot connect to server", Toast.LENGTH_SHORT).show();
             }

@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class Token {
     @SerializedName("access_token")
-    public static String access_token;
+    public String access_token;
     @SerializedName("expire_in")
     public String expire_in;
     @SerializedName("scope")
     public String scope;
 
-    public static String getAccess_token() {
+    public String getAccess_token() {
         return access_token;
     }
 

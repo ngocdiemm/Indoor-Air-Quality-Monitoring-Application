@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -34,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -163,13 +165,13 @@ public class Map extends AppCompatActivity {
         }).start();
     }
     private void GetUserNearbyLocation(){
-        GetUserNearBy(defaultWeatherId, AccessToken.getToken(), new NearbyUsersCallback() {
+        GetUserNearBy(defaultWeatherId, access_token, new NearbyUsersCallback() {
             @Override
             public void onDataFetchComplete() {
                 pointUser1 = Point.fromLngLat(userLocation1.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(0),userLocation1.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(1));
             }
         });
-        GetUserNearBy(lightId, AccessToken.getToken(), new NearbyUsersCallback() {
+        GetUserNearBy(lightId, access_token, new NearbyUsersCallback() {
             @Override
             public void onDataFetchComplete() {
                 pointUser2 = Point.fromLngLat(userLocation2.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(0),userLocation2.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(1));
@@ -206,7 +208,6 @@ public class Map extends AppCompatActivity {
         mapData = RespondMap.respondMap.getRespondMapData();
         mapView.setVisibility(View.VISIBLE);
         mapboxMap = mapView.getMapboxMap();
-        Log.d("Coordinate", String.valueOf(mapData.getOptionSuperIdol().getDefaultSuperIdol().getBounds()));
         if (mapboxMap != null) {
             //Objects.requireNonNull(new Gson().toJson(mapData));
             mapboxMap.loadStyleUri("mapbox://styles/ngocdiemm/clq3aocdo00eg01qs4gr19yop", style -> {
@@ -246,6 +247,19 @@ public class Map extends AppCompatActivity {
         }
     }
 
+    private Button createMarkerButton(Point point, String id, int iconResource) {
+        Button button = new Button(this);
+        button.setBackgroundResource(iconResource);
+        button.setOnClickListener(v -> {
+            GetUserNearBy(id, AccessToken.getToken(), new NearbyUsersCallback() {
+                @Override
+                public void onDataFetchComplete() {
+                }
+            });
+            showDialog(id);
+        });
+        return button;
+    }
     private void showDialog(String idUser) {
 
         final Dialog dialog = new Dialog(getBaseContext());
@@ -387,7 +401,6 @@ public class Map extends AppCompatActivity {
         Retrofit retrofit = APIClient.getClient(URL.mainURL);
         apiInterface = retrofit.create(APIInterface.class);
         Call<RespondMap> call = apiInterface.getMap();
-        Log.d("Call", "calling");
         call.enqueue(new Callback<RespondMap>() {
             @Override
             public void onResponse(Call<RespondMap> call, Response<RespondMap> response) {
@@ -411,9 +424,7 @@ public class Map extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        //access_token =  intent.getStringExtra("access_token");
-        Log.d("calling", "access_token");
-        Log.d("access token map", "access_token");
+        access_token =  getIntent().getStringExtra("access_token");
         mapView = findViewById(R.id.mapView);
         floatingActionButton = findViewById(R.id.focusLocation);
         //floatingActionButton.hide();
