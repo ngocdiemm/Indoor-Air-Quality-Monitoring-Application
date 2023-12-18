@@ -377,7 +377,7 @@ public class Map extends AppCompatActivity {
                 getGestures(mapView).addOnMoveListener(onMoveListener);
 
 
-                Point daihoc = Point.fromLngLat(106.6286989110777,10.80645296951909);
+                Point daihoc = Point.fromLngLat(106.8031,10.8698);
 //                addAnotherAnnotation(mapView, daihoc, R.drawable.baseline_location_on_24);
 
                 Point daihoc2 = Point.fromLngLat(106.62869354652693, 10.806331754603287);

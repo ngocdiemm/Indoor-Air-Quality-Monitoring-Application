@@ -116,6 +116,7 @@ public class Map extends AppCompatActivity {
     RespondWeather userLocation1;
     RespondWeather userLocation2;
     RespondMap mapData;
+    final  ArrayList<Point> pointsTemp = new ArrayList<>();
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
         public void onActivityResult(Boolean result) {
@@ -129,7 +130,7 @@ public class Map extends AppCompatActivity {
     });
 
     //Cũ
-    /*Diem:private final OnIndicatorBearingChangedListener onIndicatorBearingChangedListener = new OnIndicatorBearingChangedListener() {
+    private final OnIndicatorBearingChangedListener onIndicatorBearingChangedListener = new OnIndicatorBearingChangedListener() {
         @Override
         public void onIndicatorBearingChanged(double v) {
             mapView.getMapboxMap().setCamera(new CameraOptions.Builder().bearing(v).build());
@@ -141,10 +142,10 @@ public class Map extends AppCompatActivity {
             mapView.getMapboxMap().setCamera(new CameraOptions.Builder().center(point).zoom(15.0).build());
             getGestures(mapView).setFocalPoint(mapView.getMapboxMap().pixelForCoordinate(point));
         }
-    };*/
+    };
 
 
-    private void DrawMap() {
+    /*private void DrawMap() {
         mapView.setVisibility(View.INVISIBLE);
 
         new Thread(() -> {
@@ -158,15 +159,15 @@ public class Map extends AppCompatActivity {
             setMapView();
 
         }).start();
-    }
+    }*/
     private void GetUserNearbyLocation(){
-        GetUserNearBy(defaultWeatherId, Token.getAccess_token(), new NearbyUsersCallback() {
+        GetUserNearBy(defaultWeatherId, AccessToken.getToken(), new NearbyUsersCallback() {
             @Override
             public void onDataFetchComplete() {
                 pointUser1 = Point.fromLngLat(userLocation1.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(0),userLocation1.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(1));
             }
         });
-        GetUserNearBy(lightId, Token.getAccess_token(), new NearbyUsersCallback() {
+        GetUserNearBy(lightId, AccessToken.getToken(), new NearbyUsersCallback() {
             @Override
             public void onDataFetchComplete() {
                 pointUser2 = Point.fromLngLat(userLocation2.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(0),userLocation2.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(1));
@@ -413,7 +414,7 @@ public class Map extends AppCompatActivity {
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
         GetUserNearbyLocation();
         GetDataMap();
-        DrawMap();
+        setMapView();
         //return mapView;
         /*mapView.getMapboxMap().loadStyleUri("mapbox://styles/ngocdiemm/clq3aocdo00eg01qs4gr19yop", new Style.OnStyleLoaded() {
             @Override

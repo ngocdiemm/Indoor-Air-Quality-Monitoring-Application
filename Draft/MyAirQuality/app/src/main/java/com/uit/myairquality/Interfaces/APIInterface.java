@@ -23,7 +23,7 @@ import retrofit2.http.Path;
 
 public interface APIInterface {
     @GET("api/master/asset/{assetId}")
-    Call<RespondWeather> getWeather(@Path("assetId") String assetId, @Header("Authorization") String auth);
+    Call<RespondWeather> getWeather(@Path("assetId") String assetId, @Header("Authorization") String authorization);
 
 
 
