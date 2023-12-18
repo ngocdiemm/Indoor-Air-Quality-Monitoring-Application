@@ -1,6 +1,7 @@
 package com.uit.myairquality;
 
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
 import static com.mapbox.maps.plugin.gestures.GesturesUtils.getGestures;
 import static com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils.getLocationComponent;
 
@@ -246,24 +247,13 @@ public class Map extends AppCompatActivity {
             });
         }
     }
-
-    private Button createMarkerButton(Point point, String id, int iconResource) {
-        Button button = new Button(this);
-        button.setBackgroundResource(iconResource);
-        button.setOnClickListener(v -> {
-            GetUserNearBy(id, AccessToken.getToken(), new NearbyUsersCallback() {
-                @Override
-                public void onDataFetchComplete() {
-                }
-            });
-            showDialog(id);
-        });
-        return button;
-    }
     private void showDialog(String idUser) {
 
-        final Dialog dialog = new Dialog(getBaseContext());
-//        Toast.makeText(requireContext(), String.valueOf(idUser), Toast.LENGTH_SHORT).show();
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
         try {
             if(idUser.equals(lightId)){
 
