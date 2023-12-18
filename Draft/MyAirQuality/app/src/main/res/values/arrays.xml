@@ -1,0 +1,9 @@
+<resources>
+    <array name="items">
+        <item>Temperature</item>
+        <item>Wind Speed </item>
+        <item>Humidity</item>
+        <item>Rainfall</item>
+    </array>
+
+</resources>
