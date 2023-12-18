@@ -107,6 +107,8 @@ public class Map extends AppCompatActivity {
             }
         }
     });
+
+    final  ArrayList<Point> pointsTemp = new ArrayList<>();
     MapView mapView;
     //Cũ
     private final OnIndicatorBearingChangedListener onIndicatorBearingChangedListener = new OnIndicatorBearingChangedListener() {
@@ -374,6 +376,24 @@ public class Map extends AppCompatActivity {
                 locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
                 getGestures(mapView).addOnMoveListener(onMoveListener);
 
+
+                Point daihoc = Point.fromLngLat(106.6286989110777,10.80645296951909);
+//                addAnotherAnnotation(mapView, daihoc, R.drawable.baseline_location_on_24);
+
+                Point daihoc2 = Point.fromLngLat(106.62869354652693, 10.806331754603287);
+//                addAnotherAnnotation(mapView, daihoc2, R.drawable.baseline_location_on_24);
+
+                Point coopMar = Point.fromLngLat(106.63115859111467, 10.81810867093483);
+//                addAnotherAnnotation(mapView, coopMar, R.drawable.baseline_location_on_24);
+
+                Point khuCongNghiepTB = Point.fromLngLat(106.6668758797341,10.809034612616674);
+//                addAnotherAnnotation(mapView, khuCongNghiepTB, R.drawable.baseline_location_on_24);
+                pointsTemp.add(daihoc);
+                pointsTemp.add(daihoc2);
+                pointsTemp.add(coopMar);
+                pointsTemp.add(khuCongNghiepTB);
+
+                addListAnotherAnnotation(mapView, pointsTemp, R.drawable.baseline_location_on_24);
                 floatingActionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -509,7 +529,37 @@ public class Map extends AppCompatActivity {
             public boolean onAnnotationClick(@NonNull PointAnnotation pointAnnotation) {
                 if(pointAnnotation.getPoint() == point) {
                     Toast.makeText(Map.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                    showBottomSheetDialog();
                 }
+                return false;
+            }
+        });
+    }
+
+
+    public void addListAnotherAnnotation(MapView mapView, ArrayList<Point> points, int iconResource) {
+
+
+        Drawable iconDrawable = getResources().getDrawable(iconResource);
+        Bitmap iconBitmap = drawableToBitmap(iconDrawable);
+        ArrayList<PointAnnotationOptions> markerList = new ArrayList<>();
+        for (Point point: points) {
+            PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
+                    .withPoint(point).withIconImage(iconBitmap);
+            markerList.add(pointAnnotationOptions);
+        }
+
+        if(pointAnnoManager == null) {
+            AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
+            pointAnnoManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationApi, new AnnotationConfig());
+        }
+
+        pointAnnoManager.create(markerList);
+
+        pointAnnoManager.addClickListener(new OnPointAnnotationClickListener() {
+            @Override
+            public boolean onAnnotationClick(@NonNull PointAnnotation pointAnnotation) {
+                showBottomSheetDialog();
                 return false;
             }
         });
