@@ -121,6 +121,8 @@ public class Map extends AppCompatActivity {
     RespondWeather userLocation2;
     RespondMap mapData;
 
+    TextView txtLight,txtWeather;
+
     final  ArrayList<Point> pointsTemp = new ArrayList<>();
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
@@ -270,6 +272,17 @@ public class Map extends AppCompatActivity {
                     txtBrightness.setText(String.valueOf(userLocation2.getAttributeWeather().getBrightness().getValueBrightnessSuperIdol())+" %");
                     txtcolourTemperature.setText(String.valueOf(userLocation2.getAttributeWeather().getColourTemperature().getValueColorSuperIdol()));
                     txtonOff.setText(String.valueOf(userLocation2.getAttributeWeather().getOnOff().getValueOnOffSuperIdol()));
+
+                    // Set click listener for txtLight
+                    txtLight = dialog.findViewById(R.id.txtLight);
+                    txtLight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent_light = new Intent(Map.this, Settings.class);
+                            startActivity(intent_light);
+                            dialog.dismiss();
+                        }
+                    });
                 }
 
 //            Toast.makeText(requireContext(), "Onoff: "+ String.valueOf(userLocation2.getAttributeWeather().getOnOff().getValueOnOffSuperIdol()), Toast.LENGTH_SHORT).show();
@@ -295,6 +308,17 @@ public class Map extends AppCompatActivity {
                     txtTempInfor.setText(String.valueOf(userLocation1.getAttributeWeather().getTemperature().getValueTemperatureSuperIdol())+" °C");
                     txtWindDirection.setText(String.valueOf(userLocation1.getAttributeWeather().getWindDirection().getValueWinDirection()));
                     txtWindSpeed.setText(String.valueOf(userLocation1.getAttributeWeather().getWindSpeed().getValueWinSpeed()));
+
+                    // Set click listener for txtWeather
+                    txtWeather = dialog.findViewById(R.id.txtDefaultWeather);
+                    txtWeather.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent_weather = new Intent(Map.this, Settings.class);
+                            startActivity(intent_weather);
+                            dialog.dismiss();
+                        }
+                    });
                 }
 
 
