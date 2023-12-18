@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.geojson.Point;
@@ -76,6 +77,7 @@ import com.uit.myairquality.Model.TokenResponse;
 import com.uit.myairquality.Model.User;
 import com.uit.myairquality.Model.Token;
 
+import org.json.JSONArray;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.overlay.Marker;
@@ -83,11 +85,13 @@ import org.osmdroid.views.overlay.Marker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
 
 public class Map extends AppCompatActivity {
 
@@ -95,6 +99,7 @@ public class Map extends AppCompatActivity {
     private static final String assetId = "4EqQeQ0L4YNWNNTzvTOqjy";
     //InterfaceWeather weatherInterFace;
     static MapboxMap mapboxMap;
+    APIInterface apiInterface;
     private static String authorization = "";
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
@@ -125,7 +130,6 @@ public class Map extends AppCompatActivity {
         }
     };
     Button back;
-    APIInterface apiInterface;
     AnnotationConfig annoConfig;
     AnnotationPlugin annoPlugin;
     PointAnnotationManager pointAnnoManager;
@@ -141,6 +145,8 @@ public class Map extends AppCompatActivity {
     RespondWeather userLocation1;
     RespondWeather userLocation2;
     RespondMap mapData;
+
+    long latWeather=0, latLight=0, longWeather=0, longLight=0;
 
 //    private void DrawMap() {
 //        mapView.setVisibility(View.INVISIBLE);
@@ -356,102 +362,163 @@ public class Map extends AppCompatActivity {
         mapView = findViewById(R.id.mapView);
         floatingActionButton = findViewById(R.id.focusLocation);
         floatingActionButton.hide();
-        authorization = "Bearer"+access_token;
+        authorization = "Bearer "+access_token;
 
-        if (ActivityCompat.checkSelfPermission(Map.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            activityResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
 
-        mapView.getMapboxMap().loadStyleUri("mapbox://styles/ngocdiemm/clq3aocdo00eg01qs4gr19yop", new Style.OnStyleLoaded() {
+
+        CompletableFuture<Void> future1 = new CompletableFuture<>();
+        CompletableFuture<Void> future2 = new CompletableFuture<>();
+
+        Call<JsonObject> callLightAsset = apiInterface.getWeather(access_token, "Bearer " + lightId);
+        callLightAsset.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onStyleLoaded(@NonNull Style style) {
-                mapView.getMapboxMap().setCamera(new CameraOptions.Builder().zoom(20.0).build());
-                LocationComponentPlugin locationComponentPlugin = getLocationComponent(mapView);
-                locationComponentPlugin.setEnabled(true);
-                LocationPuck2D locationPuck2D = new LocationPuck2D();
-                locationPuck2D.setBearingImage(AppCompatResources.getDrawable(Map.this, R.drawable.baseline_location_on_24));
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject lightObject = response.body();
+                if (lightObject != null) {
+                    JsonArray coordinates = lightObject.get("attributes").getAsJsonObject().get("location").getAsJsonObject().get("value").getAsJsonObject().get("coordinates").getAsJsonArray();
+                    longLight = coordinates.get(0).getAsLong();
+                    latLight = coordinates.get(1).getAsLong();
+                }
 
-                locationComponentPlugin.setLocationPuck(locationPuck2D);
-                locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
-                locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
-                getGestures(mapView).addOnMoveListener(onMoveListener);
+                future1.complete(null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("API CALL", t.getMessage().toString());
+
+                future1.completeExceptionally(t);
+            }
+        });
+
+        Call<JsonObject> callWeatherAsset = apiInterface.getWeather(access_token, "Bearer " + defaultWeatherId);
+        callWeatherAsset.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject weatherObject = response.body();
+                if (weatherObject != null) {
+                    JsonArray coordinates = weatherObject.get("attributes").getAsJsonObject().get("location").getAsJsonObject().get("value").getAsJsonObject().get("coordinates").getAsJsonArray();
+                    longWeather = coordinates.get(0).getAsLong();
+                    latWeather = coordinates.get(1).getAsLong();
+                }
+
+                future2.complete(null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("API CALL", t.getMessage().toString());
+
+                future2.completeExceptionally(t);
+            }
+        });
+
+        CompletableFuture.allOf(future1, future2)
+                .thenRun(() -> {
+                    if (ActivityCompat.checkSelfPermission(Map.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                        activityResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+                    }
+
+                    if(latLight != 0 && latWeather != 0 && longWeather != 0 && longLight != 0) {
+                        mapView.getMapboxMap().loadStyleUri("mapbox://styles/ngocdiemm/clq3aocdo00eg01qs4gr19yop", new Style.OnStyleLoaded() {
+                            @Override
+                            public void onStyleLoaded(@NonNull Style style) {
+                                mapView.getMapboxMap().setCamera(new CameraOptions.Builder().zoom(20.0).build());
+                                LocationComponentPlugin locationComponentPlugin = getLocationComponent(mapView);
+                                locationComponentPlugin.setEnabled(true);
+                                LocationPuck2D locationPuck2D = new LocationPuck2D();
+                                locationPuck2D.setBearingImage(AppCompatResources.getDrawable(Map.this, R.drawable.baseline_location_on_24));
+
+                                locationComponentPlugin.setLocationPuck(locationPuck2D);
+                                locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
+                                locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
+                                getGestures(mapView).addOnMoveListener(onMoveListener);
 
 
-                Point daihoc = Point.fromLngLat(106.8031,10.8698);
+                                Point weather = Point.fromLngLat(longWeather,latWeather);
 //                addAnotherAnnotation(mapView, daihoc, R.drawable.baseline_location_on_24);
 
-                Point daihoc2 = Point.fromLngLat(106.80345028525176, 10.869905172970164);
+                                Point light = Point.fromLngLat(longLight, latLight);
 //                addAnotherAnnotation(mapView, daihoc2, R.drawable.baseline_location_on_24);
 
-                Point coopMar = Point.fromLngLat(106.63115859111467, 10.81810867093483);
-//                addAnotherAnnotation(mapView, coopMar, R.drawable.baseline_location_on_24);
+//                Point coopMar = Point.fromLngLat(106.63115859111467, 10.81810867093483);
+////                addAnotherAnnotation(mapView, coopMar, R.drawable.baseline_location_on_24);
+//
+//                Point khuCongNghiepTB = Point.fromLngLat(106.6668758797341,10.809034612616674);
+////                addAnotherAnnotation(mapView, khuCongNghiepTB, R.drawable.baseline_location_on_24);
+                                pointsTemp.add(weather);
+                                pointsTemp.add(light);
+//                pointsTemp.add(coopMar);
+//                pointsTemp.add(khuCongNghiepTB);
 
-                Point khuCongNghiepTB = Point.fromLngLat(106.6668758797341,10.809034612616674);
-//                addAnotherAnnotation(mapView, khuCongNghiepTB, R.drawable.baseline_location_on_24);
-                pointsTemp.add(daihoc);
-                pointsTemp.add(daihoc2);
-                pointsTemp.add(coopMar);
-                pointsTemp.add(khuCongNghiepTB);
+                                addListAnotherAnnotation(mapView, pointsTemp, R.drawable.baseline_location_on_24);
+                                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
 
-                addListAnotherAnnotation(mapView, pointsTemp, R.drawable.baseline_location_on_24);
-                floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                                        // Xử lí lấy tọa độ
+                                        Retrofit retrofit = APIClient.getClient();
+                                        apiInterface = retrofit.create(APIInterface.class);
+                                        Call<RespondMap> call = apiInterface.getMap();
+                                        Log.d("Call", "calling");
+                                        call.enqueue(new Callback<RespondMap>() {
+                                            @Override
+                                            public void onResponse(Call<RespondMap> call, Response<RespondMap> response) {
+                                                if (response.isSuccessful()) {
+                                                    Log.d("Call", "successful");
+                                                    RespondMap respondMap = response.body();
+                                                    if(respondMap != null){
+                                                        List<Double> center = respondMap.getOptionSuperIdol().getDefaultSuperIdol().getCenter();
+                                                        // Lấy tọa độ từ danh sách center
+                                                        double latitude = center.get(1);
+                                                        double longitude = center.get(0);
 
-                        // Xử lí lấy tọa độ
-                        Retrofit retrofit = APIClient.getClient();
-                        apiInterface = retrofit.create(APIInterface.class);
-                        Call<RespondMap> call = apiInterface.getMap();
-                        Log.d("Call", "calling");
-                        call.enqueue(new Callback<RespondMap>() {
-                            @Override
-                            public void onResponse(Call<RespondMap> call, Response<RespondMap> response) {
-                                if (response.isSuccessful()) {
-                                    Log.d("Call", "successful");
-                                    RespondMap respondMap = response.body();
-                                    if(respondMap != null){
-                                        List<Double> center = respondMap.getOptionSuperIdol().getDefaultSuperIdol().getCenter();
-                                        // Lấy tọa độ từ danh sách center
-                                        double latitude = center.get(1);
-                                        double longitude = center.get(0);
+                                                        // Thiết lập CameraOptions để di chuyển đến tọa độ mới
+                                                        CameraOptions cameraOptions = new CameraOptions.Builder()
+                                                                .center(Point.fromLngLat(longitude, latitude))
+                                                                .zoom(15.0)
+                                                                .build();
 
-                                        // Thiết lập CameraOptions để di chuyển đến tọa độ mới
-                                        CameraOptions cameraOptions = new CameraOptions.Builder()
-                                                .center(Point.fromLngLat(longitude, latitude))
-                                                .zoom(15.0)
-                                                .build();
-
-                                        // Thiết lập camera cho bản đồ
-                                        mapView.getMapboxMap().setCamera(cameraOptions);
+                                                        // Thiết lập camera cho bản đồ
+                                                        mapView.getMapboxMap().setCamera(cameraOptions);
 
 //                                        createCircleAnnotation(mapView, Point.fromLngLat(106.6296633, 10.8230983));
 
 //                                        createPointAnnotation(Point.fromLngLat(106.6296633, 10.8230983), "xxua", R.drawable.baseline_person_pin_24);
-                                        Point daihoc = Point.fromLngLat(106.6286989110777,10.80645296951909);
-                                        addAnotherAnnotation(mapView, daihoc, R.drawable.baseline_location_on_24);
+                                                        Point daihoc = Point.fromLngLat(106.6286989110777,10.80645296951909);
+                                                        addAnotherAnnotation(mapView, daihoc, R.drawable.baseline_location_on_24);
+                                                    }
+                                                }
+                                                else{
+                                                    Log.d("Eror Map", "Khong lay duoc");
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<RespondMap> call, Throwable t) {
+                                                Log.d("suscess", "deny");
+                                            }
+                                        });
+
+                                        locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
+                                        locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
+                                        getGestures(mapView).addOnMoveListener(onMoveListener);
+                                        floatingActionButton.hide();
                                     }
-                                }
-                                else{
-                                    Log.d("Eror Map", "Khong lay duoc");
-                                }
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<RespondMap> call, Throwable t) {
-                                Log.d("suscess", "deny");
+                                });
                             }
                         });
-
-                        locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
-                        locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
-                        getGestures(mapView).addOnMoveListener(onMoveListener);
-                        floatingActionButton.hide();
                     }
+                })
+                .exceptionally(ex -> {
+                    // Xử lý ngoại lệ nếu có lỗi xảy ra trong một hoặc cả hai cuộc gọi API
+                    return null;
                 });
-            }
-        });
-    }    private final OnMoveListener onMoveListener = new OnMoveListener() {
+
+
+    }
+    private final OnMoveListener onMoveListener = new OnMoveListener() {
         @Override
         public void onMoveBegin(@NonNull MoveGestureDetector moveGestureDetector) {
             getLocationComponent(mapView).removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
@@ -478,6 +545,9 @@ public class Map extends AppCompatActivity {
 
         LinearLayout navigateView = bottomSheetDialog.findViewById(R.id.navigation);
         LinearLayout cancelView = bottomSheetDialog.findViewById(R.id.cancel);
+
+
+
         // Listen events are clicked on Bottom Sheet
         navigateView.setOnClickListener(new View.OnClickListener() {
             @Override

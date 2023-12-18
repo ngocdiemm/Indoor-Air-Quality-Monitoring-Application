@@ -1,4 +1,5 @@
 package com.uit.myairquality.Interfaces;
+import com.google.gson.JsonObject;
 import com.uit.myairquality.Model.ChartResponse;
 import com.uit.myairquality.Model.MapRespone;
 import com.uit.myairquality.Model.Asset;
@@ -6,6 +7,8 @@ import com.uit.myairquality.Model.Asset;
 import com.uit.myairquality.Model.RespondMap;
 import com.uit.myairquality.Model.RespondWeather;
 import com.uit.myairquality.Model.Token;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -23,7 +26,7 @@ import retrofit2.http.Path;
 
 public interface APIInterface {
     @GET("api/master/asset/{assetId}")
-    Call<RespondWeather> getWeather(@Header("Authorization") String auth, @Path("assetId") String assetId);
+    Call<JsonObject> getWeather(@Header("Authorization") String auth, @Path("assetId") String assetId);
 
 
 

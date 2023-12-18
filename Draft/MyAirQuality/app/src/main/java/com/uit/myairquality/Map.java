@@ -183,12 +183,14 @@ public class Map extends AppCompatActivity {
         call.enqueue(new Callback<RespondWeather>() {
             @Override
             public void onResponse(Call<RespondWeather> call, Response<RespondWeather> response) {
-                if (assetId.equals(defaultWeatherId)) {
-                    userLocation1 = response.body();
-                } else if (assetId.equals(lightId)) {
-                    userLocation2 = response.body();
+                if(response.body() != null) {
+                    if (assetId.equals(defaultWeatherId)) {
+                        userLocation1 = response.body();
+                    } else if (assetId.equals(lightId)) {
+                        userLocation2 = response.body();
+                    }
+                    listener.onDataFetchComplete();
                 }
-                listener.onDataFetchComplete();
             }
 
             @Override
@@ -225,9 +227,11 @@ public class Map extends AppCompatActivity {
                     return true;
                 });
 
-                // Create point annotations
-                createPointAnnotation(pointUser1, "5zI6XqkQVSfdgOrZ1MyWEf", R.drawable.baseline_location_on_24);
-                createPointAnnotation(pointUser2, "6iWtSbgqMQsVq8RPkJJ9vo", R.drawable.baseline_location_on_24);
+                if(pointUser1 != null && pointUser2 != null) {
+                    // Create point annotations
+                    createPointAnnotation(pointUser1, "5zI6XqkQVSfdgOrZ1MyWEf", R.drawable.baseline_location_on_24);
+                    createPointAnnotation(pointUser2, "6iWtSbgqMQsVq8RPkJJ9vo", R.drawable.baseline_location_on_24);
+                }
 
 
                 // Set camera values
