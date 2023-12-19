@@ -2,6 +2,8 @@ package com.uit.myairquality;
 
 
 
+import static android.content.Intent.getIntent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -44,6 +46,7 @@ public class Settings extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemID=item.getItemId();
                 if(itemID==R.id.nav_home){
+                    Intent intent = getIntent();
                     loadFragment(new HomeFragment(), false);
                 }
                 else if (itemID==R.id.nav_dashboard){

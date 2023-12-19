@@ -36,6 +36,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:fontFamily="sans-serif-condensed-light"
         app:layout_constraintTop_toTopOf="@+id/btnLogin"
         tools:ignore="MissingConstraints" />
 
@@ -45,6 +46,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/secular_one"
         android:paddingTop="70dp"
+        app:fontFamily="sans-serif-condensed-light"
         android:text="@string/Welcome"
         android:textColor="@color/yellow"
         android:textSize="35sp"

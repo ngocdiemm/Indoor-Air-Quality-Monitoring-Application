@@ -35,5 +35,7 @@
     <string name="cancel">Hủy</string>
 <!--    <string name="home">Home</string>-->
 
+    <string name="loginSuccess">Đăng nhập thành công</string>
+    <string name="mapbox_access_token">sk.eyJ1IjoibmdvY2RpZW1tIiwiYSI6ImNscTJrcGwybTAzMzkya3BsaWczYTEzOGQifQ.n6q3fZjm1pxAbAS4dt9-fw</string>
 
 </resources>

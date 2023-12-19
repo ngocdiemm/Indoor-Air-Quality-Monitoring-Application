@@ -6,7 +6,7 @@
         android:startColor="#F1E366"
         android:centerColor="#4AD6D2"
         android:endColor="#329BEC"
-        android:angle="45"/>
+        android:angle="60"/>
     <!--    <corners-->
     <!--        android:bottomLeftRadius="45dp"-->
     <!--        android:bottomRightRadius="45dp"-->

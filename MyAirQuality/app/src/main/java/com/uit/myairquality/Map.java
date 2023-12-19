@@ -1,23 +1,10 @@
 package com.uit.myairquality;
-import com.google.android.gms.internal.maps.zzad;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.mapbox.geojson.Feature;
-import com.mapbox.maps.extension.style.layers.generated.SymbolLayer;
-import com.mapbox.maps.extension.style.sources.generated.GeoJsonSource;
-import com.uit.myairquality.Interfaces.APIInterface;
-import com.uit.myairquality.Model.APIClient;
-import com.uit.myairquality.Model.Asset;
-import com.uit.myairquality.Model.Token;
-import com.uit.myairquality.Model.URL;
-import com.uit.myairquality.R;
-import com.uit.myairquality.Model.RespondMap;
 
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
 import static com.mapbox.maps.plugin.gestures.GesturesUtils.getGestures;
 import static com.mapbox.maps.plugin.locationcomponent.LocationComponentUtils.getLocationComponent;
+
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -25,33 +12,84 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
+
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PointF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-
-//import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mapbox.android.gestures.MoveGestureDetector;
 import com.mapbox.geojson.Point;
-//import com.mapbox.maps.CameraChanged;
+import com.mapbox.maps.CameraBoundsOptions;
 import com.mapbox.maps.CameraOptions;
 import com.mapbox.maps.MapView;
+import com.mapbox.maps.MapboxMap;
 import com.mapbox.maps.Style;
 import com.mapbox.maps.plugin.LocationPuck2D;
+import com.mapbox.maps.plugin.Plugin;
+import com.mapbox.maps.plugin.animation.CameraAnimationsPlugin;
+import com.mapbox.maps.plugin.annotation.AnnotationConfig;
+import com.mapbox.maps.plugin.annotation.AnnotationPlugin;
+import com.mapbox.maps.plugin.annotation.AnnotationPluginImplKt;
+import com.mapbox.maps.plugin.annotation.AnnotationType;
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManager;
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationManagerKt;
+import com.mapbox.maps.plugin.annotation.generated.CircleAnnotationOptions;
+import com.mapbox.maps.plugin.annotation.generated.OnPointAnnotationClickListener;
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation;
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager;
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManagerKt;
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions;
 import com.mapbox.maps.plugin.gestures.OnMoveListener;
 import com.mapbox.maps.plugin.locationcomponent.LocationComponentPlugin;
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener;
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener;
+import com.uit.myairquality.Interfaces.APIInterface;
+import com.uit.myairquality.Interfaces.CallMap;
+import com.uit.myairquality.Interfaces.CallToken;
+import com.uit.myairquality.Interfaces.NearbyUsersCallback;
+import com.uit.myairquality.Model.APIClient;
+import com.uit.myairquality.Model.AccessToken;
+import com.uit.myairquality.Model.Asset;
+import com.uit.myairquality.Model.MapRespone;
+import com.uit.myairquality.Model.RespondMap;
+import com.uit.myairquality.Model.RespondWeather;
+import com.uit.myairquality.Model.RetrofitClient;
+import com.uit.myairquality.Model.TokenResponse;
+import com.uit.myairquality.Model.URL;
+import com.uit.myairquality.Model.User;
+import com.uit.myairquality.Model.Token;
 
+import org.osmdroid.config.Configuration;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.Marker;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,15 +98,32 @@ import retrofit2.Retrofit;
 
 public class Map extends AppCompatActivity {
 
+    private static final String BASE_URL = "https://uiot.ixxc.dev/api/master/";
+    private static final String assetId = "4EqQeQ0L4YNWNNTzvTOqjy";
+    //InterfaceWeather weatherInterFace;
+    static MapboxMap mapboxMap;
     MapView mapView;
-    Button back;
+    private static String authorization = "";
     APIInterface apiInterface;
+    AnnotationConfig annoConfig;
+    AnnotationPlugin annoPlugin;
+    PointAnnotationManager pointAnnoManager;
     FloatingActionButton floatingActionButton;
     Intent intent = new Intent();
     String access_token;
-    private static final String BASE_URL = "https://uiot.ixxc.dev/api/master/";
-    private static final String assetId = "4EqQeQ0L4YNWNNTzvTOqjy";
-    private static String authorization = "";
+    String defaultWeatherId= "5zI6XqkQVSfdgOrZ1MyWEf";
+    String lightId="6iWtSbgqMQsVq8RPkJJ9vo";
+    TextView txtHumidity,txtManufacturer,txtPlace,txtRainFall,txtTempInfor,txtWindDirection,txtWindSpeed;
+    TextView txtEmailInfor,txtBrightness,txtcolourTemperature,txtonOff;
+    Point pointUser1;
+    Point pointUser2;
+    RespondWeather userLocation1;
+    RespondWeather userLocation2;
+    RespondMap mapData;
+
+    TextView txtLight,txtWeather;
+
+    final  ArrayList<Point> pointsTemp = new ArrayList<>();
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
         public void onActivityResult(Boolean result) {
@@ -80,6 +135,8 @@ public class Map extends AppCompatActivity {
             }
         }
     });
+
+    //Cũ
     private final OnIndicatorBearingChangedListener onIndicatorBearingChangedListener = new OnIndicatorBearingChangedListener() {
         @Override
         public void onIndicatorBearingChanged(double v) {
@@ -94,232 +151,528 @@ public class Map extends AppCompatActivity {
         }
     };
 
-    private final OnMoveListener onMoveListener = new OnMoveListener() {
-        @Override
-        public void onMoveBegin(@NonNull MoveGestureDetector moveGestureDetector) {
-            getLocationComponent(mapView).removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
-            getLocationComponent(mapView).removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
-            getGestures(mapView).removeOnMoveListener(onMoveListener);
-            floatingActionButton.show();
+
+    private void DrawMap() {
+        mapView.setVisibility(View.INVISIBLE);
+
+        new Thread(() -> {
+            while (!RespondMap.isReady) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                   e.printStackTrace();
+                }
+           }
+            runOnUiThread(() -> setMapView());
+
+        }).start();
+    }
+    private void GetUserNearbyLocation(){
+        GetUserNearBy(defaultWeatherId, access_token, new NearbyUsersCallback() {
+            @Override
+            public void onDataFetchComplete() {
+                pointUser1 = Point.fromLngLat(userLocation1.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(0),userLocation1.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(1));
+            }
+        });
+        GetUserNearBy(lightId, access_token, new NearbyUsersCallback() {
+            @Override
+            public void onDataFetchComplete() {
+                pointUser2 = Point.fromLngLat(userLocation2.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(0),userLocation2.getAttributeWeather().getLocationSuperIdol().getValueSuperIdol().getCoordinates().get(1));
+            }
+        });
+    }
+
+    private void GetUserNearBy(String assetId, String token, NearbyUsersCallback listener){
+        apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        Call<RespondWeather> call = apiInterface.getWeather(assetId, "Bearer "+ token);
+        call.enqueue(new Callback<RespondWeather>() {
+            @Override
+            public void onResponse(Call<RespondWeather> call, Response<RespondWeather> response) {
+                if(response.body() != null) {
+                    if (assetId.equals(defaultWeatherId)) {
+                        userLocation1 = response.body();
+                    } else if (assetId.equals(lightId)) {
+                        userLocation2 = response.body();
+                    }
+                    listener.onDataFetchComplete();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespondWeather> call, Throwable t) {
+                Log.d("API CALL", t.getMessage().toString());
+            }
+        });
+    }
+
+
+
+    private void setMapView() {
+        mapData = RespondMap.respondMap.getRespondMapData();
+        mapView.setVisibility(View.VISIBLE);
+        mapboxMap = mapView.getMapboxMap();
+        if (mapboxMap != null) {
+            //Objects.requireNonNull(new Gson().toJson(mapData));
+            mapboxMap.loadStyleUri("mapbox://styles/ngocdiemm/clq3aocdo00eg01qs4gr19yop", style -> {
+                style.removeStyleLayer("poi-level-1");
+                style.removeStyleLayer("highway-name-major");
+
+                annoPlugin = AnnotationPluginImplKt.getAnnotations(mapView);
+                annoConfig = new AnnotationConfig("map_annotation");
+                pointAnnoManager = (PointAnnotationManager) annoPlugin.createAnnotationManager(AnnotationType.PointAnnotation, annoConfig);
+                pointAnnoManager.addClickListener(pointAnnotation -> {
+                    String id = Objects.requireNonNull(pointAnnotation.getData()).getAsJsonObject().get("id").getAsString();
+                    GetUserNearBy(id, AccessToken.getToken(), new NearbyUsersCallback() {
+                        @Override
+                        public void onDataFetchComplete() {
+                        }
+                    });
+                    showDialog(id);
+                    return true;
+                });
+
+                if(pointUser1 != null && pointUser2 != null) {
+                    // Create point annotations
+                    createPointAnnotation(pointUser1, "5zI6XqkQVSfdgOrZ1MyWEf", R.drawable.baseline_location_on_24);
+                    createPointAnnotation(pointUser2, "6iWtSbgqMQsVq8RPkJJ9vo", R.drawable.baseline_location_on_24);
+                }
+
+
+                // Set camera values
+                setCameraValues();
+
+                CameraAnimationsPlugin cameraAnimationsPlugin = mapView.getPlugin(Plugin.MAPBOX_CAMERA_PLUGIN_ID);
+                if (cameraAnimationsPlugin != null) {
+                    mapView.setVisibility(View.VISIBLE);
+                }
+                mapView.setVisibility(View.VISIBLE);
+            });
+        }
+    }
+    private void showDialog(String idUser) {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        try {
+            if(idUser.equals(lightId)){
+
+                if (userLocation2 != null) {
+//                    Toast.makeText(requireContext(),"Color "+ String.valueOf(userLocation2.getAttributeWeather().getColourTemperature().getValueColorSuperIdol()), Toast.LENGTH_SHORT).show();
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.activity_bottom_sheet_light);
+                    txtEmailInfor = dialog.findViewById(R.id.txtInforEmail);
+                    txtBrightness = dialog.findViewById(R.id.txtInforBrightness);
+                    txtcolourTemperature = dialog.findViewById(R.id.txtCoulourTemp);
+                    txtonOff = dialog.findViewById(R.id.txtOnOff);
+
+                    txtEmailInfor.setText(String.valueOf(userLocation2.getAttributeWeather().getEmailSuperIdol().getValueSuperIdolemail()));
+                    txtBrightness.setText(String.valueOf(userLocation2.getAttributeWeather().getBrightness().getValueBrightnessSuperIdol())+" %");
+                    txtcolourTemperature.setText(String.valueOf(userLocation2.getAttributeWeather().getColourTemperature().getValueColorSuperIdol()));
+                    txtonOff.setText(String.valueOf(userLocation2.getAttributeWeather().getOnOff().getValueOnOffSuperIdol()));
+
+                    // Set click listener for txtLight
+                    txtLight = dialog.findViewById(R.id.txtLight);
+                    txtLight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent_light = new Intent(Map.this, Settings.class);
+                            startActivity(intent_light);
+                            dialog.dismiss();
+                        }
+                    });
+                }
+
+//            Toast.makeText(requireContext(), "Onoff: "+ String.valueOf(userLocation2.getAttributeWeather().getOnOff().getValueOnOffSuperIdol()), Toast.LENGTH_SHORT).show();
+            }
+            if(idUser.equals(defaultWeatherId)){
+                if (userLocation1 != null) {
+//                    Toast.makeText(requireContext(),"Temperature "+ String.valueOf(userLocation1.getAttributeWeather().getTemperature().getValueTemperatureSuperIdol()), Toast.LENGTH_SHORT).show();
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.activity_bottom_sheet_default_weather);
+
+                    txtHumidity = dialog.findViewById(R.id.txtHumidity);
+                    txtManufacturer = dialog.findViewById(R.id.txtManufacturer);
+                    txtPlace = dialog.findViewById(R.id.txtPlace);
+                    txtRainFall = dialog.findViewById(R.id.txtRainFall);
+                    txtTempInfor = dialog.findViewById(R.id.txtTempInfor);
+                    txtWindDirection = dialog.findViewById(R.id.txtWindDirection);
+                    txtWindSpeed = dialog.findViewById(R.id.txtWindSpeed);
+
+                    txtHumidity.setText(String.valueOf(userLocation1.getAttributeWeather().getHumidity().getValueHuminitySuperIdol())+" %");
+                    txtManufacturer.setText(String.valueOf(userLocation1.getAttributeWeather().getManufacturer().getValueManufacture()));
+                    txtPlace.setText(String.valueOf(userLocation1.getAttributeWeather().getPlace().getValuePlace()));
+                    txtRainFall.setText(String.valueOf(userLocation1.getAttributeWeather().getRainfall().getValueRainfall()));
+                    txtTempInfor.setText(String.valueOf(userLocation1.getAttributeWeather().getTemperature().getValueTemperatureSuperIdol())+" °C");
+                    txtWindDirection.setText(String.valueOf(userLocation1.getAttributeWeather().getWindDirection().getValueWinDirection()));
+                    txtWindSpeed.setText(String.valueOf(userLocation1.getAttributeWeather().getWindSpeed().getValueWinSpeed()));
+
+                    // Set click listener for txtWeather
+                    txtWeather = dialog.findViewById(R.id.txtDefaultWeather);
+                    txtWeather.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent_weather = new Intent(Map.this, Settings.class);
+                            startActivity(intent_weather);
+                            dialog.dismiss();
+                        }
+                    });
+                }
+
+
+            }
+            dialog.show();
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+            dialog.getWindow().setGravity(Gravity.BOTTOM);
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e("DialogError", "Error in showDialog: " + e.getMessage());
         }
 
-        @Override
-        public boolean onMove(@NonNull MoveGestureDetector moveGestureDetector) {
-            return false;
+
+    }
+
+    private void createPointAnnotation(Point point, String id, int iconResource) {
+        ArrayList<PointAnnotationOptions> markerList = new ArrayList<>();
+        Drawable iconDrawable = getResources().getDrawable(iconResource);
+        Bitmap iconBitmap = drawableToBitmap(iconDrawable);
+        JsonObject idDeviceTemperature = new JsonObject();
+        idDeviceTemperature.addProperty("id", id);
+        PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
+                .withPoint(point)
+                .withIconImage(iconBitmap)
+                .withData(idDeviceTemperature);
+        markerList.add(pointAnnotationOptions);
+        pointAnnoManager.create(markerList);
+    }
+    public void addListAnotherAnnotation(MapView mapView, ArrayList<Point> points, int iconResource) {
+
+
+        Drawable iconDrawable = getResources().getDrawable(iconResource);
+        Bitmap iconBitmap = drawableToBitmap(iconDrawable);
+        ArrayList<PointAnnotationOptions> markerList = new ArrayList<>();
+        for (Point point: points) {
+            PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
+                    .withPoint(point).withIconImage(iconBitmap);
+            markerList.add(pointAnnotationOptions);
         }
 
-        @Override
-        public void onMoveEnd(@NonNull MoveGestureDetector moveGestureDetector) {
-
+        if(pointAnnoManager == null) {
+            AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
+            pointAnnoManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationApi, new AnnotationConfig());
         }
-    };
 
+        pointAnnoManager.create(markerList);
+
+        pointAnnoManager.addClickListener(new OnPointAnnotationClickListener() {
+            @Override
+            public boolean onAnnotationClick(@NonNull PointAnnotation pointAnnotation) {
+                showBottomSheetDialog();
+                return false;
+            }
+        });
+    }
+
+    private Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
+
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
+    private void setCameraValues() {
+        if (mapboxMap != null) {
+            mapboxMap.setCamera(
+                    new CameraOptions.Builder()
+                            .center(Point.fromLngLat(mapData.getOptionSuperIdol().getDefaultSuperIdol().getCenter().get(0),mapData.getOptionSuperIdol().getDefaultSuperIdol().getCenter().get(1) ))
+                            .zoom(mapData.getOptionSuperIdol().getDefaultSuperIdol().getZoom())
+                            .build()
+            );
+
+            mapboxMap.setBounds(
+                    new CameraBoundsOptions.Builder()
+                            .minZoom(0.0)
+                            .maxZoom(19.0)
+                            .bounds(mapData.getOptionSuperIdol().getDefaultSuperIdol().getBounds())
+                            .build()
+            );
+        }
+    }
+    private void GetDataMap(){
+        Retrofit retrofit = APIClient.getClient(URL.mainURL);
+        apiInterface = retrofit.create(APIInterface.class);
+        Call<RespondMap> call = apiInterface.getMap();
+        call.enqueue(new Callback<RespondMap>() {
+            @Override
+            public void onResponse(Call<RespondMap> call, Response<RespondMap> response) {
+                if (response.isSuccessful()) {
+                    RespondMap.setRespondMapData(response.body());
+                }
+                else{
+                    Log.d("Error Map", "Khong lay duoc");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RespondMap> call, Throwable t) {
+                Log.d("success", "deny");
+            }
+    });
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        Intent intent = getIntent();
-        access_token =  intent.getStringExtra("access_token");
-        Log.d("calling", "access_token");
-        Log.d("access token map", "access_token");
+        access_token =  getIntent().getStringExtra("access_token");
         mapView = findViewById(R.id.mapView);
         floatingActionButton = findViewById(R.id.focusLocation);
-        floatingActionButton.hide();
-        authorization = "Bearer "+access_token;
+        //floatingActionButton.hide();
+        authorization = "Bearer"+ access_token;
 
-
-
-
-        if (ActivityCompat.checkSelfPermission(Map.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(Map.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             activityResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
         }
+        apiInterface = RetrofitClient.getClient().create(APIInterface.class);
+        GetUserNearbyLocation();
+        GetDataMap();
+        DrawMap();
 
-        mapView.getMapboxMap().loadStyleUri("mapbox://styles/ngocdiemm/clq3aocdo00eg01qs4gr19yop", new Style.OnStyleLoaded() {
+//    }   private final OnMoveListener onMoveListener = new OnMoveListener() {
+//        @Override
+//        public void onMoveBegin(@NonNull MoveGestureDetector moveGestureDetector) {
+//            getLocationComponent(mapView).removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
+//            getLocationComponent(mapView).removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
+//            getGestures(mapView).removeOnMoveListener(onMoveListener);
+//            floatingActionButton.show();
+//        }
+//
+//        @Override
+//        public boolean onMove(@NonNull MoveGestureDetector moveGestureDetector) {
+//            return false;
+//        }
+//
+//        @Override
+//        public void onMoveEnd(@NonNull MoveGestureDetector moveGestureDetector) {
+//
+//        }
+    };
+
+    private void showBottomSheetDialog() {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
+
+        LinearLayout navigateView = bottomSheetDialog.findViewById(R.id.navigation);
+        LinearLayout cancelView = bottomSheetDialog.findViewById(R.id.cancel);
+        // Listen events are clicked on Bottom Sheet
+        navigateView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onStyleLoaded(@NonNull Style style) {
-                mapView.getMapboxMap().setCamera(new CameraOptions.Builder().zoom(20.0).build());
-                LocationComponentPlugin locationComponentPlugin = getLocationComponent(mapView);
-                locationComponentPlugin.setEnabled(true);
-                LocationPuck2D locationPuck2D = new LocationPuck2D();
-                locationPuck2D.setBearingImage(AppCompatResources.getDrawable(Map.this, R.drawable.baseline_location_on_24));
+            public void onClick(View v) {
+                Intent intent = new Intent(Map.this, Settings.class);
+                startActivity(intent);
+            }
+        });
+        cancelView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.cancel();
+            }
+        });
 
-                locationComponentPlugin.setLocationPuck(locationPuck2D);
-                locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
-                locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
-                getGestures(mapView).addOnMoveListener(onMoveListener);
+        bottomSheetDialog.show();
+    }
 
-                floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+    public void createCircleAnnotation(MapView mapView, Point point) {
 
-                        // Xử lí lấy tọa độ
-                        Retrofit retrofit = APIClient.getClient();
-                        apiInterface = retrofit.create(APIInterface.class);
-                        Call<RespondMap> call = apiInterface.getMap();
-                        Log.d("Call", "calling");
-                        call.enqueue(new Callback<RespondMap>() {
-                            @Override
-                            public void onResponse(Call<RespondMap> call, Response<RespondMap> response) {
-                                if (response.isSuccessful()) {
-                                    Log.d("Location Map", "successful");
-                                    RespondMap respondMap = response.body();
-                                    if(respondMap != null){
-                                        List<Double> center = respondMap.getOptionSuperIdol().getDefaultSuperIdol().getCenter();
-                                        // Lấy tọa độ từ danh sách center
-                                        double latitude = center.get(1);
-                                        double longitude = center.get(0);
+        AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
+        CircleAnnotationManager circleAnnotationManager = CircleAnnotationManagerKt.createCircleAnnotationManager(annotationApi, new AnnotationConfig());
 
-                                        // Thiết lập CameraOptions để di chuyển đến tọa độ mới
-                                        CameraOptions cameraOptions = new CameraOptions.Builder()
-                                                .center(Point.fromLngLat(longitude, latitude))
-                                                .zoom(15.0)
-                                                .build();
+        // circle annotations options
+        CircleAnnotationOptions circleAnnotationOptions = new CircleAnnotationOptions()
+                .withPoint(point)
+                .withCircleRadius(8.0)
+                .withCircleColor("#ee4e8b")
+                .withCircleBlur(0.5)
+                .withCircleStrokeWidth(2.0)
+                .withCircleStrokeColor("#ffffff");
 
-                                        Call<Asset> getAsset = apiInterface.getAsset(authorization, assetId);
-                                        getAsset.enqueue(new Callback<Asset>() {
-                                            @Override
-                                            public void onResponse(Call<Asset> call, Response<Asset> response) {
+        circleAnnotationManager.create(circleAnnotationOptions);
+    }
+
+    public void addAnotherAnnotation(MapView mapView, Point point, int iconResource) {
+
+        Drawable iconDrawable = getResources().getDrawable(iconResource);
+        Bitmap iconBitmap = drawableToBitmap(iconDrawable);
+        AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
+        PointAnnotationManager pointAnnoManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationApi, new AnnotationConfig());
 
 
-                                            }
+        PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
+                .withPoint(point).withIconImage(iconBitmap);
+        pointAnnoManager.create(pointAnnotationOptions);
+        pointAnnoManager.addClickListener(new OnPointAnnotationClickListener() {
+            @Override
+            public boolean onAnnotationClick(@NonNull PointAnnotation pointAnnotation) {
+                if(pointAnnotation.getPoint() == point) {
+                    Toast.makeText(Map.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
+    }
 
-                                            @Override
-                                            public void onFailure(Call<Asset> call, Throwable t) {
 
-                                            }
-                                        });
 
-                                        // Thiết lập camera cho bản đồ
-                                        mapView.getMapboxMap().setCamera(cameraOptions);
+}
+
+
+/*public class Map extends AppCompatActivity {
+
+
+    private MapView mapView;
+    MapRespone MapRespone;
+    User userCallApi, user;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_map);
+        double[] center=new double[2];
+        double[] bounds=new double[4];
+        float zoom=0;
+        double minZoom=0 ;
+        double maxZoom=0;
+        boolean boxZoom ;
+        // Initialize the osmdroid configuration
+        Configuration.getInstance().load(this, getPreferences(MODE_PRIVATE));
+
+        // Get a reference to the MapView from the layout
+        mapView = findViewById(R.id.MapView);
+
+        fetchDataFromApi();
+
+        mapView.setMinZoomLevel(minZoom); // Giá trị minZoom
+        mapView.setMaxZoomLevel(maxZoom);
+        GeoPoint defaultLocation = new GeoPoint(center[1], center[0]);
+        Log.i("DATA:",center[1]+" "+center[0]);
+        mapView.getController().setCenter(defaultLocation);
+        mapView.getController().setZoom(16.0);
+        // Add a marker to the default location
+        mapView.getOverlays().add(new Marker(mapView));
+
+        // Refresh the map view
+        mapView.invalidate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+    private void setMapValues(MapRespone mapResponse) {
+        if (mapResponse != null) {
+            MapRespone.Options options = mapResponse.getOptions();
+            if (options != null) {
+                MapRespone.DefaultOptions defaultOptions = options.getDefaultOptions();
+                if (defaultOptions != null) {
+                    double[] center = defaultOptions.getCenter();
+                    double[] bounds = defaultOptions.getBounds();
+                    float zoom = defaultOptions.getZoom();
+                    double minZoom = defaultOptions.getMinZoom();
+                    double maxZoom = defaultOptions.getMaxZoom();
+                    boolean boxZoom = defaultOptions.getBoxZoom();
+
+
+                }
+
+            }
+        }
+    }
+    private void fetchDataFromApi() {
+        CallToken callToken = APIClient.CallToken();
+        Call<TokenResponse> usercallToken = callToken.sendRequest(
+                "password",
+                "openremote",
+                userCallApi.getUsername(),
+                userCallApi.getPassword()
+        );
+        usercallToken.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                if (response.body() != null) {
+                    String accessToken = response.body().getAccessToken();
+                    userCallApi.setToken(accessToken);
+
+                    Log.d("Failure on call map", userCallApi.getToken());
+
+                     CallMap callMap = APIClient.CallMap();
+                    Call<MapRespone> userCallMap = callMap.getMapData(
+                            "Bearer " + userCallApi.getToken()
+                    );
+
+                    userCallMap.enqueue(new Callback<MapRespone>() {
+
+                        @Override
+                        public void onResponse(Call<MapRespone> call, Response<MapRespone> response) {
+                            if (response.isSuccessful()) {
+                                MapRespone mapResponse = response.body();
+                                if (mapResponse != null) {
+                                    MapRespone.Options options = mapResponse.getOptions();
+                                    if (options != null) {
+                                        MapRespone.DefaultOptions defaultOptions = options.getDefaultOptions();
+                                        if (defaultOptions != null) {
+                                            double[] center = defaultOptions.getCenter();
+                                            double[] bounds = defaultOptions.getBounds();
+                                            float zoom = defaultOptions.getZoom();
+                                            double minZoom = defaultOptions.getMinZoom();
+                                            double maxZoom = defaultOptions.getMaxZoom();
+                                            boolean boxZoom = defaultOptions.getBoxZoom();
+
+
+                                        }
 
                                     }
                                 }
-                                else{
-                                    Log.d("Eror Map", "Khong lay duoc");
-                                }
-
+                            } else {
+                                // Xử lý khi có lỗi trong response
                             }
-
-                            @Override
-                            public void onFailure(Call<RespondMap> call, Throwable t) {
-                                Log.d("suscess", "deny");
-                            }
-                        });
-
-//                        locationComponentPlugin.addOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
-//                        locationComponentPlugin.addOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
-                          getGestures(mapView).addOnMoveListener(onMoveListener);
-                          floatingActionButton.hide();
-                    }
-                });
+                        }
+                        @Override
+                        public void onFailure(Call<com.uit.myairquality.Model.MapRespone> call, Throwable t) {
+                            Log.d("Failure on call map", "onFailure");
+                        }
+                    });
+                }
+                else {
+                    Log.d("Failure on call map", "Không có dữ liệu");
+                }
             }
-        });
-    }
-    private void showBottomSheetDialog() {
-
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
-
-        LinearLayout navigateView = bottomSheetDialog.findViewById(R.id.navigation);
-        LinearLayout cancelView = bottomSheetDialog.findViewById(R.id.cancel);
-        // Listen events are clicked on Bottom Sheet
-        navigateView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Map.this, Settings.class);
-                startActivity(intent);
-            }
-        });
-        cancelView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.cancel();
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                Log.d("Failure on call map", "onFailure");
             }
         });
 
-        bottomSheetDialog.show();
-    }
-}
-
-/*public class Map extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
-
-    private GoogleMap mMap;
-    private Marker markerPerth;
-    private Marker markerSydney;
-    private Marker markerBrisbane;
-    private final LatLng PERTH = new LatLng(-31.952854, 115.857342);
-    private final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
-    private final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
-        mapFragment.getMapAsync(this);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        // Add some markers to the map, and add a data object to each marker.
-        markerPerth = mMap.addMarker(new MarkerOptions().position(PERTH).title("Perth"));
-        markerPerth.setTag(0);
-
-        markerSydney = mMap.addMarker(new MarkerOptions().position(SYDNEY).title("Sydney"));
-        markerSydney.setTag(0);
-
-        markerBrisbane = mMap.addMarker(new MarkerOptions().position(BRISBANE).title("Brisbane"));
-        markerBrisbane.setTag(0);
-
-        // Set a listener for marker click.
-        mMap.setOnMarkerClickListener(this);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
-
-    private void showBottomSheetDialog() {
-
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
-
-        LinearLayout navigateView = bottomSheetDialog.findViewById(R.id.navigation);
-        LinearLayout cancelView = bottomSheetDialog.findViewById(R.id.cancel);
-        // Listen events are clicked on Bottom Sheet
-        navigateView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Map.this, Settings.class);
-                startActivity(intent);
-            }
-        });
-        cancelView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.cancel();
-            }
-        });
-
-        bottomSheetDialog.show();
-    }
-
-    @Override
-    public boolean onMarkerClick(final Marker marker) {
-
-        // Retrieve the data from the marker.
-        Integer markerTag = (Integer) marker.getTag();
-
-        // Check if a click count was set, then display the click count.
-        if (markerTag != null) {
-            showBottomSheetDialog();
-        }
-
-        // Return false to indicate that we have not consumed the event and that we wish
-        // for the default behavior to occur (which is for the camera to move such that the
-        // marker is centered and for the marker's info window to open, if it has one).
-        return false;
     }
 }*/
+

@@ -2,24 +2,38 @@ package com.uit.myairquality;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.uit.myairquality.Interfaces.APIInterface;
 import com.uit.myairquality.Model.APIClient;
+import com.uit.myairquality.Model.Token;
 import com.uit.myairquality.Model.URL;
+import com.uit.myairquality.R;
+import com.uit.myairquality.Settings;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Register extends AppCompatActivity {
@@ -37,8 +51,7 @@ public class Register extends AppCompatActivity {
         ChangeLanguages.loadLocaleChanged(Register.this);
 
         setContentView(R.layout.activity_register);
-
-        apiInterface = APIClient.getClient().create(APIInterface.class);
+        apiInterface = APIClient.getClient(URL.mainURL).create(APIInterface.class);
         username = (EditText) findViewById(R.id.Username);
         password = (EditText) findViewById(R.id.Password);
         repassword = (EditText) findViewById(R.id.ReType);
