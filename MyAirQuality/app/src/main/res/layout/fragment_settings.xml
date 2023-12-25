@@ -38,8 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:text="Account"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -53,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:layout_marginBottom="500dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="120dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:cardCornerRadius="10dp"
@@ -71,13 +70,27 @@
 
 
         </LinearLayout>
+        <ImageView
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/moon"/>
+        <ImageView
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_gravity="top"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/pen"/>
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:minHeight="48dp"
@@ -90,11 +103,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="50dp"
             android:clickable="true"
             android:minHeight="48dp"
-            android:text="Change Password"
+            android:text="Night Mode"
             android:textSize="20sp"
             android:textStyle="normal"
             app:fontFamily="sans-serif-condensed-light" />
@@ -104,10 +117,9 @@
             android:src="@drawable/icon_next"
             android:layout_gravity="end"
             android:layout_marginTop="15dp"/>
-        <ImageView
+        <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_next"
             android:layout_gravity="end"
             android:layout_marginTop="55dp" />
 
@@ -119,7 +131,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:text="Preferences"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -132,7 +144,7 @@
         android:id="@+id/cardView3"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:layout_marginBottom="130dp"
+        android:layout_marginBottom="100dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:cardCornerRadius="10dp"
@@ -150,13 +162,26 @@
 
 
         </LinearLayout>
-
+        <ImageView
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/connected"/>
+        <ImageView
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_gravity="top"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/privacy"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:minHeight="48dp"
@@ -169,7 +194,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="50dp"
             android:clickable="true"
             android:minHeight="48dp"
@@ -228,7 +253,20 @@
 
 
         </LinearLayout>
-
+        <ImageView
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/faq"/>
+        <ImageView
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_gravity="top"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/contact"/>
 
 
 
@@ -237,7 +275,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
             android:clickable="true"
             android:minHeight="48dp"
@@ -264,7 +302,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="50dp"
             android:clickable="true"
             android:minHeight="48dp"

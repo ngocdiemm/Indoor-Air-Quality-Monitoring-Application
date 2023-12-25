@@ -19,11 +19,13 @@ import android.widget.TimePicker;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.uit.myairquality.Interfaces.APIInterface;
 import com.uit.myairquality.Interfaces.CallToken;
 import com.uit.myairquality.Interfaces.CallWeather;
@@ -152,6 +154,7 @@ public class DashboardFragment extends Fragment implements datetimepicker.OnDate
 
 
 
+
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_dashboard, container, false);
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -255,7 +258,7 @@ public class DashboardFragment extends Fragment implements datetimepicker.OnDate
 
         return view;
     }
- 
+
     private void populateChart(List<ChartResponse> chartresponses, String Label) {
         ArrayList<Entry> entries = new ArrayList<>();
 
@@ -268,7 +271,7 @@ public class DashboardFragment extends Fragment implements datetimepicker.OnDate
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.setLineWidth(2.0f);
         dataSet.setColor(Color.BLUE);
-        dataSet.setCircleColor(Color.BLUE);
+        dataSet.setCircleColor(Color.RED);
         dataSet.setCircleRadius(5f);
 
         LineData lineData = new LineData(dataSet);
@@ -277,12 +280,14 @@ public class DashboardFragment extends Fragment implements datetimepicker.OnDate
         lineChart.invalidate();
     }
     private void setupLineChart() {
+
         lineChart.getDescription().setEnabled(false);
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(true);
         lineChart.setTouchEnabled(true);
         lineChart.setBackgroundColor(Color.TRANSPARENT);
-        lineChart.getDescription().setTextColor(Color.WHITE);
+//        lineChart.getDescription().setTextColor(Color.BLACK);
+//        lineChart.getDescription().setTextSize(18);
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getLegend().setEnabled(false);
         lineChart.setDoubleTapToZoomEnabled(false);
@@ -293,11 +298,34 @@ public class DashboardFragment extends Fragment implements datetimepicker.OnDate
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setValueFormatter(new ConvertTime());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setLabelRotationAngle(45f);
+        xAxis.setTextColor(Color.BLACK);
+        xAxis.setTextSize(10);
+        xAxis.setLabelRotationAngle(30f);
 
         YAxis leftAxis = lineChart.getAxisLeft();
-        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setTextColor(Color.BLACK);
+        leftAxis.setTextSize(15);
+//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Đặt vị trí của trục X ở dưới
+//        xAxis.setValueFormatter(new MyXAxisValueFormatter()); // Đặt định dạng cho giá trị trục X
+
+        YAxis yAxis = lineChart.getAxisLeft();
+        yAxis.setValueFormatter(new MyYAxisValueFormatter());
+    }
+    public class MyXAxisValueFormatter extends ValueFormatter {
+
+        @Override
+        public String getAxisLabel(float value, AxisBase axis) {
+            // Định dạng giá trị trục X theo nhu cầu của bạn
+            return "" + ((int) value);
+        }
+    }
+    public class MyYAxisValueFormatter extends ValueFormatter {
+
+        @Override
+        public String getAxisLabel(float value, AxisBase axis) {
+            // Định dạng giá trị trục Y theo nhu cầu của bạn
+            return "" + ((int) value);
+        }
     }
     private void showDateTimePickerDialog(boolean isStartTime) {
         datetimepicker dateTimePickerFragment = new datetimepicker(this, isStartTime);
@@ -417,5 +445,5 @@ public class DashboardFragment extends Fragment implements datetimepicker.OnDate
 //        } else if (buttonNumber == 2) {
 //            selectedDateTime = sdf.format(calendar2.getTime());
 //            dateTo.setText(selectedDateTime);
-        }
     }
+}

@@ -23,6 +23,7 @@
             android:paddingTop="100dp"
             android:paddingRight="40dp"
             app:srcCompat="@drawable/weather" />
+
     </LinearLayout>
 
     <TextView
@@ -39,6 +40,12 @@
         app:fontFamily="sans-serif-condensed-light"
         app:layout_constraintTop_toTopOf="@+id/btnLogin"
         tools:ignore="MissingConstraints" />
+<!--    <Switch-->
+<!--        android:layout_width="20sp"-->
+<!--        android:layout_height="20sp" -->
+<!--        android:gravity="left"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:layout_marginTop="10dp"/>-->
 
     <TextView
         android:id="@+id/Welcome"
@@ -47,7 +54,7 @@
         android:fontFamily="@font/secular_one"
         android:paddingTop="70dp"
         app:fontFamily="sans-serif-condensed-light"
-        android:text="@string/Welcome"
+        android:text="My Air Quality"
         android:textColor="@color/yellow"
         android:textSize="35sp"
         android:textStyle="bold"
@@ -78,7 +85,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="200dp"
         android:background="@drawable/button_background"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="sans-serif-light"
         android:text="@string/btnLogin"
         android:textColor="#394BA0"
         android:textSize="30dp"
@@ -97,6 +104,7 @@
         android:text="@string/btnRegister"
         android:textColor="#394BA0"
         android:textStyle="bold"
+        android:fontFamily="sans-serif-light"
         android:textSize="30dp"
         android:layout_marginBottom="110dp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"

@@ -5,7 +5,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_information">
+    android:background="@drawable/background_sheet"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginBottom="30dp">
     <TextView
         android:id="@+id/txtLight"
         android:layout_width="match_parent"
@@ -13,8 +16,9 @@
         android:layout_marginTop="5dp"
         android:text="LIGHT"
         android:textAlignment="center"
-        android:textColor="#C107EC"
-        android:textSize="20dp"
+        android:textColor="#1C36B1"
+        android:textSize="30dp"
+        android:fontFamily="sans-serif-light"
         android:textStyle="bold" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,10 +33,13 @@
             android:id="@+id/textView31"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/on_off_24"
+            android:drawablePadding="10dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-light"
             android:text="On off"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,14 +48,17 @@
             android:id="@+id/txtOnOff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_gravity="center"
-            android:fontFamily="sans-serif"
-            android:text=""
-            android:textColor="#13beed"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginRight="10dp"
+            android:text="aa"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:textSize="16sp" />
+            tools:textSize="20sp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -65,9 +75,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold"
+            android:drawableLeft="@drawable/email_24"
+            android:drawablePadding="10dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -78,13 +91,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif"
-            android:text=""
-            android:textColor="#13beed"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif-light"
+            android:text="test@gmail.com"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:textSize="16sp" />
+            tools:textSize="20sp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -101,9 +116,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Brightness"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold"
+            android:drawableLeft="@drawable/brightness_24"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -113,13 +131,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif"
-            android:text=""
-            android:textColor="#13beed"
+            android:text="98"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:textSize="16sp" />
+            tools:textSize="20sp"
+            android:layout_marginRight="10dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -135,10 +155,13 @@
             android:id="@+id/textView30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Colour temperature"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold"
+            android:text="Color temperature"
+            android:drawableLeft="@drawable/color_24"
+            android:drawablePadding="10dp"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -148,13 +171,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="sans-serif"
-            android:text=""
-            android:textColor="#13beed"
+            android:fontFamily="sans-serif-light"
+            android:text="1000"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:textSize="16sp" />
+            tools:textSize="20sp"
+            android:layout_marginRight="10dp"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

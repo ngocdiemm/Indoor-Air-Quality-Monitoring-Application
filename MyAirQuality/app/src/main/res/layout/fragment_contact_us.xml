@@ -46,7 +46,7 @@
         android:layout_marginLeft="20dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp"
-        android:layout_marginBottom="200dp">
+        android:layout_marginBottom="150dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         app:cardCornerRadius="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         app:cardElevation="10dp">
         <TextView
             android:layout_width="wrap_content"
@@ -150,7 +150,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Do Quang Huy"
+            android:text="NC UIT"
             android:textColor="@color/black"
             android:layout_gravity="start"
             android:layout_marginLeft="70dp"
@@ -176,7 +176,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="dqq.h"
+            android:text="nc.uit"
             android:textColor="@color/black"
             android:layout_gravity="start"
             android:layout_marginLeft="70dp"
@@ -195,7 +195,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thay Giao Ba"
+            android:text="NC UIT"
             android:textColor="@color/black"
             android:layout_gravity="start"
             android:layout_marginLeft="70dp"
