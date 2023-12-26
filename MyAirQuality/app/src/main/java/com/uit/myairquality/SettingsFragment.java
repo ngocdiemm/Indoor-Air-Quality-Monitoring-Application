@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 /**
@@ -71,6 +73,23 @@ public class SettingsFragment extends Fragment {
        txtContact = view.findViewById(R.id.txtContact);
        btnContact = view.findViewById(R.id.btnContact);
 
+        Switch darkModeSwitch = view.findViewById(R.id.darkMode);
+
+        // Set the initial state of the switch based on stored preferences
+        darkModeSwitch.setChecked(SharedPreferenceManager.getInstance(requireContext()).getStateMode());
+
+        // Set listener for switch change
+        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Save the state of dark mode in SharedPreferences
+                SharedPreferenceManager.getInstance(requireContext()).saveStateMode(isChecked);
+
+                // Apply dark mode immediately (you may need to recreate the activity for changes to take effect)
+                // You can implement a more dynamic way to apply dark mode across the app
+                applyDarkMode(isChecked);
+            }
+        });
        txtContact.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -84,6 +103,20 @@ public class SettingsFragment extends Fragment {
             }
         });
        return view;
+    }
+    // Method to apply dark mode (you can customize this based on your app's theme handling)
+    private void applyDarkMode(boolean isDarkMode) {
+        // Example: You can set the theme programmatically or recreate the activity
+        if (isDarkMode) {
+            // Apply dark mode theme
+            requireActivity().setTheme(R.style.DarkTheme);
+        } else {
+            // Apply light mode theme
+            requireActivity().setTheme(R.style.LightTheme);
+        }
+
+        // Recreate the activity to apply the theme changes
+        requireActivity().recreate();
     }
 
     private void loadFragment( boolean isAppInitialized){
