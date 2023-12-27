@@ -451,25 +451,6 @@ public class Map extends AppCompatActivity {
         GetUserNearbyLocation();
         GetDataMap();
         DrawMap();
-
-//    }   private final OnMoveListener onMoveListener = new OnMoveListener() {
-//        @Override
-//        public void onMoveBegin(@NonNull MoveGestureDetector moveGestureDetector) {
-//            getLocationComponent(mapView).removeOnIndicatorPositionChangedListener(onIndicatorPositionChangedListener);
-//            getLocationComponent(mapView).removeOnIndicatorBearingChangedListener(onIndicatorBearingChangedListener);
-//            getGestures(mapView).removeOnMoveListener(onMoveListener);
-//            floatingActionButton.show();
-//        }
-//
-//        @Override
-//        public boolean onMove(@NonNull MoveGestureDetector moveGestureDetector) {
-//            return false;
-//        }
-//
-//        @Override
-//        public void onMoveEnd(@NonNull MoveGestureDetector moveGestureDetector) {
-//
-//        }
     };
 
     private void showBottomSheetDialog() {

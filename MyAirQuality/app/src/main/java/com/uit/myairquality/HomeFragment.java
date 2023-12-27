@@ -9,12 +9,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uit.myairquality.Interfaces.CallToken;
@@ -83,6 +85,7 @@ TextView nhietdo, gio, mua, doam, thoigian,time;
     User userCallApi;
     private static final String DATE_FORMAT = "dd/MM";
     private static final String TIME_FORMAT_24 = "HH:mm";
+    ImageView btnBackToMap;
     APIClient ApiClient;
     Date date = new Date();
     public static String getDateString(Date date) {
@@ -112,11 +115,18 @@ private void updateDayOfWeek() {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         nhietdo = view.findViewById(R.id.nhietdo);
+        btnBackToMap = view.findViewById(R.id.backButtonHomepage);
         gio = view.findViewById(R.id.gio);
         mua =  view.findViewById(R.id.mua);
         doam = view.findViewById(R.id.doam);
         thoigian = view.findViewById(R.id.n_gay);
         time = view.findViewById(R.id.thoigian);
+        btnBackToMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadFragment();
+            }
+        });
 
 
         updateDayOfWeek();
@@ -176,6 +186,19 @@ private void updateDayOfWeek() {
         });
 
         return view;
+    }
+    private void loadFragment(){
+        Intent intent = new Intent(getActivity(),Map.class);
+        startActivity(intent);
+//        Map map = new Map();
+//        FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+//        if (isAppInitialized){
+//            fragmentTransaction.add(R.layout.activity_map);
+//        } else {
+//            fragmentTransaction.replace(R.id.frame,map);
+//        }
+//
+//        fragmentTransaction.commit();
     }
 
 
