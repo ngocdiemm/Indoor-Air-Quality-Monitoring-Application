@@ -98,18 +98,15 @@ import retrofit2.Retrofit;
 
 public class Map extends AppCompatActivity {
 
-    private static final String BASE_URL = "https://uiot.ixxc.dev/api/master/";
-    private static final String assetId = "4EqQeQ0L4YNWNNTzvTOqjy";
-    //InterfaceWeather weatherInterFace;
     static MapboxMap mapboxMap;
     MapView mapView;
-    private static String authorization = "";
     APIInterface apiInterface;
     AnnotationConfig annoConfig;
     AnnotationPlugin annoPlugin;
+
+    String authorization = "";
     PointAnnotationManager pointAnnoManager;
     FloatingActionButton floatingActionButton;
-    Intent intent = new Intent();
     String access_token;
     String defaultWeatherId= "5zI6XqkQVSfdgOrZ1MyWEf";
     String lightId="6iWtSbgqMQsVq8RPkJJ9vo";
@@ -123,7 +120,6 @@ public class Map extends AppCompatActivity {
 
     TextView txtLight,txtWeather;
 
-    final  ArrayList<Point> pointsTemp = new ArrayList<>();
     private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
         @Override
         public void onActivityResult(Boolean result) {
@@ -150,7 +146,6 @@ public class Map extends AppCompatActivity {
             getGestures(mapView).setFocalPoint(mapView.getMapboxMap().pixelForCoordinate(point));
         }
     };
-
 
     private void DrawMap() {
         mapView.setVisibility(View.INVISIBLE);
@@ -181,6 +176,7 @@ public class Map extends AppCompatActivity {
             }
         });
     }
+
 
     private void GetUserNearBy(String assetId, String token, NearbyUsersCallback listener){
         apiInterface = RetrofitClient.getClient().create(APIInterface.class);
@@ -232,11 +228,9 @@ public class Map extends AppCompatActivity {
                 });
 
                 if(pointUser1 != null && pointUser2 != null) {
-                    // Create point annotations
                     createPointAnnotation(pointUser1, "5zI6XqkQVSfdgOrZ1MyWEf", R.drawable.baseline_location_on_24);
                     createPointAnnotation(pointUser2, "6iWtSbgqMQsVq8RPkJJ9vo", R.drawable.baseline_location_on_24);
                 }
-
 
                 // Set camera values
                 setCameraValues();
@@ -260,7 +254,6 @@ public class Map extends AppCompatActivity {
             if(idUser.equals(lightId)){
 
                 if (userLocation2 != null) {
-//                    Toast.makeText(requireContext(),"Color "+ String.valueOf(userLocation2.getAttributeWeather().getColourTemperature().getValueColorSuperIdol()), Toast.LENGTH_SHORT).show();
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.activity_bottom_sheet_light);
                     txtEmailInfor = dialog.findViewById(R.id.txtInforEmail);
@@ -285,11 +278,9 @@ public class Map extends AppCompatActivity {
                     });
                 }
 
-//            Toast.makeText(requireContext(), "Onoff: "+ String.valueOf(userLocation2.getAttributeWeather().getOnOff().getValueOnOffSuperIdol()), Toast.LENGTH_SHORT).show();
             }
             if(idUser.equals(defaultWeatherId)){
                 if (userLocation1 != null) {
-//                    Toast.makeText(requireContext(),"Temperature "+ String.valueOf(userLocation1.getAttributeWeather().getTemperature().getValueTemperatureSuperIdol()), Toast.LENGTH_SHORT).show();
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.activity_bottom_sheet_default_weather);
 
@@ -333,7 +324,6 @@ public class Map extends AppCompatActivity {
             Log.e("DialogError", "Error in showDialog: " + e.getMessage());
         }
 
-
     }
 
     private void createPointAnnotation(Point point, String id, int iconResource) {
@@ -348,33 +338,6 @@ public class Map extends AppCompatActivity {
                 .withData(idDeviceTemperature);
         markerList.add(pointAnnotationOptions);
         pointAnnoManager.create(markerList);
-    }
-    public void addListAnotherAnnotation(MapView mapView, ArrayList<Point> points, int iconResource) {
-
-
-        Drawable iconDrawable = getResources().getDrawable(iconResource);
-        Bitmap iconBitmap = drawableToBitmap(iconDrawable);
-        ArrayList<PointAnnotationOptions> markerList = new ArrayList<>();
-        for (Point point: points) {
-            PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
-                    .withPoint(point).withIconImage(iconBitmap);
-            markerList.add(pointAnnotationOptions);
-        }
-
-        if(pointAnnoManager == null) {
-            AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
-            pointAnnoManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationApi, new AnnotationConfig());
-        }
-
-        pointAnnoManager.create(markerList);
-
-        pointAnnoManager.addClickListener(new OnPointAnnotationClickListener() {
-            @Override
-            public boolean onAnnotationClick(@NonNull PointAnnotation pointAnnotation) {
-                showBottomSheetDialog();
-                return false;
-            }
-        });
     }
 
     private Bitmap drawableToBitmap(Drawable drawable) {
@@ -441,7 +404,6 @@ public class Map extends AppCompatActivity {
         access_token =  getIntent().getStringExtra("access_token");
         mapView = findViewById(R.id.mapView);
         floatingActionButton = findViewById(R.id.focusLocation);
-        //floatingActionButton.hide();
         authorization = "Bearer"+ access_token;
 
         if (ActivityCompat.checkSelfPermission(Map.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -452,208 +414,4 @@ public class Map extends AppCompatActivity {
         GetDataMap();
         DrawMap();
     };
-
-    private void showBottomSheetDialog() {
-
-        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
-
-        LinearLayout navigateView = bottomSheetDialog.findViewById(R.id.navigation);
-        LinearLayout cancelView = bottomSheetDialog.findViewById(R.id.cancel);
-        // Listen events are clicked on Bottom Sheet
-        navigateView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Map.this, Settings.class);
-                startActivity(intent);
-            }
-        });
-        cancelView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialog.cancel();
-            }
-        });
-
-        bottomSheetDialog.show();
-    }
-
-    public void createCircleAnnotation(MapView mapView, Point point) {
-
-        AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
-        CircleAnnotationManager circleAnnotationManager = CircleAnnotationManagerKt.createCircleAnnotationManager(annotationApi, new AnnotationConfig());
-
-        // circle annotations options
-        CircleAnnotationOptions circleAnnotationOptions = new CircleAnnotationOptions()
-                .withPoint(point)
-                .withCircleRadius(8.0)
-                .withCircleColor("#ee4e8b")
-                .withCircleBlur(0.5)
-                .withCircleStrokeWidth(2.0)
-                .withCircleStrokeColor("#ffffff");
-
-        circleAnnotationManager.create(circleAnnotationOptions);
-    }
-
-    public void addAnotherAnnotation(MapView mapView, Point point, int iconResource) {
-
-        Drawable iconDrawable = getResources().getDrawable(iconResource);
-        Bitmap iconBitmap = drawableToBitmap(iconDrawable);
-        AnnotationPlugin annotationApi = AnnotationPluginImplKt.getAnnotations(mapView);
-        PointAnnotationManager pointAnnoManager = PointAnnotationManagerKt.createPointAnnotationManager(annotationApi, new AnnotationConfig());
-
-
-        PointAnnotationOptions pointAnnotationOptions = new PointAnnotationOptions()
-                .withPoint(point).withIconImage(iconBitmap);
-        pointAnnoManager.create(pointAnnotationOptions);
-        pointAnnoManager.addClickListener(new OnPointAnnotationClickListener() {
-            @Override
-            public boolean onAnnotationClick(@NonNull PointAnnotation pointAnnotation) {
-                if(pointAnnotation.getPoint() == point) {
-                    Toast.makeText(Map.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                }
-                return false;
-            }
-        });
-    }
-
-
-
 }
-
-
-/*public class Map extends AppCompatActivity {
-
-
-    private MapView mapView;
-    MapRespone MapRespone;
-    User userCallApi, user;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        double[] center=new double[2];
-        double[] bounds=new double[4];
-        float zoom=0;
-        double minZoom=0 ;
-        double maxZoom=0;
-        boolean boxZoom ;
-        // Initialize the osmdroid configuration
-        Configuration.getInstance().load(this, getPreferences(MODE_PRIVATE));
-
-        // Get a reference to the MapView from the layout
-        mapView = findViewById(R.id.MapView);
-
-        fetchDataFromApi();
-
-        mapView.setMinZoomLevel(minZoom); // Giá trị minZoom
-        mapView.setMaxZoomLevel(maxZoom);
-        GeoPoint defaultLocation = new GeoPoint(center[1], center[0]);
-        Log.i("DATA:",center[1]+" "+center[0]);
-        mapView.getController().setCenter(defaultLocation);
-        mapView.getController().setZoom(16.0);
-        // Add a marker to the default location
-        mapView.getOverlays().add(new Marker(mapView));
-
-        // Refresh the map view
-        mapView.invalidate();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-    private void setMapValues(MapRespone mapResponse) {
-        if (mapResponse != null) {
-            MapRespone.Options options = mapResponse.getOptions();
-            if (options != null) {
-                MapRespone.DefaultOptions defaultOptions = options.getDefaultOptions();
-                if (defaultOptions != null) {
-                    double[] center = defaultOptions.getCenter();
-                    double[] bounds = defaultOptions.getBounds();
-                    float zoom = defaultOptions.getZoom();
-                    double minZoom = defaultOptions.getMinZoom();
-                    double maxZoom = defaultOptions.getMaxZoom();
-                    boolean boxZoom = defaultOptions.getBoxZoom();
-
-
-                }
-
-            }
-        }
-    }
-    private void fetchDataFromApi() {
-        CallToken callToken = APIClient.CallToken();
-        Call<TokenResponse> usercallToken = callToken.sendRequest(
-                "password",
-                "openremote",
-                userCallApi.getUsername(),
-                userCallApi.getPassword()
-        );
-        usercallToken.enqueue(new Callback<TokenResponse>() {
-            @Override
-            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
-                if (response.body() != null) {
-                    String accessToken = response.body().getAccessToken();
-                    userCallApi.setToken(accessToken);
-
-                    Log.d("Failure on call map", userCallApi.getToken());
-
-                     CallMap callMap = APIClient.CallMap();
-                    Call<MapRespone> userCallMap = callMap.getMapData(
-                            "Bearer " + userCallApi.getToken()
-                    );
-
-                    userCallMap.enqueue(new Callback<MapRespone>() {
-
-                        @Override
-                        public void onResponse(Call<MapRespone> call, Response<MapRespone> response) {
-                            if (response.isSuccessful()) {
-                                MapRespone mapResponse = response.body();
-                                if (mapResponse != null) {
-                                    MapRespone.Options options = mapResponse.getOptions();
-                                    if (options != null) {
-                                        MapRespone.DefaultOptions defaultOptions = options.getDefaultOptions();
-                                        if (defaultOptions != null) {
-                                            double[] center = defaultOptions.getCenter();
-                                            double[] bounds = defaultOptions.getBounds();
-                                            float zoom = defaultOptions.getZoom();
-                                            double minZoom = defaultOptions.getMinZoom();
-                                            double maxZoom = defaultOptions.getMaxZoom();
-                                            boolean boxZoom = defaultOptions.getBoxZoom();
-
-
-                                        }
-
-                                    }
-                                }
-                            } else {
-                                // Xử lý khi có lỗi trong response
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<com.uit.myairquality.Model.MapRespone> call, Throwable t) {
-                            Log.d("Failure on call map", "onFailure");
-                        }
-                    });
-                }
-                else {
-                    Log.d("Failure on call map", "Không có dữ liệu");
-                }
-            }
-            @Override
-            public void onFailure(Call<TokenResponse> call, Throwable t) {
-                Log.d("Failure on call map", "onFailure");
-            }
-        });
-
-    }
-}*/
-
