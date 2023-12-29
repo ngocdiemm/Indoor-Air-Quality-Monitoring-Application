@@ -10,8 +10,7 @@ public class SharedPreferenceManager {
     private static final String PREF_NAME = "PREF_AIR_QUALITY";
     private static final String KEY_LANGUAGES = "KEY_LANGUAGES";
     private static final String KEY_MODES = "KEY_MODES";
-    private static final String KEY_NEW_USER = "KEY_NEW_USER";
-    //biến instance đảm bảo rằng chỉ có 1 phiên bản duy nhất được tạo ra và sử dụng cho toàn bộ ứng dụng
+
     private static SharedPreferenceManager instance;
     private SharedPreferences sharedPreferences;
 
@@ -48,15 +47,6 @@ public class SharedPreferenceManager {
         return sharedPreferences.getBoolean(KEY_MODES, false);
     }
 
-    //lấy ra trạng thái hiện tại xem phải người dùng mới hay không
-    public Boolean getStateNewUser() {
-        return sharedPreferences.getBoolean(KEY_NEW_USER, true);
-    }
-
-    //lưu lại trạng thái hiện tại của người dùng mới hay không
-    public void saveStateNewUser(Boolean state) {
-        sharedPreferences.edit().putBoolean(KEY_NEW_USER, state).apply();
-    }
 
 
 }
